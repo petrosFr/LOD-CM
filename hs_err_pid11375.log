@@ -1,0 +1,1038 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 2785017856 bytes for committing reserved memory.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_linux.cpp:2651), pid=11375, tid=0x00007eca4de41700
+#
+# JRE version: OpenJDK Runtime Environment (8.0_131-b11) (build 1.8.0_131-b11)
+# Java VM: OpenJDK 64-Bit Server VM (25.131-b11 mixed mode linux-amd64 )
+# Derivative: IcedTea 3.4.0
+# Distribution: Custom build (Sat Jun 17 16:08:04 UTC 2017)
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f15ac08c800):  VMThread [stack: 0x00007eca4dd41000,0x00007eca4de42000] [id=11392]
+
+Stack: [0x00007eca4dd41000,0x00007eca4de42000],  sp=0x00007eca4de404a0,  free space=1021k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.so+0x91fd1c]  VMError::report_and_die()+0x15c
+V  [libjvm.so+0x473b2a]  report_vm_out_of_memory(char const*, int, unsigned long, VMErrorType, char const*)+0x6a
+V  [libjvm.so+0x7bc9f0]  os::Linux::commit_memory_impl(char*, unsigned long, bool)+0xe0
+V  [libjvm.so+0x7bcace]  os::Linux::commit_memory_impl(char*, unsigned long, unsigned long, bool)+0x1e
+V  [libjvm.so+0x7bcb0c]  os::pd_commit_memory(char*, unsigned long, unsigned long, bool)+0xc
+V  [libjvm.so+0x7b80af]  os::commit_memory(char*, unsigned long, unsigned long, bool)+0x1f
+V  [libjvm.so+0x81c3fb]  PSVirtualSpace::expand_by(unsigned long)+0x5b
+V  [libjvm.so+0x80f1d5]  PSOldGen::expand_by(unsigned long) [clone .part.109]+0x15
+V  [libjvm.so+0x80f35b]  PSOldGen::expand(unsigned long) [clone .part.111]+0xdb
+V  [libjvm.so+0x80f6e8]  PSOldGen::resize(unsigned long)+0x188
+V  [libjvm.so+0x813abc]  PSParallelCompact::invoke_no_policy(bool)+0x97c
+V  [libjvm.so+0x81ace6]  PSScavenge::invoke()+0x1a6
+V  [libjvm.so+0x7d8bb3]  ParallelScavengeHeap::failed_mem_allocate(unsigned long)+0x63
+V  [libjvm.so+0x921884]  VM_ParallelGCFailedAllocation::doit()+0x84
+V  [libjvm.so+0x925817]  VM_Operation::evaluate()+0x47
+V  [libjvm.so+0x924418]  VMThread::evaluate_operation(VM_Operation*)+0x2f8
+V  [libjvm.so+0x924879]  VMThread::loop()+0x1c9
+V  [libjvm.so+0x924c32]  VMThread::run()+0x72
+V  [libjvm.so+0x7bce32]  java_start(Thread*)+0xe2
+
+VM_Operation (0x00007f15b2d567b0): ParallelGCFailedAllocation, mode: safepoint, requested by thread 0x00007f15ac009000
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00007f15ac585000 JavaThread "AsyncAppender-Async" daemon [_thread_blocked, id=11403, stack(0x00007eca4c81b000,0x00007eca4c91c000)]
+  0x00007f15ac0e9000 JavaThread "Service Thread" daemon [_thread_blocked, id=11400, stack(0x00007eca4d3c5000,0x00007eca4d4c6000)]
+  0x00007f15ac0dc000 JavaThread "C1 CompilerThread3" daemon [_thread_blocked, id=11399, stack(0x00007eca4d4c6000,0x00007eca4d5c7000)]
+  0x00007f15ac0d9800 JavaThread "C2 CompilerThread2" daemon [_thread_blocked, id=11398, stack(0x00007eca4d5c7000,0x00007eca4d6c8000)]
+  0x00007f15ac0d8000 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=11397, stack(0x00007eca4d6c8000,0x00007eca4d7c9000)]
+  0x00007f15ac0ca800 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=11396, stack(0x00007eca4d7c9000,0x00007eca4d8ca000)]
+  0x00007f15ac0c8800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=11395, stack(0x00007eca4d8ca000,0x00007eca4d9cb000)]
+  0x00007f15ac09a800 JavaThread "Finalizer" daemon [_thread_blocked, id=11394, stack(0x00007eca4db3f000,0x00007eca4dc40000)]
+  0x00007f15ac096000 JavaThread "Reference Handler" daemon [_thread_blocked, id=11393, stack(0x00007eca4dc40000,0x00007eca4dd41000)]
+  0x00007f15ac009000 JavaThread "main" [_thread_blocked, id=11377, stack(0x00007f15b2c57000,0x00007f15b2d58000)]
+
+Other Threads:
+=>0x00007f15ac08c800 VMThread [stack: 0x00007eca4dd41000,0x00007eca4de42000] [id=11392]
+  0x00007f15ac0eb000 WatcherThread [stack: 0x00007eca4d2c4000,0x00007eca4d3c5000] [id=11401]
+
+VM state:at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00007f15ac006e70] ExpandHeap_lock - owner thread: 0x00007f15ac08c800
+[0x00007f15ac0074f0] Threads_lock - owner thread: 0x00007f15ac08c800
+[0x00007f15ac0079f0] Heap_lock - owner thread: 0x00007f15ac009000
+
+Heap:
+ PSYoungGen      total 2316288K, used 1071093K [0x00007efc9cc00000, 0x00007f0135200000, 0x00007f159cc00000)
+  eden space 1041920K, 0% used [0x00007efc9cc00000,0x00007efc9cc00000,0x00007efcdc580000)
+  from space 1274368K, 84% used [0x00007efcdc580000,0x00007efd1db7d4c0,0x00007efd2a200000)
+  to   space 9038848K, 0% used [0x00007eff0d700000,0x00007eff0d700000,0x00007f0135200000)
+ ParOldGen       total 11229184K, used 11228762K [0x00007eca9cc00000, 0x00007ecd4a200000, 0x00007efc9cc00000)
+  object space 11229184K, 99% used [0x00007eca9cc00000,0x00007ecd4a1968d8,0x00007ecd4a200000)
+ Metaspace       used 23784K, capacity 24457K, committed 24576K, reserved 24576K
+
+Card table byte_map: [0x00007eca773ff000,0x00007eca9cc00000] byte_map_base: 0x00007e8b11f19000
+
+Marking Bits: (ParMarkBitMap*) 0x00007f15b1f5c800
+ Begin Bits: [0x00007ec7e0000000, 0x00007ec90c000000)
+ End Bits:   [0x00007ec90c000000, 0x00007eca38000000)
+
+Polling page: 0x00007f15b2d80000
+
+CodeCache: size=245760Kb used=10731Kb max_used=10820Kb free=235028Kb
+ bounds [0x00007f159d000000, 0x00007f159dc00000, 0x00007f15ac000000]
+ total_blobs=3026 nmethods=2603 adapters=337
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 853,043 Thread 0x00007f15ac0d8000 3164 % !   4       linked_itemset_4.Main::main @ 591 (1675 bytes)
+Event: 853,166 Thread 0x00007f15ac0ca800 3165       4       java.lang.String::valueOf (5 bytes)
+Event: 853,174 Thread 0x00007f15ac0ca800 nmethod 3165 0x00007f159d32df10 code [0x00007f159d32e0a0, 0x00007f159d32e5f8]
+Event: 853,937 Thread 0x00007f15ac0d8000 nmethod 3164% 0x00007f159db867d0 code [0x00007f159db870e0, 0x00007f159db90a98]
+Event: 855,717 Thread 0x00007f15ac0dc000 3166 % !   3       linked_itemset_4.Main::main @ 430 (1675 bytes)
+Event: 855,737 Thread 0x00007f15ac0dc000 nmethod 3166% 0x00007f159db9b9d0 code [0x00007f159db9e1a0, 0x00007f159dbbb448]
+Event: 1005,214 Thread 0x00007f15ac0d8000 3167       4       java.lang.String::<init> (10 bytes)
+Event: 1005,257 Thread 0x00007f15ac0d8000 nmethod 3167 0x00007f159d590d50 code [0x00007f159d590ea0, 0x00007f159d590f18]
+Event: 1340,967 Thread 0x00007f15ac0d8000 3168 % !   4       linked_itemset_4.Main::main @ 430 (1675 bytes)
+Event: 1342,884 Thread 0x00007f15ac0d8000 nmethod 3168% 0x00007f159dbdacd0 code [0x00007f159dbdb5c0, 0x00007f159dbe6498]
+
+GC Heap History (10 events):
+Event: 1027,081 GC heap after
+Heap after GC invocations=79 (full 11):
+ PSYoungGen      total 10003456K, used 5720392K [0x00007efc9cc00000, 0x00007f016f580000, 0x00007f159cc00000)
+  eden space 904192K, 0% used [0x00007efc9cc00000,0x00007efc9cc00000,0x00007efcd3f00000)
+  from space 9099264K, 62% used [0x00007eff16280000,0x00007f00734d2248,0x00007f0141880000)
+  to   space 9473536K, 0% used [0x00007efcd3f00000,0x00007efcd3f00000,0x00007eff16280000)
+ ParOldGen       total 7356416K, used 6227026K [0x00007eca9cc00000, 0x00007ecc5dc00000, 0x00007efc9cc00000)
+  object space 7356416K, 84% used [0x00007eca9cc00000,0x00007ecc18d14958,0x00007ecc5dc00000)
+ Metaspace       used 23784K, capacity 24457K, committed 24576K, reserved 24576K
+}
+Event: 1039,276 GC heap before
+{Heap before GC invocations=80 (full 11):
+ PSYoungGen      total 10003456K, used 6624584K [0x00007efc9cc00000, 0x00007f016f580000, 0x00007f159cc00000)
+  eden space 904192K, 100% used [0x00007efc9cc00000,0x00007efcd3f00000,0x00007efcd3f00000)
+  from space 9099264K, 62% used [0x00007eff16280000,0x00007f00734d2248,0x00007f0141880000)
+  to   space 9473536K, 0% used [0x00007efcd3f00000,0x00007efcd3f00000,0x00007eff16280000)
+ ParOldGen       total 7356416K, used 6227026K [0x00007eca9cc00000, 0x00007ecc5dc00000, 0x00007efc9cc00000)
+  object space 7356416K, 84% used [0x00007eca9cc00000,0x00007ecc18d14958,0x00007ecc5dc00000)
+ Metaspace       used 23784K, capacity 24457K, committed 24576K, reserved 24576K
+Event: 1116,923 GC heap after
+Heap after GC invocations=80 (full 11):
+ PSYoungGen      total 10377728K, used 5793079K [0x00007efc9cc00000, 0x00007f0184780000, 0x00007f159cc00000)
+  eden space 904192K, 0% used [0x00007efc9cc00000,0x00007efc9cc00000,0x00007efcd3f00000)
+  from space 9473536K, 61% used [0x00007efcd3f00000,0x00007efe3584dd98,0x00007eff16280000)
+  to   space 9766400K, 0% used [0x00007eff30600000,0x00007eff30600000,0x00007f0184780000)
+ ParOldGen       total 7356416K, used 6309194K [0x00007eca9cc00000, 0x00007ecc5dc00000, 0x00007efc9cc00000)
+  object space 7356416K, 85% used [0x00007eca9cc00000,0x00007ecc1dd52958,0x00007ecc5dc00000)
+ Metaspace       used 23784K, capacity 24457K, committed 24576K, reserved 24576K
+}
+Event: 1145,789 GC heap before
+{Heap before GC invocations=81 (full 11):
+ PSYoungGen      total 10377728K, used 6697271K [0x00007efc9cc00000, 0x00007f0184780000, 0x00007f159cc00000)
+  eden space 904192K, 100% used [0x00007efc9cc00000,0x00007efcd3f00000,0x00007efcd3f00000)
+  from space 9473536K, 61% used [0x00007efcd3f00000,0x00007efe3584dd98,0x00007eff16280000)
+  to   space 9766400K, 0% used [0x00007eff30600000,0x00007eff30600000,0x00007f0184780000)
+ ParOldGen       total 7356416K, used 6309194K [0x00007eca9cc00000, 0x00007ecc5dc00000, 0x00007efc9cc00000)
+  object space 7356416K, 85% used [0x00007eca9cc00000,0x00007ecc1dd52958,0x00007ecc5dc00000)
+ Metaspace       used 23784K, capacity 24457K, committed 24576K, reserved 24576K
+Event: 1219,635 GC heap after
+Heap after GC invocations=81 (full 11):
+ PSYoungGen      total 9713664K, used 3178865K [0x00007efc9cc00000, 0x00007f0141a80000, 0x00007f159cc00000)
+  eden space 1041920K, 0% used [0x00007efc9cc00000,0x00007efc9cc00000,0x00007efcdc580000)
+  from space 8671744K, 36% used [0x00007eff30600000,0x00007efff265c690,0x00007f0141a80000)
+  to   space 9218560K, 0% used [0x00007efcdc580000,0x00007efcdc580000,0x00007eff0f000000)
+ ParOldGen       total 9081856K, used 9081850K [0x00007eca9cc00000, 0x00007eccc7100000, 0x00007efc9cc00000)
+  object space 9081856K, 99% used [0x00007eca9cc00000,0x00007eccc70fe958,0x00007eccc7100000)
+ Metaspace       used 23784K, capacity 24457K, committed 24576K, reserved 24576K
+}
+Event: 1219,635 GC heap before
+{Heap before GC invocations=82 (full 12):
+ PSYoungGen      total 9713664K, used 3178865K [0x00007efc9cc00000, 0x00007f0141a80000, 0x00007f159cc00000)
+  eden space 1041920K, 0% used [0x00007efc9cc00000,0x00007efc9cc00000,0x00007efcdc580000)
+  from space 8671744K, 36% used [0x00007eff30600000,0x00007efff265c690,0x00007f0141a80000)
+  to   space 9218560K, 0% used [0x00007efcdc580000,0x00007efcdc580000,0x00007eff0f000000)
+ ParOldGen       total 9081856K, used 9081850K [0x00007eca9cc00000, 0x00007eccc7100000, 0x00007efc9cc00000)
+  object space 9081856K, 99% used [0x00007eca9cc00000,0x00007eccc70fe958,0x00007eccc7100000)
+ Metaspace       used 23784K, capacity 24457K, committed 24576K, reserved 24576K
+Event: 1336,510 GC heap after
+Heap after GC invocations=82 (full 12):
+ PSYoungGen      total 9713664K, used 3045463K [0x00007efc9cc00000, 0x00007f0141a80000, 0x00007f159cc00000)
+  eden space 1041920K, 0% used [0x00007efc9cc00000,0x00007efc9cc00000,0x00007efcdc580000)
+  from space 8671744K, 35% used [0x00007eff30600000,0x00007effea415d70,0x00007f0141a80000)
+  to   space 9218560K, 0% used [0x00007efcdc580000,0x00007efcdc580000,0x00007eff0f000000)
+ ParOldGen       total 11229184K, used 9081500K [0x00007eca9cc00000, 0x00007ecd4a200000, 0x00007efc9cc00000)
+  object space 11229184K, 80% used [0x00007eca9cc00000,0x00007eccc70a7010,0x00007ecd4a200000)
+ Metaspace       used 23784K, capacity 24457K, committed 24576K, reserved 24576K
+}
+Event: 1366,268 GC heap before
+{Heap before GC invocations=83 (full 12):
+ PSYoungGen      total 9713664K, used 4087383K [0x00007efc9cc00000, 0x00007f0141a80000, 0x00007f159cc00000)
+  eden space 1041920K, 100% used [0x00007efc9cc00000,0x00007efcdc580000,0x00007efcdc580000)
+  from space 8671744K, 35% used [0x00007eff30600000,0x00007effea415d70,0x00007f0141a80000)
+  to   space 9218560K, 0% used [0x00007efcdc580000,0x00007efcdc580000,0x00007eff0f000000)
+ ParOldGen       total 11229184K, used 9081500K [0x00007eca9cc00000, 0x00007ecd4a200000, 0x00007efc9cc00000)
+  object space 11229184K, 80% used [0x00007eca9cc00000,0x00007eccc70a7010,0x00007ecd4a200000)
+ Metaspace       used 23784K, capacity 24457K, committed 24576K, reserved 24576K
+Event: 1405,207 GC heap after
+Heap after GC invocations=83 (full 12):
+ PSYoungGen      total 2316288K, used 1273881K [0x00007efc9cc00000, 0x00007f0135200000, 0x00007f159cc00000)
+  eden space 1041920K, 0% used [0x00007efc9cc00000,0x00007efc9cc00000,0x00007efcdc580000)
+  from space 1274368K, 99% used [0x00007efcdc580000,0x00007efd2a186440,0x00007efd2a200000)
+  to   space 9038848K, 0% used [0x00007eff0d700000,0x00007eff0d700000,0x00007f0135200000)
+ ParOldGen       total 11229184K, used 11051788K [0x00007eca9cc00000, 0x00007ecd4a200000, 0x00007efc9cc00000)
+  object space 11229184K, 98% used [0x00007eca9cc00000,0x00007ecd3f4c3010,0x00007ecd4a200000)
+ Metaspace       used 23784K, capacity 24457K, committed 24576K, reserved 24576K
+}
+Event: 1405,208 GC heap before
+{Heap before GC invocations=84 (full 13):
+ PSYoungGen      total 2316288K, used 1273881K [0x00007efc9cc00000, 0x00007f0135200000, 0x00007f159cc00000)
+  eden space 1041920K, 0% used [0x00007efc9cc00000,0x00007efc9cc00000,0x00007efcdc580000)
+  from space 1274368K, 99% used [0x00007efcdc580000,0x00007efd2a186440,0x00007efd2a200000)
+  to   space 9038848K, 0% used [0x00007eff0d700000,0x00007eff0d700000,0x00007f0135200000)
+ ParOldGen       total 11229184K, used 11051788K [0x00007eca9cc00000, 0x00007ecd4a200000, 0x00007efc9cc00000)
+  object space 11229184K, 98% used [0x00007eca9cc00000,0x00007ecd3f4c3010,0x00007ecd4a200000)
+ Metaspace       used 23784K, capacity 24457K, committed 24576K, reserved 24576K
+
+Deoptimization events (10 events):
+Event: 717,704 Thread 0x00007f15ac009000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f159d7ab2b0 method=java.util.HashMap.computeIfAbsent(Ljava/lang/Object;Ljava/util/function/Function;)Ljava/lang/Object; @ 233
+Event: 799,158 Thread 0x00007f15ac009000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f159d49cd14 method=java.util.HashMap.resize()[Ljava/util/HashMap$Node; @ 206
+Event: 848,644 Thread 0x00007f15ac009000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f159d49d95c method=java.util.ArrayList$ArrayListSpliterator.forEachRemaining(Ljava/util/function/Consumer;)V @ 87
+Event: 851,745 Thread 0x00007f15ac009000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f159d828168 method=java.lang.Integer.getChars(II[C)V @ 20
+Event: 851,745 Thread 0x00007f15ac009000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f159d5a5280 method=java.lang.Integer.getChars(II[C)V @ 20
+Event: 851,763 Thread 0x00007f15ac009000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f159d210a28 method=java.lang.Integer.getChars(II[C)V @ 20
+Event: 851,783 Thread 0x00007f15ac009000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f159db64978 method=java.lang.Integer.getChars(II[C)V @ 20
+Event: 853,174 Thread 0x00007f15ac009000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007f159db783d8 method=java.lang.Integer.getChars(II[C)V @ 20
+Event: 1340,653 Thread 0x00007f15ac009000 Uncommon trap: reason=class_check action=maybe_recompile pc=0x00007f159db8fa90 method=linked_itemset_4.Main.main([Ljava/lang/String;)V @ 437
+Event: 1359,680 Thread 0x00007f15ac009000 Uncommon trap: reason=class_check action=maybe_recompile pc=0x00007f159db8fa90 method=linked_itemset_4.Main.main([Ljava/lang/String;)V @ 437
+
+Internal exceptions (10 events):
+Event: 0,183 Thread 0x00007f15ac009000 Exception <a 'java/security/PrivilegedActionException'> (0x00007efc9d08f1d8) thrown at [/home/abuild/rpmbuild/BUILD/icedtea-3.4.0/openjdk/hotspot/src/share/vm/prims/jvm.cpp, line 1400]
+Event: 0,183 Thread 0x00007f15ac009000 Exception <a 'java/security/PrivilegedActionException'> (0x00007efc9d08f4b8) thrown at [/home/abuild/rpmbuild/BUILD/icedtea-3.4.0/openjdk/hotspot/src/share/vm/prims/jvm.cpp, line 1400]
+Event: 0,484 Thread 0x00007f15ac009000 Exception <a 'java/lang/ArrayIndexOutOfBoundsException': 18> (0x00007efc9ec45220) thrown at [/home/abuild/rpmbuild/BUILD/icedtea-3.4.0/openjdk/hotspot/src/share/vm/interpreter/interpreterRuntime.cpp, line 369]
+Event: 0,484 Thread 0x00007f15ac009000 Exception <a 'java/lang/ArrayIndexOutOfBoundsException': 110> (0x00007efc9ec46e78) thrown at [/home/abuild/rpmbuild/BUILD/icedtea-3.4.0/openjdk/hotspot/src/share/vm/interpreter/interpreterRuntime.cpp, line 369]
+Event: 0,581 Thread 0x00007f15ac009000 Exception <a 'java/lang/NoSuchMethodError': org.slf4j.impl.StaticMarkerBinder.getSingleton()Lorg/slf4j/impl/StaticMarkerBinder;> (0x00007efc9f58cdb0) thrown at [/home/abuild/rpmbuild/BUILD/icedtea-3.4.0/openjdk/hotspot/src/share/vm/interpreter/linkResolve
+Event: 0,864 Thread 0x00007f15ac009000 Exception <a 'java/io/FileNotFoundException'> (0x00007efc9d1cf1e8) thrown at [/home/abuild/rpmbuild/BUILD/icedtea-3.4.0/openjdk/hotspot/src/share/vm/prims/jni.cpp, line 709]
+Event: 0,873 Thread 0x00007f15ac009000 Exception <a 'java/io/FileNotFoundException'> (0x00007efc9d2ba2e0) thrown at [/home/abuild/rpmbuild/BUILD/icedtea-3.4.0/openjdk/hotspot/src/share/vm/prims/jni.cpp, line 709]
+Event: 0,892 Thread 0x00007f15ac009000 Exception <a 'java/lang/NoSuchMethodError': java.lang.Object.lambda$codePoints$1()Ljava/util/Spliterator$OfInt;> (0x00007efc9d53a7c8) thrown at [/home/abuild/rpmbuild/BUILD/icedtea-3.4.0/openjdk/hotspot/src/share/vm/interpreter/linkResolver.cpp, line 582]
+Event: 387,045 Thread 0x00007f15ac009000 Exception <a 'java/lang/NoSuchMethodError': java.lang.Object.lambda$and$0(Ljava/util/function/Predicate;Ljava/lang/Object;)Z> (0x00007efcc799f560) thrown at [/home/abuild/rpmbuild/BUILD/icedtea-3.4.0/openjdk/hotspot/src/share/vm/interpreter/linkResolver.c
+Event: 430,704 Thread 0x00007f15ac009000 Implicit null exception at 0x00007f159d2fed65 to 0x00007f159d2fef55
+
+Events (10 events):
+Event: 1336,802 Executing VM operation: RevokeBias done
+Event: 1340,653 Thread 0x00007f15ac009000 Uncommon trap: trap_request=0xffffffde fr.pc=0x00007f159db8fa90
+Event: 1340,654 Thread 0x00007f15ac009000 DEOPT PACKING pc=0x00007f159db8fa90 sp=0x00007f15b2d568f0
+Event: 1340,654 Thread 0x00007f15ac009000 DEOPT UNPACKING pc=0x00007f159d004f69 sp=0x00007f15b2d568e0 mode 2
+Event: 1341,270 Thread 0x00007f15ac009000 DEOPT PACKING pc=0x00007f159dbb82ea sp=0x00007f15b2d563b0
+Event: 1341,271 Thread 0x00007f15ac009000 DEOPT UNPACKING pc=0x00007f159d047373 sp=0x00007f15b2d56650 mode 0
+Event: 1359,678 Thread 0x00007f15ac009000 Uncommon trap: trap_request=0xffffffde fr.pc=0x00007f159db8fa90
+Event: 1359,681 Thread 0x00007f15ac009000 DEOPT PACKING pc=0x00007f159db8fa90 sp=0x00007f15b2d568f0
+Event: 1359,682 Thread 0x00007f15ac009000 DEOPT UNPACKING pc=0x00007f159d004f69 sp=0x00007f15b2d568e0 mode 2
+Event: 1366,268 Executing VM operation: ParallelGCFailedAllocation
+
+
+Dynamic libraries:
+00400000-00401000 r-xp 00000000 103:03 264822                            /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/bin/java
+00600000-00601000 r--p 00000000 103:03 264822                            /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/bin/java
+00601000-00602000 rw-p 00001000 103:03 264822                            /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/bin/java
+022ab000-022cc000 rw-p 00000000 00:00 0                                  [heap]
+7ec717800000-7ec718000000 rw-s 68000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec718000000-7ec718800000 rw-s 67800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec718800000-7ec719000000 rw-s 67000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec719000000-7ec719800000 rw-s 66800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec719800000-7ec71a000000 rw-s 66000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec71a000000-7ec71a800000 rw-s 65800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec71a800000-7ec71b000000 rw-s 65000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec71b000000-7ec71b800000 rw-s 64800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec71b800000-7ec71c000000 rw-s 64000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec71c000000-7ec71c800000 rw-s 63800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec71c800000-7ec71d000000 rw-s 63000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec71d000000-7ec71d800000 rw-s 62800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec71d800000-7ec71e000000 rw-s 62000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec71e000000-7ec71e800000 rw-s 61800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec71e800000-7ec71f000000 rw-s 61000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec71f000000-7ec71f800000 rw-s 60800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec71f800000-7ec720000000 rw-s 60000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec720000000-7ec720800000 rw-s 5f800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec720800000-7ec721000000 rw-s 5f000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec721000000-7ec721800000 rw-s 5e800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec721800000-7ec722000000 rw-s 5e000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec722000000-7ec722800000 rw-s 5d800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec722800000-7ec723000000 rw-s 5d000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec723000000-7ec723800000 rw-s 5c800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec723800000-7ec724000000 rw-s 5c000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec724000000-7ec724800000 rw-s 5b800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec724800000-7ec725000000 rw-s 5b000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec725000000-7ec725800000 rw-s 5a800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec725800000-7ec726000000 rw-s 5a000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec726000000-7ec726800000 rw-s 59800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec726800000-7ec727000000 rw-s 59000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec727000000-7ec727800000 rw-s 58800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec727800000-7ec728000000 rw-s 58000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec728000000-7ec728800000 rw-s 57800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec728800000-7ec729000000 rw-s 24000000 103:03 4326423                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/POS.dat
+7ec729000000-7ec729800000 rw-s 57000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec729800000-7ec72a000000 rw-s 56800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec72a000000-7ec72a800000 rw-s 56000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec72a800000-7ec72b000000 rw-s 55800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec72b000000-7ec72b800000 rw-s 55000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec72b800000-7ec72c000000 rw-s 54800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec72c000000-7ec72c800000 rw-s 54000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec72c800000-7ec72d000000 rw-s 53800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec72d000000-7ec72d800000 rw-s 53000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec72d800000-7ec72e000000 rw-s 52800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec72e000000-7ec72e800000 rw-s 52000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec72e800000-7ec72f000000 rw-s 51800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec72f000000-7ec72f800000 rw-s 51000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec72f800000-7ec730000000 rw-s 50800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec730000000-7ec730800000 rw-s 50000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec730800000-7ec731000000 rw-s 4f800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec731000000-7ec731800000 rw-s 4f000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec731800000-7ec732000000 rw-s 4e800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec732000000-7ec732800000 rw-s 4e000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec732800000-7ec733000000 rw-s 4d800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec733000000-7ec733800000 rw-s 4d000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec733800000-7ec734000000 rw-s 4c800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec734000000-7ec734800000 rw-s 4c000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec734800000-7ec735000000 rw-s 4b800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec735000000-7ec735800000 rw-s 4b000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec735800000-7ec736000000 rw-s 4a800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec736000000-7ec736800000 rw-s 4a000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec736800000-7ec737000000 rw-s 49800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec737000000-7ec737800000 rw-s 49000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec737800000-7ec738000000 rw-s 48800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec738000000-7ec738800000 rw-s 48000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec738800000-7ec739000000 rw-s 47800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec739000000-7ec739800000 rw-s 47000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec739800000-7ec73a000000 rw-s 46800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec73a000000-7ec73a800000 rw-s 46000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec73a800000-7ec73b000000 rw-s 45800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec73b000000-7ec73b800000 rw-s 45000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec73b800000-7ec73c000000 rw-s 44800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec73c000000-7ec73c800000 rw-s 44000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec73c800000-7ec73d000000 rw-s 43800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec73d000000-7ec73d800000 rw-s 43000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec73d800000-7ec73e000000 rw-s 42800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec73e000000-7ec73e800000 rw-s 42000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec73e800000-7ec73f000000 rw-s 41800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec73f000000-7ec73f800000 rw-s 41000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec73f800000-7ec740000000 rw-s 23800000 103:03 4326423                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/POS.dat
+7ec740000000-7ec740800000 rw-s 40800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec740800000-7ec741000000 rw-s 40000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec741000000-7ec741800000 rw-s 3f800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec741800000-7ec742000000 rw-s 3f000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec742000000-7ec742800000 rw-s 3e800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec742800000-7ec743000000 rw-s 3e000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec743000000-7ec743800000 rw-s 3d800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec743800000-7ec744000000 rw-s 3d000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec744000000-7ec744800000 rw-s 3c800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec744800000-7ec745000000 rw-s 3c000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec745000000-7ec745800000 rw-s 3b800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec745800000-7ec746000000 rw-s 3b000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec746000000-7ec746800000 rw-s 3a800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec746800000-7ec747000000 rw-s 3a000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec747000000-7ec747800000 rw-s 39800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec747800000-7ec748000000 rw-s 39000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec748000000-7ec748800000 rw-s 38800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec748800000-7ec749000000 rw-s 38000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec749000000-7ec749800000 rw-s 37800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec749800000-7ec74a000000 rw-s 37000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec74a000000-7ec74a800000 rw-s 36800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec74a800000-7ec74b000000 rw-s 36000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec74b000000-7ec74b800000 rw-s 35800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec74b800000-7ec74c000000 rw-s 35000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec74c000000-7ec74c800000 rw-s 34800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec74c800000-7ec74d000000 rw-s 34000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec74d000000-7ec74d800000 rw-s 33800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec74d800000-7ec74e000000 rw-s 33000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec74e000000-7ec74e800000 rw-s 32800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec74e800000-7ec74f000000 rw-s 32000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec74f000000-7ec74f800000 rw-s 31800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec74f800000-7ec750000000 rw-s 31000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec750000000-7ec750800000 rw-s 30800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec750800000-7ec751000000 rw-s 30000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec751000000-7ec751800000 rw-s 2f800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec751800000-7ec752000000 rw-s 2f000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec752000000-7ec752800000 rw-s 2e800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec752800000-7ec753000000 rw-s 2e000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec753000000-7ec753800000 rw-s 2d800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec753800000-7ec754000000 rw-s 2d000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec754000000-7ec754800000 rw-s 2c800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec754800000-7ec755000000 rw-s 2c000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec755000000-7ec755800000 rw-s 2b800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec755800000-7ec756000000 rw-s 2b000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec756000000-7ec756800000 rw-s 2a800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec756800000-7ec757000000 rw-s 2a000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec757000000-7ec757800000 rw-s 29800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec757800000-7ec758000000 rw-s 29000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec758000000-7ec758800000 rw-s 28800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec758800000-7ec759000000 rw-s 28000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec759000000-7ec759800000 rw-s 27800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec759800000-7ec75a000000 rw-s 27000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec75a000000-7ec75a800000 rw-s 26800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec75a800000-7ec75b000000 rw-s 26000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec75b000000-7ec75b800000 rw-s 25800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec75b800000-7ec75c000000 rw-s 23000000 103:03 4326423                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/POS.dat
+7ec75c000000-7ec75c800000 rw-s 25000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec75c800000-7ec75d000000 rw-s 24800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec75d000000-7ec75d800000 rw-s 24000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec75d800000-7ec75e000000 rw-s 23800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec75e000000-7ec75e800000 rw-s 23000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec75e800000-7ec75f000000 rw-s 22800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec75f000000-7ec75f800000 rw-s 22000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec75f800000-7ec760000000 rw-s 21800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec760000000-7ec760800000 rw-s 21000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec760800000-7ec761000000 rw-s 20800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec761000000-7ec761800000 rw-s 20000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec761800000-7ec762000000 rw-s 1f800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec762000000-7ec762800000 rw-s 1f000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec762800000-7ec763000000 rw-s 1e800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec763000000-7ec763800000 rw-s 1e000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec763800000-7ec764000000 rw-s 1d800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec764000000-7ec764800000 rw-s 1d000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec764800000-7ec765000000 rw-s 1c800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec765000000-7ec765800000 rw-s 1c000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec765800000-7ec766000000 rw-s 1b800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec766000000-7ec766800000 rw-s 1b000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec766800000-7ec767000000 rw-s 1a800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec767000000-7ec767800000 rw-s 1a000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec767800000-7ec768000000 rw-s 19800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec768000000-7ec768800000 rw-s 19000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec768800000-7ec769000000 rw-s 18800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec769000000-7ec769800000 rw-s 18000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec769800000-7ec76a000000 rw-s 17800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec76a000000-7ec76a800000 rw-s 17000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec76a800000-7ec76b000000 rw-s 16800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec76b000000-7ec76b800000 rw-s 16000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec76b800000-7ec76c000000 rw-s 15800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec76c000000-7ec76c800000 rw-s 15000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec76c800000-7ec76d000000 rw-s 14800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec76d000000-7ec76d800000 rw-s 14000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec76d800000-7ec76e000000 rw-s 13800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec76e000000-7ec76e800000 rw-s 13000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec76e800000-7ec76f000000 rw-s 12800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec76f000000-7ec76f800000 rw-s 12000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec76f800000-7ec770000000 rw-s 11800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec770000000-7ec770800000 rw-s 11000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec770800000-7ec771000000 rw-s 10800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec771000000-7ec771800000 rw-s 10000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec771800000-7ec772000000 rw-s 0f800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec772000000-7ec772800000 rw-s 0f000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec772800000-7ec773000000 rw-s 0e800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec773000000-7ec773800000 rw-s 0e000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec773800000-7ec774000000 rw-s 0d800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec774000000-7ec774800000 rw-s 0d000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec774800000-7ec775000000 rw-s 22800000 103:03 4326423                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/POS.dat
+7ec775000000-7ec775800000 rw-s 0c800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec775800000-7ec776000000 rw-s 0c000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec776000000-7ec776800000 rw-s 0b800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec776800000-7ec777000000 rw-s 0b000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec777000000-7ec777800000 rw-s 0a800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec777800000-7ec778000000 rw-s 0a000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec778000000-7ec778800000 rw-s 09800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec778800000-7ec779000000 rw-s 09000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec779000000-7ec779800000 rw-s 08800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec779800000-7ec77a000000 rw-s 08000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec77a000000-7ec77a800000 rw-s 07800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec77a800000-7ec77b000000 rw-s 07000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec77b000000-7ec77b800000 rw-s 06800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec77b800000-7ec77c000000 rw-s 06000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec77c000000-7ec77c800000 rw-s 05800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec77c800000-7ec77d000000 rw-s 05000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec77d000000-7ec77d800000 rw-s 04800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec77d800000-7ec77e000000 rw-s 04000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec77e000000-7ec77e800000 rw-s 03800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec77e800000-7ec77f000000 rw-s 03000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec77f000000-7ec77f800000 rw-s 02800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec77f800000-7ec780000000 rw-s 02000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec780000000-7ec780800000 rw-s 01800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec780800000-7ec781000000 rw-s 01000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec781000000-7ec781800000 rw-s 00800000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec781800000-7ec782000000 rw-s 00000000 103:03 4326413                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.dat
+7ec782000000-7ec782800000 rw-s 00000000 103:03 4326431                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/SPO.idn
+7ec782800000-7ec783000000 rw-s 22000000 103:03 4326423                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/POS.dat
+7ec783000000-7ec783800000 rw-s 00000000 103:03 4326428                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/POS.idn
+7ec783800000-7ec784000000 rw-s 2e000000 103:03 4326433                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/node2id.dat
+7ec784000000-7ec784021000 rw-p 00000000 00:00 0 
+7ec784021000-7ec788000000 ---p 00000000 00:00 0 
+7ec788000000-7ec788021000 rw-p 00000000 00:00 0 
+7ec788021000-7ec78c000000 ---p 00000000 00:00 0 
+7ec78c000000-7ec78c021000 rw-p 00000000 00:00 0 
+7ec78c021000-7ec790000000 ---p 00000000 00:00 0 
+7ec790000000-7ec790021000 rw-p 00000000 00:00 0 
+7ec790021000-7ec794000000 ---p 00000000 00:00 0 
+7ec794000000-7ec794852000 rw-p 00000000 00:00 0 
+7ec794852000-7ec798000000 ---p 00000000 00:00 0 
+7ec798000000-7ec798021000 rw-p 00000000 00:00 0 
+7ec798021000-7ec79c000000 ---p 00000000 00:00 0 
+7ec79c000000-7ec79db33000 rw-p 00000000 00:00 0 
+7ec79db33000-7ec7a0000000 ---p 00000000 00:00 0 
+7ec7a0000000-7ec7a1022000 rw-p 00000000 00:00 0 
+7ec7a1022000-7ec7a4000000 ---p 00000000 00:00 0 
+7ec7a4000000-7ec7a4021000 rw-p 00000000 00:00 0 
+7ec7a4021000-7ec7a8000000 ---p 00000000 00:00 0 
+7ec7a8000000-7ec7a912e000 rw-p 00000000 00:00 0 
+7ec7a912e000-7ec7ac000000 ---p 00000000 00:00 0 
+7ec7ac000000-7ec7ac021000 rw-p 00000000 00:00 0 
+7ec7ac021000-7ec7b0000000 ---p 00000000 00:00 0 
+7ec7b0000000-7ec7b0021000 rw-p 00000000 00:00 0 
+7ec7b0021000-7ec7b4000000 ---p 00000000 00:00 0 
+7ec7b4000000-7ec7b4295000 rw-p 00000000 00:00 0 
+7ec7b4295000-7ec7b8000000 ---p 00000000 00:00 0 
+7ec7b8000000-7ec7b8800000 rw-s 06000000 103:03 4326433                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/node2id.dat
+7ec7b8800000-7ec7b9000000 rw-s 00000000 103:03 4326422                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/node2id.idn
+7ec7b9000000-7ec7b9800000 rw-s 00000000 103:03 4326421                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/prefix2id.dat
+7ec7b9800000-7ec7ba000000 rw-s 00000000 103:03 4326406                   /home/issa/Thesis/Datasets/dbpedia/2016-10/all/prefix2id.idn
+7ec7ba000000-7ec7ba200000 rw-p 00000000 00:00 0 
+7ec7ba200000-7ec7ba400000 rw-p 00000000 00:00 0 
+7ec7ba400000-7ec7ba600000 rw-p 00000000 00:00 0 
+7ec7ba600000-7eca38000000 rw-p 00000000 00:00 0 
+7eca38000000-7eca38cb8000 rw-p 00000000 00:00 0 
+7eca38cb8000-7eca3c000000 ---p 00000000 00:00 0 
+7eca3c000000-7eca3cbb0000 rw-p 00000000 00:00 0 
+7eca3cbb0000-7eca40000000 ---p 00000000 00:00 0 
+7eca40000000-7eca41038000 rw-p 00000000 00:00 0 
+7eca41038000-7eca44000000 ---p 00000000 00:00 0 
+7eca44000000-7eca4484b000 rw-p 00000000 00:00 0 
+7eca4484b000-7eca48000000 ---p 00000000 00:00 0 
+7eca48000000-7eca48ada000 rw-p 00000000 00:00 0 
+7eca48ada000-7eca4c000000 ---p 00000000 00:00 0 
+7eca4c180000-7eca4c184000 r--s 00055000 103:03 394597                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/jsse.jar
+7eca4c184000-7eca4c187000 ---p 00000000 00:00 0 
+7eca4c187000-7eca4c1bd000 rw-p 00000000 00:00 0 
+7eca4c1bd000-7eca4c1c0000 ---p 00000000 00:00 0 
+7eca4c1c0000-7eca4c3f6000 rw-p 00000000 00:00 0 
+7eca4c3f6000-7eca4c409000 r--s 00102000 103:03 394611                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/resources.jar
+7eca4c409000-7eca4c41a000 r-xp 00000000 103:03 394544                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libnio.so
+7eca4c41a000-7eca4c619000 ---p 00011000 103:03 394544                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libnio.so
+7eca4c619000-7eca4c61a000 r--p 00010000 103:03 394544                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libnio.so
+7eca4c61a000-7eca4c61b000 rw-p 00011000 103:03 394544                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libnio.so
+7eca4c61b000-7eca4c81b000 rw-p 00000000 00:00 0 
+7eca4c81b000-7eca4c81e000 ---p 00000000 00:00 0 
+7eca4c81e000-7eca4c91c000 rw-p 00000000 00:00 0 
+7eca4c91c000-7eca4c937000 r--s 001d6000 103:03 394578                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/ext/nashorn.jar
+7eca4c937000-7eca4c96c000 r--s 00000000 00:14 17621                      /run/nscd/dbDIjTe6 (deleted)
+7eca4c96c000-7eca4c982000 r-xp 00000000 103:03 394543                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libnet.so
+7eca4c982000-7eca4cb81000 ---p 00016000 103:03 394543                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libnet.so
+7eca4cb81000-7eca4cb82000 r--p 00015000 103:03 394543                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libnet.so
+7eca4cb82000-7eca4cb83000 rw-p 00016000 103:03 394543                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libnet.so
+7eca4cb83000-7eca4cd83000 rw-p 00000000 00:00 0 
+7eca4cd83000-7eca4cf83000 rw-p 00000000 00:00 0 
+7eca4cf83000-7eca4cf8e000 r--s 0011c000 103:03 394576                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/ext/localedata.jar
+7eca4cf8e000-7eca4cfa9000 r--s 003b7000 103:03 394571                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/ext/cldrdata.jar
+7eca4cfa9000-7eca4cfb1000 r-xp 00000000 103:03 394541                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libmanagement.so
+7eca4cfb1000-7eca4d1b1000 ---p 00008000 103:03 394541                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libmanagement.so
+7eca4d1b1000-7eca4d1b2000 r--p 00008000 103:03 394541                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libmanagement.so
+7eca4d1b2000-7eca4d1b3000 rw-p 00009000 103:03 394541                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libmanagement.so
+7eca4d1b3000-7eca4d1b7000 r--s 005e4000 103:03 4198880                   /home/issa/.m2/repository/org/xerial/sqlite-jdbc/3.18.0/sqlite-jdbc-3.18.0.jar
+7eca4d1b7000-7eca4d1c2000 r--s 000b6000 103:03 4205475                   /home/issa/.m2/repository/org/tinyjee/jgraphx/jgraphx/3.4.1.3/jgraphx-3.4.1.3.jar
+7eca4d1c2000-7eca4d1c7000 r--s 00033000 103:03 4200729                   /home/issa/.m2/repository/org/apache/logging/log4j/log4j-api/2.8.1/log4j-api-2.8.1.jar
+7eca4d1c7000-7eca4d1e3000 r--s 0013b000 103:03 4200727                   /home/issa/.m2/repository/org/apache/logging/log4j/log4j-core/2.8.1/log4j-core-2.8.1.jar
+7eca4d1e3000-7eca4d1ec000 r--s 00078000 103:03 4205473                   /home/issa/.m2/repository/org/apache/jena/jena-tdb/3.3.0/jena-tdb-3.3.0.jar
+7eca4d1ec000-7eca4d1f3000 r--s 00064000 103:03 4203746                   /home/issa/.m2/repository/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.jar
+7eca4d1f3000-7eca4d1f9000 r--s 00034000 103:03 4203740                   /home/issa/.m2/repository/org/apache/thrift/libthrift/0.9.3/libthrift-0.9.3.jar
+7eca4d1f9000-7eca4d1fc000 r--s 00024000 103:03 4203738                   /home/issa/.m2/repository/org/apache/httpcomponents/httpclient-cache/4.5.2/httpclient-cache-4.5.2.jar
+7eca4d1fc000-7eca4d200000 r--s 0002f000 103:03 4203736                   /home/issa/.m2/repository/commons-io/commons-io/2.5/commons-io-2.5.jar
+7eca4d200000-7eca4d203000 r--s 0000a000 103:03 4203734                   /home/issa/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.7.0/jackson-annotations-2.7.0.jar
+7eca4d203000-7eca4d214000 r--s 00115000 103:03 4203732                   /home/issa/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.7.4/jackson-databind-2.7.4.jar
+7eca4d214000-7eca4d217000 r--s 0003b000 103:03 4203730                   /home/issa/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar
+7eca4d217000-7eca4d21e000 r--s 0003a000 103:03 4203726                   /home/issa/.m2/repository/commons-codec/commons-codec/1.9/commons-codec-1.9.jar
+7eca4d21e000-7eca4d225000 r--s 00049000 103:03 4203724                   /home/issa/.m2/repository/org/apache/httpcomponents/httpcore/4.4.4/httpcore-4.4.4.jar
+7eca4d225000-7eca4d232000 r--s 000a7000 103:03 4203722                   /home/issa/.m2/repository/org/apache/httpcomponents/httpclient/4.5.2/httpclient-4.5.2.jar
+7eca4d232000-7eca4d26a000 r--s 0024e000 103:03 4205471                   /home/issa/.m2/repository/org/apache/jena/jena-shaded-guava/3.3.0/jena-shaded-guava-3.3.0.jar
+7eca4d26a000-7eca4d29e000 r--s 0028d000 103:03 4205469                   /home/issa/.m2/repository/org/apache/jena/jena-arq/3.3.0/jena-arq-3.3.0.jar
+7eca4d29e000-7eca4d2c4000 r--p 00000000 103:03 4591739                   /usr/share/locale/fr/LC_MESSAGES/libc.mo
+7eca4d2c4000-7eca4d2c5000 ---p 00000000 00:00 0 
+7eca4d2c5000-7eca4d3c5000 rw-p 00000000 00:00 0 
+7eca4d3c5000-7eca4d3c8000 ---p 00000000 00:00 0 
+7eca4d3c8000-7eca4d4c6000 rw-p 00000000 00:00 0 
+7eca4d4c6000-7eca4d4c9000 ---p 00000000 00:00 0 
+7eca4d4c9000-7eca4d5c7000 rw-p 00000000 00:00 0 
+7eca4d5c7000-7eca4d5ca000 ---p 00000000 00:00 0 
+7eca4d5ca000-7eca4d6c8000 rw-p 00000000 00:00 0 
+7eca4d6c8000-7eca4d6cb000 ---p 00000000 00:00 0 
+7eca4d6cb000-7eca4d7c9000 rw-p 00000000 00:00 0 
+7eca4d7c9000-7eca4d7cc000 ---p 00000000 00:00 0 
+7eca4d7cc000-7eca4d8ca000 rw-p 00000000 00:00 0 
+7eca4d8ca000-7eca4d8cd000 ---p 00000000 00:00 0 
+7eca4d8cd000-7eca4d9cb000 rw-p 00000000 00:00 0 
+7eca4d9cb000-7eca4da0f000 r--p 00000000 103:03 264182                    /usr/lib/locale/fr_FR.utf8/LC_CTYPE
+7eca4da0f000-7eca4db3f000 r--p 00000000 103:03 264187                    /usr/lib/locale/fr_FR.utf8/LC_COLLATE
+7eca4db3f000-7eca4db42000 ---p 00000000 00:00 0 
+7eca4db42000-7eca4dc40000 rw-p 00000000 00:00 0 
+7eca4dc40000-7eca4dc43000 ---p 00000000 00:00 0 
+7eca4dc43000-7eca4dd41000 rw-p 00000000 00:00 0 
+7eca4dd41000-7eca4dd42000 ---p 00000000 00:00 0 
+7eca4dd42000-7eca50000000 rw-p 00000000 00:00 0 
+7eca50000000-7eca505bf000 rw-p 00000000 00:00 0 
+7eca505bf000-7eca54000000 ---p 00000000 00:00 0 
+7eca54000000-7eca54844000 rw-p 00000000 00:00 0 
+7eca54844000-7eca58000000 ---p 00000000 00:00 0 
+7eca58000000-7eca58761000 rw-p 00000000 00:00 0 
+7eca58761000-7eca5c000000 ---p 00000000 00:00 0 
+7eca5c002000-7eca5c007000 r--s 00023000 103:03 4203716                   /home/issa/.m2/repository/com/github/andrewoma/dexx/collection/0.6/collection-0.6.jar
+7eca5c007000-7eca5c2b9000 rw-p 00000000 00:00 0 
+7eca5c2b9000-7eca5c487000 r--s 01f3c000 103:03 394612                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/rt.jar
+7eca5c487000-7eca5dbf7000 rw-p 00000000 00:00 0 
+7eca5dbf7000-7eca5dbf8000 ---p 00000000 00:00 0 
+7eca5dbf8000-7eca5dcf8000 rw-p 00000000 00:00 0 
+7eca5dcf8000-7eca5dcf9000 ---p 00000000 00:00 0 
+7eca5dcf9000-7eca5ddf9000 rw-p 00000000 00:00 0 
+7eca5ddf9000-7eca5ddfa000 ---p 00000000 00:00 0 
+7eca5ddfa000-7eca5defa000 rw-p 00000000 00:00 0 
+7eca5defa000-7eca5defb000 ---p 00000000 00:00 0 
+7eca5defb000-7eca5dffb000 rw-p 00000000 00:00 0 
+7eca5dffb000-7eca5dffc000 ---p 00000000 00:00 0 
+7eca5dffc000-7eca5e0fc000 rw-p 00000000 00:00 0 
+7eca5e0fc000-7eca5e0fd000 ---p 00000000 00:00 0 
+7eca5e0fd000-7eca5e1fd000 rw-p 00000000 00:00 0 
+7eca5e1fd000-7eca5e1fe000 ---p 00000000 00:00 0 
+7eca5e1fe000-7eca5e2fe000 rw-p 00000000 00:00 0 
+7eca5e2fe000-7eca5e2ff000 ---p 00000000 00:00 0 
+7eca5e2ff000-7eca5f96a000 rw-p 00000000 00:00 0 
+7eca5f96a000-7eca773ff000 ---p 00000000 00:00 0 
+7eca773ff000-7eca7896a000 rw-p 00000000 00:00 0 
+7eca7896a000-7eca903ff000 ---p 00000000 00:00 0 
+7eca903ff000-7eca928c2000 rw-p 00000000 00:00 0 
+7eca928c2000-7eca9cbff000 ---p 00000000 00:00 0 
+7eca9cbff000-7ecd4a200000 rw-p 00000000 00:00 0 
+7ecdf0200000-7efc9cc00000 ---p 00000000 00:00 0 
+7efc9cc00000-7f0135200000 rw-p 00000000 00:00 0 
+7f0135200000-7f159cc00000 ---p 00000000 00:00 0 
+7f159cc00000-7f159cc01000 rw-p 00000000 00:00 0 
+7f159cc01000-7f159cc06000 r--s 00031000 103:03 4205467                   /home/issa/.m2/repository/org/apache/jena/jena-base/3.3.0/jena-base-3.3.0.jar
+7f159cc06000-7f159cc1f000 r--s 00135000 103:03 4203708                   /home/issa/.m2/repository/xerces/xercesImpl/2.11.0/xercesImpl-2.11.0.jar
+7f159cc1f000-7f159cc70000 rw-p 00000000 00:00 0 
+7f159cc70000-7f159d000000 ---p 00000000 00:00 0 
+7f159d000000-7f159dc00000 rwxp 00000000 00:00 0 
+7f159dc00000-7f15ac000000 ---p 00000000 00:00 0 
+7f15ac000000-7f15ac98e000 rw-p 00000000 00:00 0 
+7f15ac98e000-7f15b0000000 ---p 00000000 00:00 0 
+7f15b0000000-7f15b0001000 r--s 00005000 103:03 4203750                   /home/issa/.m2/repository/org/apache/logging/log4j/log4j-slf4j-impl/2.8.1/log4j-slf4j-impl-2.8.1.jar
+7f15b0001000-7f15b0004000 r--s 0001c000 103:03 4203728                   /home/issa/.m2/repository/com/github/jsonld-java/jsonld-java/0.9.0/jsonld-java-0.9.0.jar
+7f15b0004000-7f15b000d000 r--s 0002d000 103:03 4203710                   /home/issa/.m2/repository/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.jar
+7f15b000d000-7f15b0083000 rw-p 00000000 00:00 0 
+7f15b0083000-7f15b008b000 r-xp 00000000 103:03 394551                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libzip.so
+7f15b008b000-7f15b028a000 ---p 00008000 103:03 394551                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libzip.so
+7f15b028a000-7f15b028b000 r--p 00007000 103:03 394551                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libzip.so
+7f15b028b000-7f15b028c000 rw-p 00008000 103:03 394551                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libzip.so
+7f15b028c000-7f15b02b8000 r-xp 00000000 103:03 402038                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libjava.so
+7f15b02b8000-7f15b04b7000 ---p 0002c000 103:03 402038                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libjava.so
+7f15b04b7000-7f15b04b8000 r--p 0002b000 103:03 402038                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libjava.so
+7f15b04b8000-7f15b04ba000 rw-p 0002c000 103:03 402038                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libjava.so
+7f15b04ba000-7f15b04c7000 r-xp 00000000 103:03 394550                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libverify.so
+7f15b04c7000-7f15b06c6000 ---p 0000d000 103:03 394550                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libverify.so
+7f15b06c6000-7f15b06c8000 r--p 0000c000 103:03 394550                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libverify.so
+7f15b06c8000-7f15b06c9000 rw-p 0000e000 103:03 394550                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/libverify.so
+7f15b06c9000-7f15b06d0000 r-xp 00000000 103:03 655403                    /lib64/librt-2.22.so
+7f15b06d0000-7f15b08cf000 ---p 00007000 103:03 655403                    /lib64/librt-2.22.so
+7f15b08cf000-7f15b08d0000 r--p 00006000 103:03 655403                    /lib64/librt-2.22.so
+7f15b08d0000-7f15b08d1000 rw-p 00007000 103:03 655403                    /lib64/librt-2.22.so
+7f15b08d1000-7f15b08e7000 r-xp 00000000 103:03 659549                    /lib64/libgcc_s.so.1
+7f15b08e7000-7f15b0ae6000 ---p 00016000 103:03 659549                    /lib64/libgcc_s.so.1
+7f15b0ae6000-7f15b0ae7000 r--p 00015000 103:03 659549                    /lib64/libgcc_s.so.1
+7f15b0ae7000-7f15b0ae8000 rw-p 00016000 103:03 659549                    /lib64/libgcc_s.so.1
+7f15b0ae8000-7f15b0be4000 r-xp 00000000 103:03 655377                    /lib64/libm-2.22.so
+7f15b0be4000-7f15b0de3000 ---p 000fc000 103:03 655377                    /lib64/libm-2.22.so
+7f15b0de3000-7f15b0de4000 r--p 000fb000 103:03 655377                    /lib64/libm-2.22.so
+7f15b0de4000-7f15b0de5000 rw-p 000fc000 103:03 655377                    /lib64/libm-2.22.so
+7f15b0de5000-7f15b0f5e000 r-xp 00000000 103:03 4727464                   /usr/lib64/libstdc++.so.6.0.22
+7f15b0f5e000-7f15b115e000 ---p 00179000 103:03 4727464                   /usr/lib64/libstdc++.so.6.0.22
+7f15b115e000-7f15b1168000 r--p 00179000 103:03 4727464                   /usr/lib64/libstdc++.so.6.0.22
+7f15b1168000-7f15b116a000 rw-p 00183000 103:03 4727464                   /usr/lib64/libstdc++.so.6.0.22
+7f15b116a000-7f15b116e000 rw-p 00000000 00:00 0 
+7f15b116e000-7f15b1c82000 r-xp 00000000 103:03 394556                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/server/libjvm.so
+7f15b1c82000-7f15b1e81000 ---p 00b14000 103:03 394556                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/server/libjvm.so
+7f15b1e81000-7f15b1f20000 r--p 00b13000 103:03 394556                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/server/libjvm.so
+7f15b1f20000-7f15b1f49000 rw-p 00bb2000 103:03 394556                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/server/libjvm.so
+7f15b1f49000-7f15b1f79000 rw-p 00000000 00:00 0 
+7f15b1f79000-7f15b1f91000 r-xp 00000000 103:03 655399                    /lib64/libpthread-2.22.so
+7f15b1f91000-7f15b2190000 ---p 00018000 103:03 655399                    /lib64/libpthread-2.22.so
+7f15b2190000-7f15b2191000 r--p 00017000 103:03 655399                    /lib64/libpthread-2.22.so
+7f15b2191000-7f15b2192000 rw-p 00018000 103:03 655399                    /lib64/libpthread-2.22.so
+7f15b2192000-7f15b2196000 rw-p 00000000 00:00 0 
+7f15b2196000-7f15b2198000 r-xp 00000000 103:03 655375                    /lib64/libdl-2.22.so
+7f15b2198000-7f15b2398000 ---p 00002000 103:03 655375                    /lib64/libdl-2.22.so
+7f15b2398000-7f15b2399000 r--p 00002000 103:03 655375                    /lib64/libdl-2.22.so
+7f15b2399000-7f15b239a000 rw-p 00003000 103:03 655375                    /lib64/libdl-2.22.so
+7f15b239a000-7f15b23af000 r-xp 00000000 103:03 655413                    /lib64/libz.so.1.2.8
+7f15b23af000-7f15b25ae000 ---p 00015000 103:03 655413                    /lib64/libz.so.1.2.8
+7f15b25ae000-7f15b25af000 r--p 00014000 103:03 655413                    /lib64/libz.so.1.2.8
+7f15b25af000-7f15b25b0000 rw-p 00015000 103:03 655413                    /lib64/libz.so.1.2.8
+7f15b25b0000-7f15b2749000 r-xp 00000000 103:03 655369                    /lib64/libc-2.22.so
+7f15b2749000-7f15b2949000 ---p 00199000 103:03 655369                    /lib64/libc-2.22.so
+7f15b2949000-7f15b294d000 r--p 00199000 103:03 655369                    /lib64/libc-2.22.so
+7f15b294d000-7f15b294f000 rw-p 0019d000 103:03 655369                    /lib64/libc-2.22.so
+7f15b294f000-7f15b2953000 rw-p 00000000 00:00 0 
+7f15b2953000-7f15b2960000 r-xp 00000000 103:03 394517                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/jli/libjli.so
+7f15b2960000-7f15b2b60000 ---p 0000d000 103:03 394517                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/jli/libjli.so
+7f15b2b60000-7f15b2b61000 r--p 0000d000 103:03 394517                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/jli/libjli.so
+7f15b2b61000-7f15b2b62000 rw-p 0000e000 103:03 394517                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64/jli/libjli.so
+7f15b2b62000-7f15b2b83000 r-xp 00000000 103:03 655414                    /lib64/ld-2.22.so
+7f15b2b83000-7f15b2b85000 r--s 00003000 103:03 4203742                   /home/issa/.m2/repository/org/slf4j/jcl-over-slf4j/1.7.21/jcl-over-slf4j-1.7.21.jar
+7f15b2b85000-7f15b2b9f000 r--s 00141000 103:03 4205463                   /home/issa/.m2/repository/org/apache/jena/jena-core/3.3.0/jena-core-3.3.0.jar
+7f15b2b9f000-7f15b2c22000 rw-p 00000000 00:00 0 
+7f15b2c22000-7f15b2c57000 r--s 00000000 00:14 17619                      /run/nscd/passwd
+7f15b2c57000-7f15b2c5a000 ---p 00000000 00:00 0 
+7f15b2c5a000-7f15b2d5d000 rw-p 00000000 00:00 0 
+7f15b2d5d000-7f15b2d5e000 r--s 00009000 103:03 4203744                   /home/issa/.m2/repository/org/apache/commons/commons-csv/1.3/commons-csv-1.3.jar
+7f15b2d5e000-7f15b2d5f000 r--s 0000c000 103:03 4203712                   /home/issa/.m2/repository/commons-cli/commons-cli/1.3/commons-cli-1.3.jar
+7f15b2d5f000-7f15b2d61000 r--s 00020000 103:03 4205465                   /home/issa/.m2/repository/org/apache/jena/jena-iri/3.3.0/jena-iri-3.3.0.jar
+7f15b2d61000-7f15b2d63000 r--s 00009000 103:03 4203704                   /home/issa/.m2/repository/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21.jar
+7f15b2d63000-7f15b2d66000 r--s 0000f000 103:03 394574                    /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/ext/icedtea-sound.jar
+7f15b2d66000-7f15b2d67000 r--p 00000000 103:03 268860                    /usr/lib/locale/fr_FR.utf8/LC_NUMERIC
+7f15b2d67000-7f15b2d68000 r--p 00000000 103:03 268704                    /usr/lib/locale/fr_FR.utf8/LC_TIME
+7f15b2d68000-7f15b2d69000 r--p 00000000 103:03 268859                    /usr/lib/locale/fr_FR.utf8/LC_MONETARY
+7f15b2d69000-7f15b2d6a000 r--p 00000000 103:03 264246                    /usr/lib/locale/fr_FR.utf8/LC_MESSAGES/SYS_LC_MESSAGES
+7f15b2d6a000-7f15b2d6b000 r--p 00000000 103:03 264185                    /usr/lib/locale/fr_FR.utf8/LC_PAPER
+7f15b2d6b000-7f15b2d6c000 r--p 00000000 103:03 264210                    /usr/lib/locale/fr_FR.utf8/LC_NAME
+7f15b2d6c000-7f15b2d6d000 r--p 00000000 103:03 262370                    /usr/lib/locale/fr_FR.utf8/LC_ADDRESS
+7f15b2d6d000-7f15b2d6e000 r--p 00000000 103:03 268861                    /usr/lib/locale/fr_FR.utf8/LC_TELEPHONE
+7f15b2d6e000-7f15b2d6f000 r--p 00000000 103:03 268706                    /usr/lib/locale/fr_FR.utf8/LC_MEASUREMENT
+7f15b2d6f000-7f15b2d76000 r--s 00000000 103:03 4732539                   /usr/lib64/gconv/gconv-modules.cache
+7f15b2d76000-7f15b2d77000 r--p 00000000 103:03 268703                    /usr/lib/locale/fr_FR.utf8/LC_IDENTIFICATION
+7f15b2d77000-7f15b2d7f000 rw-s 00000000 103:03 4906502                   /tmp/hsperfdata_issa/11375
+7f15b2d7f000-7f15b2d80000 rw-p 00000000 00:00 0 
+7f15b2d80000-7f15b2d81000 ---p 00000000 00:00 0 
+7f15b2d81000-7f15b2d82000 rw-p 00000000 00:00 0 
+7f15b2d82000-7f15b2d83000 r--p 00020000 103:03 655414                    /lib64/ld-2.22.so
+7f15b2d83000-7f15b2d84000 rw-p 00021000 103:03 655414                    /lib64/ld-2.22.so
+7f15b2d84000-7f15b2d85000 rw-p 00000000 00:00 0 
+7ffebb2d4000-7ffebb2f6000 rw-p 00000000 00:00 0                          [stack]
+7ffebb33f000-7ffebb342000 r--p 00000000 00:00 0                          [vvar]
+7ffebb342000-7ffebb344000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+
+VM Arguments:
+jvm_args: -Xmx300G -Dfile.encoding=UTF-8 
+java_command: linked_itemset_4.Main
+java_class_path (initial): /home/issa/workspace/linked_itemset_4/target/classes:/home/issa/.m2/repository/org/apache/jena/jena-core/3.3.0/jena-core-3.3.0.jar:/home/issa/.m2/repository/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21.jar:/home/issa/.m2/repository/org/apache/jena/jena-iri/3.3.0/jena-iri-3.3.0.jar:/home/issa/.m2/repository/xerces/xercesImpl/2.11.0/xercesImpl-2.11.0.jar:/home/issa/.m2/repository/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.jar:/home/issa/.m2/repository/commons-cli/commons-cli/1.3/commons-cli-1.3.jar:/home/issa/.m2/repository/org/apache/jena/jena-base/3.3.0/jena-base-3.3.0.jar:/home/issa/.m2/repository/com/github/andrewoma/dexx/collection/0.6/collection-0.6.jar:/home/issa/.m2/repository/org/apache/jena/jena-arq/3.3.0/jena-arq-3.3.0.jar:/home/issa/.m2/repository/org/apache/jena/jena-shaded-guava/3.3.0/jena-shaded-guava-3.3.0.jar:/home/issa/.m2/repository/org/apache/httpcomponents/httpclient/4.5.2/httpclient-4.5.2.jar:/home/issa/.m2/repository/org/apache/httpcomponents/httpcore/4.4.4/httpcore-4.4.4.jar:/home/issa/.m2/repository/commons-codec/commons-codec/1.9/commons-codec-1.9.jar:/home/issa/.m2/repository/com/github/jsonld-java/jsonld-java/0.9.0/jsonld-java-0.9.0.jar:/home/issa/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar:/home/issa/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.7.4/jackson-databind-2.7.4.jar:/home/issa/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.7.0/jackson-annotations-2.7.0.jar:/home/issa/.m2/repository/commons-io/commons-io/2.5/commons-io-2.5.jar:/home/issa/.m2/repository/org/apache/httpcomponents/httpclient-cache/4.5.2/httpclient-cache-4.5.2.jar:/home/issa/.m2/repository/org/apache/thrift/libthrift/0.9.3/libthrift-0.9.3.jar:/home/issa/.m2/repository/org/slf4j/jcl-over-slf4j/1.7.21/jcl-over-slf4j-1.7.21.jar:/home/issa/.m2/repository/org/apache/commons/commons-csv/1.3/commons-csv-1.3.jar:/home/issa/.m2/repository/org/apache/commons/commons-lang3/3.4/commo
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=/usr/lib64/jvm/jre
+JRE_HOME=/usr/lib64/jvm/jre
+PATH=/home/issa/bin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games
+SHELL=/bin/bash
+DISPLAY=:0
+HOSTTYPE=x86_64
+OSTYPE=linux
+MACHTYPE=x86_64-suse-linux
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0x920770], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGBUS: [libjvm.so+0x920770], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGFPE: [libjvm.so+0x7b93a0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGPIPE: [libjvm.so+0x7b93a0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGXFSZ: [libjvm.so+0x7b93a0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGILL: [libjvm.so+0x7b93a0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGUSR1: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+SIGUSR2: [libjvm.so+0x7b90f0], sa_mask[0]=00100000000000000000000000000000, sa_flags=SA_RESTART|SA_SIGINFO
+SIGHUP: [libjvm.so+0x7b9640], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGINT: [libjvm.so+0x7b9640], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGTERM: [libjvm.so+0x7b9640], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGQUIT: [libjvm.so+0x7b9640], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+
+
+---------------  S Y S T E M  ---------------
+
+OS:openSUSE 42.2 (x86_64)
+VERSION = 42.2
+CODENAME = Malachite
+# /etc/SuSE-release is deprecated and will be removed in the future, use /etc/os-release instead
+
+uname:Linux 4.4.73-18.17-default #1 SMP Fri Jun 23 20:25:06 UTC 2017 (f462a66) x86_64
+libc:glibc 2.22 NPTL 2.22 
+rlimit: STACK 8192k, CORE 0k, NPROC 1200, NOFILE 4096, AS infinity
+load average:8,52 8,25 6,21
+
+/proc/meminfo:
+MemTotal:       16281996 kB
+MemFree:          150156 kB
+MemAvailable:      41700 kB
+Buffers:             836 kB
+Cached:           105680 kB
+SwapCached:        67596 kB
+Active:         14073524 kB
+Inactive:        1734592 kB
+Active(anon):   14041492 kB
+Inactive(anon):  1704852 kB
+Active(file):      32032 kB
+Inactive(file):    29740 kB
+Unevictable:          96 kB
+Mlocked:              96 kB
+SwapTotal:      16786428 kB
+SwapFree:         357784 kB
+Dirty:                40 kB
+Writeback:             0 kB
+AnonPages:      15635700 kB
+Mapped:            38936 kB
+Shmem:             42792 kB
+Slab:             115912 kB
+SReclaimable:      55612 kB
+SUnreclaim:        60300 kB
+KernelStack:       12640 kB
+PageTables:       106324 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:    24927424 kB
+Committed_AS:   48622788 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:           0 kB
+VmallocChunk:          0 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:    301056 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:      266448 kB
+DirectMap2M:    14264320 kB
+DirectMap1G:     3145728 kB
+
+
+CPU:total 8 (initial active 8) (4 cores per cpu, 2 threads per core) family 6 model 94 stepping 3, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, clmul, erms, rtm, 3dnowpref, lzcnt, ht, tsc, tscinvbit, bmi1, bmi2, adx
+
+/proc/cpuinfo:
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 94
+model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0xba
+cpu MHz		: 3868.511
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch ida arat epb pln pts dtherm hwp hwp_notify hwp_act_window hwp_epp intel_pt tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt xsaveopt xsavec xgetbv1
+bugs		:
+bogomips	: 6816.61
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 94
+model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0xba
+cpu MHz		: 3770.097
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch ida arat epb pln pts dtherm hwp hwp_notify hwp_act_window hwp_epp intel_pt tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt xsaveopt xsavec xgetbv1
+bugs		:
+bogomips	: 6816.61
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 94
+model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0xba
+cpu MHz		: 3871.497
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 4
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch ida arat epb pln pts dtherm hwp hwp_notify hwp_act_window hwp_epp intel_pt tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt xsaveopt xsavec xgetbv1
+bugs		:
+bogomips	: 6816.61
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 94
+model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0xba
+cpu MHz		: 3797.538
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 6
+initial apicid	: 6
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch ida arat epb pln pts dtherm hwp hwp_notify hwp_act_window hwp_epp intel_pt tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt xsaveopt xsavec xgetbv1
+bugs		:
+bogomips	: 6816.61
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 4
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 94
+model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0xba
+cpu MHz		: 3781.578
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch ida arat epb pln pts dtherm hwp hwp_notify hwp_act_window hwp_epp intel_pt tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt xsaveopt xsavec xgetbv1
+bugs		:
+bogomips	: 6816.61
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 5
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 94
+model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0xba
+cpu MHz		: 3782.121
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch ida arat epb pln pts dtherm hwp hwp_notify hwp_act_window hwp_epp intel_pt tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt xsaveopt xsavec xgetbv1
+bugs		:
+bogomips	: 6816.61
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 6
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 94
+model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0xba
+cpu MHz		: 3850.408
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 5
+initial apicid	: 5
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch ida arat epb pln pts dtherm hwp hwp_notify hwp_act_window hwp_epp intel_pt tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt xsaveopt xsavec xgetbv1
+bugs		:
+bogomips	: 6816.61
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 7
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 94
+model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0xba
+cpu MHz		: 3783.576
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 7
+initial apicid	: 7
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch ida arat epb pln pts dtherm hwp hwp_notify hwp_act_window hwp_epp intel_pt tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt xsaveopt xsavec xgetbv1
+bugs		:
+bogomips	: 6816.61
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+
+
+Memory: 4k page, physical 16281996k(153016k free), swap 16786428k(357528k free)
+
+vm_info: OpenJDK 64-Bit Server VM (25.131-b11) for linux-amd64 JRE (1.8.0_131-b11), built on Jun 17 2017 16:32:44 by "abuild" with gcc 4.8.5
+
+time: Wed Jul 12 11:04:54 2017
+elapsed time: 1520 seconds (0d 0h 25m 20s)
+

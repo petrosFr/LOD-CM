@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    </Console>
+    <!-- <File name="File" fileName="logs/log.log">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    </File> -->
+    <!-- <RollingFile name="RollingFile" fileName="logs/app.log"
+                 filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+      <Policies>
+        <TimeBasedTriggeringPolicy />
+        <SizeBasedTriggeringPolicy size="250 MB"/>
+      </Policies>
+    </RollingFile> -->
+    <RollingFile name="RollingFile" fileName="logs/app.log" immediateFlush="false"
+                 filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+        <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        <Policies>
+            <!-- <TimeBasedTriggeringPolicy /> -->
+            <OnStartupTriggeringPolicy />
+        </Policies>
+    </RollingFile>
+    <Async name="Async">
+        <AppenderRef ref="RollingFile"/>
+    </Async>
+  </Appenders>
+  <Loggers>
+  	<!-- <Logger name="fr.cnam.ph" level="info">
+      <AppenderRef ref="Console"/>
+    </Logger> -->
+  	<Logger name="fr.cnam.ph" level="info" additivity="false">
+      <AppenderRef ref="Async" level="info"/>
+      <AppenderRef ref="Console" level="info"/>
+    </Logger>
+  	<!-- <Logger name="fr.cnam.ph" level="info" additivity="false">
+      <AppenderRef ref="Console"/>
+    </Logger> -->
+    <Root level="error">
+      <AppenderRef ref="Console"/>
+      <AppenderRef ref="Async"/>
+    </Root>
+  </Loggers>
+</Configuration>
