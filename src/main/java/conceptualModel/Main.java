@@ -49,120 +49,146 @@ public class Main {
 		}
 		String classname = args[0];
 		String threshold = args[1];
-//		 String classname = "Film";
-//		 String threshold = "90";
+		String datasetName = args.length > 2 ? args[3] : null;
+		// String classname = "Film";
+		// String threshold = "90";
 
 		String rootPath = "/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/itemsets/";
 		String set = "dbpedia/2016-10/";
+		
+		String dbpediaHDTPath = "/srv/www/htdocs/demo_conception/dataset.hdt";
+		String instanceType = "http://dbpedia.org/ontology/" + instanceType;
+		String wikidataHDTPath = "/srv/www/htdocs/demo_conception/wikidata.hdt";
+		String hdtPath = dbpediaHDTPath;
+		if (datasetName != null) {
+			if (datasetName == "Wikidata") {
+				hdtPath = wikidataHDTPath;
+				// We have to search for Wikidata equivalent class since
+				// the interface present only DBpedia classes.
+				// TODO: we can make it quicker by creatling a file
+				// containing all pair of classes such as each line is:
+				// DBpedia_Class Wikiadata_Equivalent_Class
+				try (HDT hdt = HDTManager.loadHDT(hdtPath, null)) {
+					IteratorTripleString it = hdt.search(instanceType, "http://www.w3.org/2002/07/owl#equivalentClass", "");
+					while (it.hasNext()) {
+						TripleString ts = it.next();
+						String wikidataInstanceType = ts.getObject().toString();
+						instanceType = wikidataInstanceType;
+					}
+				}				 
+			}
+		}
 
-		try (HDT hdt = HDTManager
-				.loadHDT("/srv/www/htdocs/demo_conception/dataset.hdt", null)) {
+		try (HDT hdt = HDTManager.loadHDT(hdtPath, null)) {
 
 			String ItemHashmap = "";
 			String TransactionSP = "";
 			int numTrans = 0;
 
-				List<String> subjects = new ArrayList<>();
-				List<String> transactions = new ArrayList<>();
-				List<String> itemHashMap = new ArrayList<>();
-				HashMap<String, String> finalMap1 = new HashMap<String, String>();
-				int item = 0;
+			List<String> subjects = new ArrayList<>();
+			List<String> transactions = new ArrayList<>();
+			List<String> itemHashMap = new ArrayList<>();
+			HashMap<String, String> finalMap1 = new HashMap<String, String>();
+			int item = 0;
 
-				String instanceType = classname;
-				String folderPath = rootPath + set + classname;
+			// String instanceType = classname;
+			String folderPath = rootPath + set + classname;
 
-				File tmpFolder = new File(folderPath);
+			File tmpFolder = new File(folderPath);
 
-				if (!tmpFolder.exists())
-					tmpFolder.mkdirs();
+			if (!tmpFolder.exists())
+				tmpFolder.mkdirs();
 
+			IteratorTripleString it = hdt.search("", "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+					"");
+			Set<String> subjectsTmp = new HashSet<>();
+			while (it.hasNext()) {
+				TripleString ts = it.next();
+				String s = ts.getSubject().toString();
+				subjectsTmp.add(s);
+			}
 
-				IteratorTripleString it = hdt.search("", "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-						"http://dbpedia.org/ontology/" + instanceType);
-				Set<String> subjectsTmp = new HashSet<>();
-				while (it.hasNext()) {
-					TripleString ts = it.next();
-					String s = ts.getSubject().toString();
-					subjectsTmp.add(s);
+			final Map<String, Set<String>> predicatesBySubject = new ConcurrentHashMap<>();
+			subjectsTmp.parallelStream().forEach((subject) -> {
+				IteratorTripleString iter = null;
+				try {
+					iter = hdt.search(subject, "", "");
+				} catch (NotFoundException e) {
+					e.printStackTrace();
 				}
-
-				final Map<String, Set<String>> predicatesBySubject = new ConcurrentHashMap<>();
-				subjectsTmp.parallelStream().forEach((subject) -> {
-					IteratorTripleString iter = null;
-					try {
-						iter = hdt.search(subject, "", "");
-					} catch (NotFoundException e) {
-						e.printStackTrace();
-					}
-					Set<String> setTmp = new HashSet<>();
-					while (iter.hasNext()) {
-						TripleString ts = iter.next();
-						String p = ts.getPredicate().toString();
-						setTmp.add(p);
-					}
-					predicatesBySubject.put(subject, setTmp);
-				});
-
-				for (Entry<String, Set<String>> entry : predicatesBySubject.entrySet()) {
-					String transaction = "";
-
-					String subject = entry.getKey().toString();
-					Set<String> predicates = entry.getValue();
-					for (String predicate : predicates) {
-						if (finalMap1.containsKey(predicate))
-							transaction = transaction + finalMap1.get(predicate) + " ";
-						else {
-							item++;
-							finalMap1.put(predicate, Integer.toString(item));
-							transaction = transaction + finalMap1.get(predicate) + " ";
-							itemHashMap.add(item + " => " + predicate);
-						}
-					}
-					subjects.add(subject);
-					transactions.add(transaction);
-					numTrans++;
+				Set<String> setTmp = new HashSet<>();
+				while (iter.hasNext()) {
+					TripleString ts = iter.next();
+					String p = ts.getPredicate().toString();
+					setTmp.add(p);
 				}
+				predicatesBySubject.put(subject, setTmp);
+			});
 
-				ItemHashmap = folderPath + "/itemHashmap.txt";
-				Path fileItemHashmap = Paths.get(folderPath + "/itemHashmap.txt");
-				Files.write(fileItemHashmap, itemHashMap, Charset.forName("UTF-8"));
+			for (Entry<String, Set<String>> entry : predicatesBySubject.entrySet()) {
+				String transaction = "";
 
-				Path fileSubjects = Paths.get(folderPath + "/subjects.txt");
-				Files.write(fileSubjects, subjects, Charset.forName("UTF-8"));
+				String subject = entry.getKey().toString();
+				Set<String> predicates = entry.getValue();
+				for (String predicate : predicates) {
+					if (finalMap1.containsKey(predicate))
+						transaction = transaction + finalMap1.get(predicate) + " ";
+					else {
+						item++;
+						finalMap1.put(predicate, Integer.toString(item));
+						transaction = transaction + finalMap1.get(predicate) + " ";
+						itemHashMap.add(item + " => " + predicate);
+					}
+				}
+				subjects.add(subject);
+				transactions.add(transaction);
+				numTrans++;
+			}
 
-				TransactionSP = folderPath + "/transactions.txt";
-				Path fileTransactionSP = Paths.get(folderPath + "/transactions.txt");
-				Files.write(fileTransactionSP, transactions, Charset.forName("UTF-8"));
+			ItemHashmap = folderPath + "/itemHashmap.txt";
+			Path fileItemHashmap = Paths.get(folderPath + "/itemHashmap.txt");
+			Files.write(fileItemHashmap, itemHashMap, Charset.forName("UTF-8"));
 
-				// FPGrowth...
-				// Load a sequence database
-				String input = folderPath + "/transactions.txt";
-				String output = folderPath + "/fpgrowth_" + threshold + ".txt";
+			Path fileSubjects = Paths.get(folderPath + "/subjects.txt");
+			Files.write(fileSubjects, subjects, Charset.forName("UTF-8"));
 
-				// Create an instance of the algorithm
-				AlgoFPGrowth algo = new AlgoFPGrowth();
+			TransactionSP = folderPath + "/transactions.txt";
+			Path fileTransactionSP = Paths.get(folderPath + "/transactions.txt");
+			Files.write(fileTransactionSP, transactions, Charset.forName("UTF-8"));
 
-				// execute the algorithm
-				double ms = Integer.parseInt(threshold) / 100.0;
-				algo.runAlgorithm(input, output, ms);
+			// FPGrowth...
+			// Load a sequence database
+			String input = folderPath + "/transactions.txt";
+			String output = folderPath + "/fpgrowth_" + threshold + ".txt";
 
-				ItemHashmap = folderPath + "/itemHashmap.txt";
-				TransactionSP = folderPath + "/transactions.txt";
-				conceptualModel conceptual = new conceptualModel(hdt);
+			// Create an instance of the algorithm
+			AlgoFPGrowth algo = new AlgoFPGrowth();
 
-				conceptual.setPathFile(TransactionSP, output, ItemHashmap);
-				conceptual.CreateTxtFile(classname, threshold, numTrans);
+			// execute the algorithm
+			double ms = Integer.parseInt(threshold) / 100.0;
+			algo.runAlgorithm(input, output, ms);
 
-				File source = new File(
-						"/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt");
-				SourceFileReader readeruml = new SourceFileReader(source);
-				List<GeneratedImage> list = readeruml.getGeneratedImages();
+			ItemHashmap = folderPath + "/itemHashmap.txt";
+			TransactionSP = folderPath + "/transactions.txt";
+			conceptualModel conceptual = new conceptualModel(hdt);
+
+			conceptual.setPathFile(TransactionSP, output, ItemHashmap);
+			conceptual.CreateTxtFile(classname, threshold, numTrans);
+
+			File source = new File(
+					"/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt");
+			SourceFileReader readeruml = new SourceFileReader(source);
+			List<GeneratedImage> list = readeruml.getGeneratedImages();
 		}
-        String[] cmdScript;
-        if (Integer.parseInt(threshold)>80)
-        	cmdScript = new String[]{"/bin/bash", "/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/scriptApriori.sh",classname,threshold};
-        else
-        	cmdScript = new String[]{"/bin/bash", "/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/scriptFPgrowth.sh",classname,threshold}; 
+		String[] cmdScript;
+		if (Integer.parseInt(threshold) > 80)
+			cmdScript = new String[] { "/bin/bash",
+					"/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/scriptApriori.sh", classname,
+					threshold };
+		else
+			cmdScript = new String[] { "/bin/bash",
+					"/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/scriptFPgrowth.sh", classname,
+					threshold };
 		Process procScript = Runtime.getRuntime().exec(cmdScript);
 	}
 }
