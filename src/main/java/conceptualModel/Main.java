@@ -57,8 +57,8 @@ public class Main {
 		String set = "dbpedia/2016-10/";
 		
 		String dbpediaHDTPath = "/srv/www/htdocs/demo_conception/dataset.hdt";
-		String instanceType = "http://dbpedia.org/ontology/" + instanceType;
-		String wikidataHDTPath = "/srv/www/htdocs/demo_conception/wikidata.hdt";
+		String instanceType = "http://dbpedia.org/ontology/" + classname;
+		String wikidataHDTPath = "/data2/hamdif/doctorants/ph/linkeddatasets/hdt/wikidata/wikidata2018_09_11.hdt";
 		String hdtPath = dbpediaHDTPath;
 		if (datasetName != null) {
 			if (datasetName == "Wikidata") {
