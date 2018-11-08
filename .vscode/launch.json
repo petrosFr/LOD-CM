@@ -9,6 +9,17 @@
             "stopOnEntry": false,
             "mainClass": "conceptualModel.Main",
             "args": "",
+            "projectName": "linked_itemset_4"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Main",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "conceptualModel.Main",
+            "args": "",
             "projectName": "LOD-CM"
         }
     ]

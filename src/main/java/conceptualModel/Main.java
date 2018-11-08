@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -43,6 +45,7 @@ public class Main {
 
 	/// link
 	public static void main(String[] args) throws IOException, NotFoundException {
+		
 		if (args.length < 2) {
 			System.out.println("ERREUR IL MANQUE UN ARGUMENT");
 			System.exit(0);
@@ -58,9 +61,10 @@ public class Main {
 		
 		String dbpediaHDTPath = "/srv/www/htdocs/demo_conception/dataset.hdt";
 		String instanceType = "http://dbpedia.org/ontology/" + classname;
-		String wikidataHDTPath = "/data2/hamdif/doctorants/ph/linkeddatasets/hdt/wikidata/wikidata2018_09_11.hdt";
+		String wikidataHDTPath = "/srv/www/htdocs/demo_conception/wikidata2018_09_11.hdt";
 		String hdtPath = dbpediaHDTPath;
 		if (datasetName != null) {
+			logInformation("dataset name:" + datasetName);
 			if (datasetName == "Wikidata") {
 				hdtPath = wikidataHDTPath;
 				// We have to search for Wikidata equivalent class since
@@ -74,6 +78,7 @@ public class Main {
 						TripleString ts = it.next();
 						String wikidataInstanceType = ts.getObject().toString();
 						instanceType = wikidataInstanceType;
+						logInformation("new instance type name:" + instanceType);
 					}
 				}				 
 			}
@@ -190,5 +195,13 @@ public class Main {
 					"/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/scriptFPgrowth.sh", classname,
 					threshold };
 		Process procScript = Runtime.getRuntime().exec(cmdScript);
+	}
+
+	public static void logInformation(String s) throws IOException {
+		Files.write(
+			// Paths.get("log_information.txt"), 
+			Paths.get("/srv/www/htdocs/demo_conception/log_information.txt"), 
+			(s + "\n").getBytes(), 
+			new OpenOption[] {StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.APPEND});
 	}
 }
