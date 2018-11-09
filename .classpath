@@ -29,43 +29,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/subhi/spmf.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/collection-0.7.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/commons-cli-1.4.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/commons-codec-1.11.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/commons-compress-1.16.1.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/commons-csv-1.5.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/commons-io-2.6.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/commons-lang3-3.4.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/commons-math3-3.5.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/hdt-api-2.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/hdt-java-cli-2.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/hdt-java-core-2.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/hdt-jena-2.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/httpclient-4.5.3.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/httpclient-cache-4.5.3.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/httpcore-4.4.6.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/jackson-annotations-2.9.0.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/jackson-core-2.9.0.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/jackson-databind-2.9.0.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/jcl-over-slf4j-1.7.25.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/jcommander-1.72.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/jena-arq-3.7.0.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/jena-base-3.7.0.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/jena-core-3.7.0.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/jena-iri-3.7.0.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/jena-shaded-guava-3.7.0.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/JLargeArrays-1.6.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/jsonld-java-0.11.1.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/libthrift-0.10.0.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/logback-classic-1.2.3.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/logback-core-1.2.3.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/objenesis-2.6.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/slf4j-api-1.7.25.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/xercesImpl-2.11.0.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/xml-apis-1.4.01.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/hdt-java-master/hdt-java-package/target/hdt-java-package-2.1-SNAPSHOT-distribution/hdt-java-package-2.1-SNAPSHOT/lib/xz-1.6.jar"/>
-	<classpathentry kind="lib" path="/etudiants/deptinfo/p/pari_p1/dev/java/java-json.jar"/>
 	<!-- <classpathentry kind="lib" path="C:/google_drive/dev/java/lib/spmf.jar"/>
 	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/collection-0.7.jar"/>
 	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/commons-cli-1.4.jar"/>
@@ -101,18 +64,21 @@
 	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/xml-apis-1.4.01.jar"/>
 	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/xz-1.6.jar"/>
 	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/java-json.jar"/> -->
-	<classpathentry kind="src" output="target/test-classes" path="target/generated-test-sources/test-annotations">
+	<classpathentry kind="src" path="target/generated-sources/annotations">
 		<attributes>
 			<attribute name="optional" value="true"/>
-			<attribute name="test" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 			<attribute name="ignore_optional_problems" value="true"/>
 			<attribute name="m2e-apt" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="target/generated-sources/annotations">
+	<classpathentry kind="src" output="target/test-classes" path="target/generated-test-sources/test-annotations">
 		<attributes>
 			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="ignore_optional_problems" value="true"/>
+			<attribute name="m2e-apt" value="true"/>
+			<attribute name="test" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>

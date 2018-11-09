@@ -1,3 +1,4 @@
 /target/
 log_information.txt
 *.hdt
+install.sh
