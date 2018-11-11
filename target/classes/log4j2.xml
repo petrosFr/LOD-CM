@@ -4,8 +4,8 @@
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
     </Console>
-    <RollingFile name="RollingFile" fileName="/etudiants/deptinfo/p/pari_p1/logs/app.log" immediateFlush="false"
-                 filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+    <RollingFile name="RollingFile" fileName="lod_cm_logs/app.log" immediateFlush="false"
+                 filePattern="lod_cm_logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
         <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         <Policies>
             <OnStartupTriggeringPolicy />
@@ -16,9 +16,9 @@
     </Async>
   </Appenders>
   <Loggers>
-  	<Logger name="conceptualModel" level="info" additivity="false">
-      <AppenderRef ref="Async" level="info"/>
-      <AppenderRef ref="Console" level="info"/>
+  	<Logger name="conceptualModel" level="debug" additivity="false">
+      <AppenderRef ref="Async" level="debug"/>
+      <AppenderRef ref="Console" level="debug"/>
     </Logger>
     <Root level="error">
       <AppenderRef ref="Console"/>
