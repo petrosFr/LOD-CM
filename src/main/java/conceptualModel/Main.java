@@ -49,11 +49,12 @@ public class Main {
 
 		log.info("starting...");
 		checkArguments(args);
-		String dirWhereJarIs = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath();
-		// FIXME: automatize recuperation of jar name, do not hard code it in following string.
-		String fullConfFileName = Paths.get(dirWhereJarIs, "conf.json").toString()
-			.replace("target\\classes\\", "").replace("target/classes/", "")
-			.replace("lod-cmOK.jar/", "").replace("lod-cmOK.jar\\", ""); 
+		String dirWhereJarIs = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI())
+				.getPath();
+		// FIXME: automatize recuperation of jar name, do not hard code it in following
+		// string.
+		String fullConfFileName = Paths.get(dirWhereJarIs, "conf.json").toString().replace("target\\classes\\", "")
+				.replace("target/classes/", "").replace("lod-cmOK.jar/", "").replace("lod-cmOK.jar\\", "");
 		log.info("loading configuration file: " + fullConfFileName);
 		Configuration conf = Configuration.fromJson(fullConfFileName);
 		String classname = args[0];
@@ -211,17 +212,23 @@ public class Main {
 					"/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt");
 			SourceFileReader readeruml = new SourceFileReader(source);
 			List<GeneratedImage> list = readeruml.getGeneratedImages();
+		} catch (Exception e) {
+			log.error("error during main computation: ", e);
 		}
-		String[] cmdScript;
-		if (Integer.parseInt(threshold) > 80)
-			cmdScript = new String[] { "/bin/bash",
-					"/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/scriptApriori.sh", classname,
-					threshold };
-		else
-			cmdScript = new String[] { "/bin/bash",
-					"/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/scriptFPgrowth.sh", classname,
-					threshold };
-		Process procScript = Runtime.getRuntime().exec(cmdScript);
+		try {
+			String[] cmdScript;
+			if (Integer.parseInt(threshold) > 80)
+				cmdScript = new String[] { "/bin/bash",
+						"/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/scriptApriori.sh", classname,
+						threshold };
+			else
+				cmdScript = new String[] { "/bin/bash",
+						"/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/scriptFPgrowth.sh", classname,
+						threshold };
+			Process procScript = Runtime.getRuntime().exec(cmdScript);
+		} catch (Exception e) {
+			log.error("error during final step: ", e);
+		}
 		log.info("end of program.");
 	}
 
