@@ -13,6 +13,30 @@
 	<build>
 		<plugins>
 			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<!-- <outputDirectory>${basedir}/target/extra-resources</outputDirectory> -->
+							<outputDirectory>${basedir}</outputDirectory>
+							<resources>
+								<resource>
+									<!-- <directory>src/non-packaged-resources</directory> -->
+									<directory>conf.json</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
 					<archive>
