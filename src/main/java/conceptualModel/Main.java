@@ -88,10 +88,12 @@ public class Main {
 
 		// String dbpediaHDTPath = "/srv/www/htdocs/demo_conception/dataset.hdt";
 		String instanceType = "http://dbpedia.org/ontology/" + classname; // classname is from DBpedia
+		log.info("instanceType: " + instanceType);
+		log.info("Selected datasetName: " + ds.datasetName);
 		// String wikidataHDTPath =
 		// "/data2/hamdif/doctorants/ph/linkeddatasets/hdt/wikidata/wikidata2018_09_11.hdt";
 		// String hdtPath = dbpediaHDTPath;
-		if (datasetName == wikidataStr) {
+		if (ds.datasetName.equalsIgnoreCase(wikidataStr)) {
 			log.debug("using wikidata... getting corresponding class of: " + classname);
 			// We have to search for Wikidata equivalent class since
 			// the interface present only DBpedia classes.
@@ -129,10 +131,14 @@ public class Main {
 
 			File tmpFolder = new File(folderPath);
 
-			if (!tmpFolder.exists())
-				tmpFolder.mkdirs();
+			if (!tmpFolder.exists()) {
+				log.info("creating folder: " + tmpFolder.toString());
+				boolean creationResult = tmpFolder.mkdirs();
+				log.info("folder created: " + creationResult);
+			}
 			String propertyType = ds.datasetName.equalsIgnoreCase(wikidataStr) ? "http://www.wikidata.org/prop/P31"
 					: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+			log.debug("propertyType: " + propertyType);
 			IteratorTripleString it = hdt.search("", propertyType, "");
 			Set<String> subjectsTmp = new HashSet<>();
 			while (it.hasNext()) {
@@ -140,8 +146,10 @@ public class Main {
 				String s = ts.getSubject().toString();
 				subjectsTmp.add(s);
 			}
+			log.debug("subjectsTmp size: " + subjectsTmp.size());
 
 			final Map<String, Set<String>> predicatesBySubject = new ConcurrentHashMap<>();
+			log.debug("Parallel loop starting...");
 			subjectsTmp.parallelStream().forEach((subject) -> {
 				IteratorTripleString iter = null;
 				try {
@@ -157,7 +165,8 @@ public class Main {
 				}
 				predicatesBySubject.put(subject, setTmp);
 			});
-
+			
+			log.debug("predicatesBySubject size: " + predicatesBySubject.size());
 			for (Entry<String, Set<String>> entry : predicatesBySubject.entrySet()) {
 				String transaction = "";
 
@@ -178,6 +187,8 @@ public class Main {
 				numTrans++;
 			}
 
+			
+			log.debug("Writing files...");
 			ItemHashmap = folderPath + "/itemHashmap.txt";
 			Path fileItemHashmap = Paths.get(folderPath + "/itemHashmap.txt");
 			Files.write(fileItemHashmap, itemHashMap, Charset.forName("UTF-8"));
@@ -189,6 +200,8 @@ public class Main {
 			Path fileTransactionSP = Paths.get(folderPath + "/transactions.txt");
 			Files.write(fileTransactionSP, transactions, Charset.forName("UTF-8"));
 
+			
+			log.debug("FPGrowth starting...");
 			// FPGrowth...
 			// Load a sequence database
 			String input = folderPath + "/transactions.txt";
@@ -204,6 +217,9 @@ public class Main {
 			ItemHashmap = folderPath + "/itemHashmap.txt";
 			TransactionSP = folderPath + "/transactions.txt";
 			conceptualModel conceptual = new conceptualModel(hdt);
+
+			
+			log.debug("Finishing main computation...");
 
 			conceptual.setPathFile(TransactionSP, output, ItemHashmap);
 			conceptual.CreateTxtFile(classname, threshold, numTrans);
