@@ -46,14 +46,28 @@ public class Main {
 	/// link
 	public static void main(String[] args) throws IOException, NotFoundException {
 
+		log.info("starting...");
 		checkArguments(args);
 		Configuration conf = Configuration.fromJson("conf.json");
 		String classname = args[0];
 		String threshold = args[1];
-		String datasetName = args.length > 2 ? args[2] : null;
+		String datasetName = args.length > 2 ? args[2] : "dbpedia";
 
 		String rootPath = conf.rootPath; // FIXME: document this in Configuration class
 		String set = conf.set; // FIXME: document this in Configuration class
+		log.debug("classname: " + classname);
+		log.debug("threshold: " + threshold);
+		log.debug("datasetName: " + datasetName);
+		log.debug("rootPath: " + rootPath);
+		log.debug("set: " + set);
+		log.debug("datasets size: " + conf.datasets.size());
+		for (Dataset ds : conf.datasets) {
+			log.debug("--------");
+			log.debug("datasetName: " + ds.datasetName);
+			log.debug("hdtFilePath: " + ds.hdtFilePath);
+			log.debug("classNamespace: " + ds.classNamespace);
+			log.debug("--------");
+		}
 		Optional<Dataset> optionalDataset = conf.datasets.stream()
 				.filter(x -> x.datasetName.equalsIgnoreCase(datasetName)).findFirst();
 		if (!optionalDataset.isPresent()) {
@@ -75,8 +89,8 @@ public class Main {
 			// TODO: we can make it quicker by creatling a file
 			// containing all pair of classes such as each line is:
 			// DBpedia_Class Wikiadata_Equivalent_Class
-			Dataset dbpedia = conf.datasets.stream()
-				.filter(x -> x.datasetName.equalsIgnoreCase(dbpediaStr)).findFirst().get();
+			Dataset dbpedia = conf.datasets.stream().filter(x -> x.datasetName.equalsIgnoreCase(dbpediaStr)).findFirst()
+					.get();
 			try (HDT hdt = HDTManager.loadHDT(dbpedia.hdtFilePath, null)) {
 				IteratorTripleString it = hdt.search(instanceType, "http://www.w3.org/2002/07/owl#equivalentClass", "");
 				while (it.hasNext()) {
@@ -107,9 +121,8 @@ public class Main {
 
 			if (!tmpFolder.exists())
 				tmpFolder.mkdirs();
-			String propertyType = ds.datasetName.equalsIgnoreCase(wikidataStr) ? 
-				"http://www.wikidata.org/prop/P31" : 
-				"http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+			String propertyType = ds.datasetName.equalsIgnoreCase(wikidataStr) ? "http://www.wikidata.org/prop/P31"
+					: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
 			IteratorTripleString it = hdt.search("", propertyType, "");
 			Set<String> subjectsTmp = new HashSet<>();
 			while (it.hasNext()) {
