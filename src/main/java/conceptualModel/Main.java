@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.OpenOption;
@@ -44,11 +45,15 @@ public class Main {
 	static HashMap<String, Double> propertyMinsup = new HashMap<String, Double>();
 
 	/// link
-	public static void main(String[] args) throws IOException, NotFoundException {
+	public static void main(String[] args) throws IOException, NotFoundException, URISyntaxException {
 
 		log.info("starting...");
 		checkArguments(args);
-		Configuration conf = Configuration.fromJson("conf.json");
+		String dirWhereJarIs = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath();
+		String fullConfFileName = Paths.get(dirWhereJarIs, "conf.json").toString()
+			.replace("target\\classes\\", "").replace("target/classes/", "");
+		log.info("loading configuration file: " + fullConfFileName);
+		Configuration conf = Configuration.fromJson(fullConfFileName);
 		String classname = args[0];
 		String threshold = args[1];
 		String datasetName = args.length > 2 ? args[2] : "dbpedia";
