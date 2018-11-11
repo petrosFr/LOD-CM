@@ -14,7 +14,10 @@ public class Configuration {
     
     public String rootPath;
     public String set;
-    public Dataset[] datasets;
+    /**
+     * List of available datasets.
+     */
+    public List<Dataset> datasets;
 
     /**
      * Fill the configuration class with values from specified json file.

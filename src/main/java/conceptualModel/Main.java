@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
@@ -35,47 +36,55 @@ import net.sourceforge.plantuml.SourceFileReader;
 
 public class Main {
 
+	static final String wikidataStr = "Wikidata";
+	static final String dbpediaStr = "DBpedia";
+
 	private static final Logger log = LoggerFactory.getLogger(Main.class);
 
 	static HashMap<String, Double> propertyMinsup = new HashMap<String, Double>();
 
-	
 	/// link
 	public static void main(String[] args) throws IOException, NotFoundException {
-		
+
 		checkArguments(args);
 		Configuration conf = Configuration.fromJson("conf.json");
 		String classname = args[0];
 		String threshold = args[1];
 		String datasetName = args.length > 2 ? args[2] : null;
-		// String classname = "Film";
-		// String threshold = "90";
 
-		String rootPath = "/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/itemsets/";
-		String set = "dbpedia/2016-10/";
-		
-		String dbpediaHDTPath = "/srv/www/htdocs/demo_conception/dataset.hdt";
-		String instanceType = "http://dbpedia.org/ontology/" + classname;
-		String wikidataHDTPath = "/data2/hamdif/doctorants/ph/linkeddatasets/hdt/wikidata/wikidata2018_09_11.hdt";
-		String hdtPath = dbpediaHDTPath;
-		if (datasetName != null) {
-			log.info("dataset name:" + datasetName);
-			if (datasetName == "Wikidata") {
-				// We have to search for Wikidata equivalent class since
-				// the interface present only DBpedia classes.
-				// TODO: we can make it quicker by creatling a file
-				// containing all pair of classes such as each line is:
-				// DBpedia_Class Wikiadata_Equivalent_Class
-				try (HDT hdt = HDTManager.loadHDT(hdtPath, null)) {
-					IteratorTripleString it = hdt.search(instanceType, "http://www.w3.org/2002/07/owl#equivalentClass", "");
-					while (it.hasNext()) {
-						TripleString ts = it.next();
-						String wikidataInstanceType = ts.getObject().toString();
-						instanceType = wikidataInstanceType;
-						log.info("new instance type name:" + instanceType);
-					}
-				}	
-				hdtPath = wikidataHDTPath;			 
+		String rootPath = conf.rootPath; // FIXME: document this in Configuration class
+		String set = conf.set; // FIXME: document this in Configuration class
+		Optional<Dataset> optionalDataset = conf.datasets.stream()
+				.filter(x -> x.datasetName.equalsIgnoreCase(datasetName)).findFirst();
+		if (!optionalDataset.isPresent()) {
+			log.error("No corresponding dataset found: " + datasetName);
+			System.exit(0);
+		}
+		Dataset ds = optionalDataset.get();
+
+		String hdtPath = ds.hdtFilePath;
+
+		// String dbpediaHDTPath = "/srv/www/htdocs/demo_conception/dataset.hdt";
+		String instanceType = "http://dbpedia.org/ontology/" + classname; // classname is from DBpedia
+		// String wikidataHDTPath =
+		// "/data2/hamdif/doctorants/ph/linkeddatasets/hdt/wikidata/wikidata2018_09_11.hdt";
+		// String hdtPath = dbpediaHDTPath;
+		if (datasetName == wikidataStr) {
+			// We have to search for Wikidata equivalent class since
+			// the interface present only DBpedia classes.
+			// TODO: we can make it quicker by creatling a file
+			// containing all pair of classes such as each line is:
+			// DBpedia_Class Wikiadata_Equivalent_Class
+			Dataset dbpedia = conf.datasets.stream()
+				.filter(x -> x.datasetName.equalsIgnoreCase(dbpediaStr)).findFirst().get();
+			try (HDT hdt = HDTManager.loadHDT(dbpedia.hdtFilePath, null)) {
+				IteratorTripleString it = hdt.search(instanceType, "http://www.w3.org/2002/07/owl#equivalentClass", "");
+				while (it.hasNext()) {
+					TripleString ts = it.next();
+					String wikidataInstanceType = ts.getObject().toString();
+					instanceType = wikidataInstanceType;
+					log.info("new instance type name: " + instanceType);
+				}
 			}
 		}
 
@@ -98,9 +107,10 @@ public class Main {
 
 			if (!tmpFolder.exists())
 				tmpFolder.mkdirs();
-
-			IteratorTripleString it = hdt.search("", "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-					"");
+			String propertyType = ds.datasetName.equalsIgnoreCase(wikidataStr) ? 
+				"http://www.wikidata.org/prop/P31" : 
+				"http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+			IteratorTripleString it = hdt.search("", propertyType, "");
 			Set<String> subjectsTmp = new HashSet<>();
 			while (it.hasNext()) {
 				TripleString ts = it.next();
@@ -194,6 +204,7 @@ public class Main {
 
 	/**
 	 * Function checkings if arguments are correct. If not, provide a man page.
+	 * 
 	 * @param args
 	 */
 	static void checkArguments(String[] args) {
@@ -206,8 +217,9 @@ public class Main {
 
 	/**
 	 * Function that save a Jena model into a file.
-	 * @param model The model to be saved
-	 * @param file The full path of the file
+	 * 
+	 * @param model  The model to be saved
+	 * @param file   The full path of the file
 	 * @param format The format of the serialization
 	 */
 	@Deprecated
@@ -216,7 +228,7 @@ public class Main {
 		try (OutputStream out = new FileOutputStream(file)) {
 			RDFDataMgr.write(out, model, format);
 		} catch (IOException e) {
-			log.error("Error during saveModel:", e);
+			log.error("Error during saveModel: ", e);
 		}
 	}
 }
