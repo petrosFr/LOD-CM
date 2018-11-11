@@ -215,6 +215,7 @@ public class Main {
 		} catch (Exception e) {
 			log.error("error during main computation: ", e);
 		}
+		log.info("final step");
 		try {
 			String[] cmdScript;
 			if (Integer.parseInt(threshold) > 80)
