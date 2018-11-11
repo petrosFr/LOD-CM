@@ -1,0 +1,16 @@
+{
+    "rootPath": "/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/itemsets/",
+    "set": "dbpedia/2016-10/",
+    "datasets": [
+        {
+           "datasetName": "DBpedia",
+            "hdtFilePath": "/srv/www/htdocs/demo_conception/dataset.hdt",
+            "classNamespace": "http://dbpedia.org/ontology/"
+        },        
+        {
+            "datasetName": "Wikidata",
+             "hdtFilePath": "/data2/hamdif/doctorants/ph/linkeddatasets/hdt/wikidata/wikidata-20170313-all-BETA.hdt",
+             "classNamespace": "http://www.wikidata.org/entity/"
+         }
+    ]
+}

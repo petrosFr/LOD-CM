@@ -26,6 +26,8 @@ import org.rdfhdt.hdt.hdt.HDT;
 import org.rdfhdt.hdt.hdt.HDTManager;
 import org.rdfhdt.hdt.triples.IteratorTripleString;
 import org.rdfhdt.hdt.triples.TripleString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ca.pfv.spmf.algorithms.frequentpatterns.fpgrowth.AlgoFPGrowth;
 import net.sourceforge.plantuml.GeneratedImage;
@@ -33,26 +35,19 @@ import net.sourceforge.plantuml.SourceFileReader;
 
 public class Main {
 
+	private static final Logger log = LoggerFactory.getLogger(Main.class);
+
 	static HashMap<String, Double> propertyMinsup = new HashMap<String, Double>();
 
-	public static void saveModel(Model model, String file, RDFFormat format) {
-		try (OutputStream out = new FileOutputStream(file)) {
-			RDFDataMgr.write(out, model, format);
-		} catch (IOException e) {
-			System.out.println(e);
-		}
-	}
-
+	
 	/// link
 	public static void main(String[] args) throws IOException, NotFoundException {
 		
-		if (args.length < 2) {
-			System.out.println("ERREUR IL MANQUE UN ARGUMENT");
-			System.exit(0);
-		}
+		checkArguments(args);
+		Configuration conf = Configuration.fromJson("conf.json");
 		String classname = args[0];
 		String threshold = args[1];
-		String datasetName = args.length > 2 ? args[3] : null;
+		String datasetName = args.length > 2 ? args[2] : null;
 		// String classname = "Film";
 		// String threshold = "90";
 
@@ -64,9 +59,8 @@ public class Main {
 		String wikidataHDTPath = "/data2/hamdif/doctorants/ph/linkeddatasets/hdt/wikidata/wikidata2018_09_11.hdt";
 		String hdtPath = dbpediaHDTPath;
 		if (datasetName != null) {
-			logInformation("dataset name:" + datasetName);
+			log.info("dataset name:" + datasetName);
 			if (datasetName == "Wikidata") {
-				hdtPath = wikidataHDTPath;
 				// We have to search for Wikidata equivalent class since
 				// the interface present only DBpedia classes.
 				// TODO: we can make it quicker by creatling a file
@@ -78,9 +72,10 @@ public class Main {
 						TripleString ts = it.next();
 						String wikidataInstanceType = ts.getObject().toString();
 						instanceType = wikidataInstanceType;
-						logInformation("new instance type name:" + instanceType);
+						log.info("new instance type name:" + instanceType);
 					}
-				}				 
+				}	
+				hdtPath = wikidataHDTPath;			 
 			}
 		}
 
@@ -197,11 +192,31 @@ public class Main {
 		Process procScript = Runtime.getRuntime().exec(cmdScript);
 	}
 
-	public static void logInformation(String s) throws IOException {
-		Files.write(
-			// Paths.get("log_information.txt"), 
-			Paths.get("/srv/www/htdocs/demo_conception/log_information.txt"), 
-			(s + "\n").getBytes(), 
-			new OpenOption[] {StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.APPEND});
+	/**
+	 * Function checkings if arguments are correct. If not, provide a man page.
+	 * @param args
+	 */
+	static void checkArguments(String[] args) {
+		// TODO: provide a man page if arguments are not correct.
+		if (args.length < 2) {
+			log.error("There must be at least two arguments.");
+			System.exit(0);
+		}
+	}
+
+	/**
+	 * Function that save a Jena model into a file.
+	 * @param model The model to be saved
+	 * @param file The full path of the file
+	 * @param format The format of the serialization
+	 */
+	@Deprecated
+	public static void saveModel(Model model, String file, RDFFormat format) {
+		log.debug("enterring saveModel");
+		try (OutputStream out = new FileOutputStream(file)) {
+			RDFDataMgr.write(out, model, format);
+		} catch (IOException e) {
+			log.error("Error during saveModel:", e);
+		}
 	}
 }
