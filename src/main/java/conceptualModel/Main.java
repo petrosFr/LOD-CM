@@ -91,6 +91,7 @@ public class Main {
 		// "/data2/hamdif/doctorants/ph/linkeddatasets/hdt/wikidata/wikidata2018_09_11.hdt";
 		// String hdtPath = dbpediaHDTPath;
 		if (datasetName == wikidataStr) {
+			log.debug("using wikidata... getting corresponding class of: " + classname);
 			// We have to search for Wikidata equivalent class since
 			// the interface present only DBpedia classes.
 			// TODO: we can make it quicker by creatling a file
@@ -109,6 +110,7 @@ public class Main {
 			}
 		}
 
+		log.info("main computation...");
 		try (HDT hdt = HDTManager.loadHDT(hdtPath, null)) {
 
 			String ItemHashmap = "";
@@ -220,6 +222,7 @@ public class Main {
 					"/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/scriptFPgrowth.sh", classname,
 					threshold };
 		Process procScript = Runtime.getRuntime().exec(cmdScript);
+		log.info("end of program.");
 	}
 
 	/**

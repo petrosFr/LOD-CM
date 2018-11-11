@@ -43,6 +43,10 @@ import org.rdfhdt.hdt.triples.TripleString;
 
 public class conceptualModel {
 
+	public static String myNS = "http://subhi.com#";
+	public static String dbpOntPath = "/srv/www/htdocs/demo_conception/dbpedia_2016-10.nt";
+	public static Property sub = ResourceFactory.createProperty(myNS, "subclass");
+	static Model dbpOnt = RDFDataMgr.loadModel(dbpOntPath);// <- charge dbo
 	private String mfpPathFile;
 	private String itemHashmap;
 	private HDT hdt;
@@ -61,10 +65,6 @@ public class conceptualModel {
 		this.itemHashmap = itemHashmap;
 	}
 
-	public static String myNS = "http://subhi.com#";
-	public static Property sub = ResourceFactory.createProperty(myNS, "subclass");
-	static Model dbpOnt = RDFDataMgr.loadModel("/srv/www/htdocs/demo_conception/dbpedia_2016-10.nt");// <- charge dbo
-
 	public static HashMap<Integer, String> HashmapItem = new HashMap<Integer, String>();
 	public static HashMap<Integer, String> propertyMinsup = new HashMap<Integer, String>();
 
@@ -78,7 +78,9 @@ public class conceptualModel {
 		return (Integer) null;
 	}
 
-	// upload hashMap
+	/**
+	 * upload hashMap
+	 */
 	public void readHashmap() {
 		File file = new File(this.itemHashmap);
 		BufferedReader reader = null;
@@ -104,7 +106,13 @@ public class conceptualModel {
 		}
 	}
 
-	// in case of absence the domain
+	/**
+	 * in case of absence of the domain
+	 * 
+	 * @param p3
+	 * @return
+	 * @throws NotFoundException
+	 */
 	public String FindDomain(String p3) throws NotFoundException {
 		HashMap<String, Integer> typeMap = new HashMap<String, Integer>();
 		IteratorTripleString it = hdt.search("", p3, "");
@@ -120,6 +128,7 @@ public class conceptualModel {
 		subjectsTmp.parallelStream().forEach((subject) -> {
 			IteratorTripleString iter = null;
 			try {
+				// TODO: adapt property if Wikidata is selected
 				iter = hdt.search(subject, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "");
 			} catch (NotFoundException e) {
 				e.printStackTrace();
@@ -157,7 +166,13 @@ public class conceptualModel {
 		return ttt;
 	}
 
-	// in case of absence the range
+	/**
+	 * in case of absence the range
+	 * 
+	 * @param p4
+	 * @return
+	 * @throws NotFoundException
+	 */
 	public String FindRange(String p4) throws NotFoundException {
 		HashMap<String, Integer> typeMap = new HashMap<String, Integer>();
 		IteratorTripleString it = hdt.search("", p4, "");
@@ -171,6 +186,7 @@ public class conceptualModel {
 		objectsTmp.parallelStream().forEach((object) -> {
 			IteratorTripleString iter = null;
 			try {
+				// TODO: adapt property if Wikidata is selected
 				iter = hdt.search(object, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "");
 			} catch (NotFoundException e) {
 				e.printStackTrace();
@@ -209,7 +225,12 @@ public class conceptualModel {
 		return ttt;
 	}
 
-	// find superclasses
+	/**
+	 * find superclasses
+	 * 
+	 * @param c
+	 * @return
+	 */
 	public Set<String> findSubclass(String c) {
 		HashSet<String> sub = new HashSet<String>();
 		String superclass = "";
@@ -225,7 +246,7 @@ public class conceptualModel {
 		}
 		return sub;
 	}
-	
+
 	public Set<String> findSubclassAll(String c) {
 		HashSet<String> sub = new HashSet<String>();
 		String superclass = "";
@@ -255,16 +276,14 @@ public class conceptualModel {
 	Model outputModelsupclasses = ModelFactory.createDefaultModel();
 	Model outputModelrelations = ModelFactory.createDefaultModel();
 
-	
-
-	public void CreateTxtFile(String type, String threshold, int numberofTransactions) throws IOException, NotFoundException {
+	public void CreateTxtFile(String type, String threshold, int numberofTransactions)
+			throws IOException, NotFoundException {
 		String attributes = "";
 		List<String> CModel = new ArrayList<>();
 		HashSet<String> finalclass = new HashSet<String>();
 		CModel.add("@startuml");
 		CModel.add("skinparam linetype ortho");
 
-		
 		Set<String> classes = new HashSet<>();
 		Set<String> classesWithSubclass = new HashSet<>();
 		BufferedReader reader = null;
@@ -410,14 +429,14 @@ public class conceptualModel {
 				if (c2.contains("#"))
 					c2 = c2.substring(c2.lastIndexOf("#") + 1);
 				CModel.add(c2 + " <|-- " + c1);
-				if (c1.contains("Thing")) 
+				if (c1.contains("Thing"))
 					continue;
 				else
-					finalclass.add("\""+c1+"\"");
-				if (c2.contains("Thing")) 
+					finalclass.add("\"" + c1 + "\"");
+				if (c2.contains("Thing"))
 					continue;
 				else
-				finalclass.add("\""+c2+"\"");
+					finalclass.add("\"" + c2 + "\"");
 			}
 		}
 
@@ -426,17 +445,18 @@ public class conceptualModel {
 				.get("/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + type + "_" + threshold + ".txt");
 		Files.write(fileCModel, CModel, Charset.forName("UTF-8"));
 		Set<PosixFilePermission> perms = Files.readAttributes(fileCModel, PosixFileAttributes.class).permissions();
-		
-		try (FileWriter fileJSON = new FileWriter("/srv/www/htdocs/demo_conception/pictures_uml/JSONclasses_" + type + "_" + threshold + ".json")) {
+
+		try (FileWriter fileJSON = new FileWriter(
+				"/srv/www/htdocs/demo_conception/pictures_uml/JSONclasses_" + type + "_" + threshold + ".json")) {
 			fileJSON.write(finalclass.toString());
 			fileJSON.flush();
 			fileJSON.close();
 			System.out.println("Successfully Copied JSON Object to File...");
 			System.out.println("\nJSON Object C BON");
-		}catch (IOException e) {
-		    e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		
+
 		perms.add(PosixFilePermission.OWNER_WRITE);
 		perms.add(PosixFilePermission.OWNER_READ);
 		perms.add(PosixFilePermission.OWNER_EXECUTE);
