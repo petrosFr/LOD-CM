@@ -50,8 +50,10 @@ public class Main {
 		log.info("starting...");
 		checkArguments(args);
 		String dirWhereJarIs = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath();
+		// FIXME: automatize recuperation of jar name, do not hard code it in following string.
 		String fullConfFileName = Paths.get(dirWhereJarIs, "conf.json").toString()
-			.replace("target\\classes\\", "").replace("target/classes/", "");
+			.replace("target\\classes\\", "").replace("target/classes/", "")
+			.replace("lod-cmOK.jar/", "").replace("lod-cmOK.jar\\", ""); 
 		log.info("loading configuration file: " + fullConfFileName);
 		Configuration conf = Configuration.fromJson(fullConfFileName);
 		String classname = args[0];
