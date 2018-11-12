@@ -50,12 +50,11 @@ public class Main {
 
 	static HashMap<String, Double> propertyMinsup = new HashMap<String, Double>();
 
-	public static HashMap<Integer,String> HashmapItem = new HashMap<Integer,String>();
-	public static HashMap<List<String>,String> MFPElementSup = new HashMap<List<String>,String>();
-	
-	
+	public static HashMap<Integer, String> HashmapItem = new HashMap<Integer, String>();
+	public static HashMap<List<String>, String> MFPElementSup = new HashMap<List<String>, String>();
+
 	public static void main(String[] args) throws IOException, NotFoundException, URISyntaxException {
-		
+
 		log.info("starting...");
 		checkArguments(args);
 		String dirWhereJarIs = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI())
@@ -69,12 +68,11 @@ public class Main {
 		String classname = args[0];
 		String threshold = args[1];
 		String datasetName = args.length > 2 ? args[2] : "dbpedia";
-		
+
 		String rootPath = conf.rootPath; // FIXME: document this in Configuration class
 		String set = conf.set; // FIXME: document this in Configuration class
 		String folderPath = rootPath + set + classname;
 
-		
 		log.debug("classname: " + classname);
 		log.debug("threshold: " + threshold);
 		log.debug("datasetName: " + datasetName);
@@ -113,8 +111,7 @@ public class Main {
 			List<String> lines = Files.readAllLines(Paths.get("./", "equivalent_classes"));
 			log.debug("# of equivalent classes: " + lines.size());
 			final String tmpString = instanceType;
-			Optional<String> newInstanceType = lines.stream().filter(x -> x.startsWith(tmpString + "\t"))
-				.findFirst();
+			Optional<String> newInstanceType = lines.stream().filter(x -> x.startsWith(tmpString + "\t")).findFirst();
 			if (!newInstanceType.isPresent()) {
 				log.error("no wikidata equivelent class to " + instanceType + " has been found!");
 				System.exit(0);
@@ -124,17 +121,19 @@ public class Main {
 			// // TODO: we can make it quicker by creatling a file
 			// // containing all pair of classes such as each line is:
 			// // DBpedia_Class Wikiadata_Equivalent_Class
-			// Dataset dbpedia = conf.datasets.stream().filter(x -> x.datasetName.equalsIgnoreCase(dbpediaStr)).findFirst()
-			// 		.get();			
+			// Dataset dbpedia = conf.datasets.stream().filter(x ->
+			// x.datasetName.equalsIgnoreCase(dbpediaStr)).findFirst()
+			// .get();
 			// log.debug("dbpedia found ? " + dbpedia);
 			// try (HDT hdt = HDTManager.loadHDT(dbpedia.hdtFilePath, null)) {
-			// 	IteratorTripleString it = hdt.search(instanceType, "http://www.w3.org/2002/07/owl#equivalentClass", "");
-			// 	while (it.hasNext()) {
-			// 		TripleString ts = it.next();
-			// 		String wikidataInstanceType = ts.getObject().toString();
-			// 		instanceType = wikidataInstanceType;
-			// 		log.info("new instance type name: " + instanceType);
-			// 	}
+			// IteratorTripleString it = hdt.search(instanceType,
+			// "http://www.w3.org/2002/07/owl#equivalentClass", "");
+			// while (it.hasNext()) {
+			// TripleString ts = it.next();
+			// String wikidataInstanceType = ts.getObject().toString();
+			// instanceType = wikidataInstanceType;
+			// log.info("new instance type name: " + instanceType);
+			// }
 			// }
 		}
 
@@ -152,7 +151,6 @@ public class Main {
 			int item = 0;
 
 			// String instanceType = classname;
-
 
 			File tmpFolder = new File(folderPath);
 
@@ -239,10 +237,10 @@ public class Main {
 			log.info("minsup: " + ms);
 			// log.debug("input: " + input);
 			Itemsets itemsets = null;
-			try {		
-				log.debug("input exist ? " + conceptualModel.isFileExists(input));		
+			try {
+				log.debug("input exist ? " + conceptualModel.isFileExists(input));
 				itemsets = algo.runAlgorithm(input, output, ms);
-				log.debug("output exist ? " + conceptualModel.isFileExists(output));	
+				log.debug("output exist ? " + conceptualModel.isFileExists(output));
 			} catch (Exception e) {
 				log.error("Error in AlgoFPGrowth runAlgorithm", e);
 			}
@@ -258,8 +256,9 @@ public class Main {
 			conceptual.CreateTxtFile(classname, threshold, numTrans);
 
 			File source = new File(
-					"/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt");			
-			log.debug("source exist? " + conceptualModel.isFileExists("/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt"));
+					"/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt");
+			log.debug("source exist? " + conceptualModel.isFileExists(
+					"/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt"));
 			SourceFileReader readeruml = new SourceFileReader(source);
 			List<GeneratedImage> list = readeruml.getGeneratedImages();
 			log.debug("# of generated images: " + list.size());
@@ -276,53 +275,55 @@ public class Main {
 			else
 				cmdScript = new String[] { "/bin/bash",
 						"/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub26/scriptFPgrowth.sh", classname,
-						java.util.		threshold };
+						threshold };
 			Process procScript = Runtime.getRuntime().exec(cmdScript);
 		} catch (Exception e) {
 			log.error("error during final step: ", e);
 		}
-		
-		String line="";
+
+		String line = "";
 		readHashmap(folderPath + "/itemHashmap.txt");
-        String value="";
-        ArrayList<String> element = new ArrayList<>();
-        BufferedReader MFPBuff = new BufferedReader(new FileReader(rootPath+ set + classname + "/schemas/schema_minsup"+threshold+".txt"));
-        while ((line = MFPBuff.readLine()) != null) {
-            String l1 = line.substring(0,line.indexOf("("));
-                String[] properties = l1.split(" ");
-                for (int i=0; i < properties.length; i++) {
-                    int x= Integer.parseInt(properties[i]);
-                    if (HashmapItem.containsKey(x)) {
-                    	value=HashmapItem.get(x);
-                    	value=value.substring(value.lastIndexOf("/")+1);
-                        if (value.contains("#"))
-                        	value=value.substring(value.indexOf("#")+1);
-                        element.add(value);
-                    }
-                       
-                }
-                String l2=line.substring(line.indexOf("(")+1,line.indexOf(")"));
-                MFPElementSup.put(element,l2);
-        }
-        MFPBuff.close();
-        BufferedWriter writer = new BufferedWriter(new FileWriter(rootPath+ set + classname + "/schemas/schema_minsupElements"+threshold+".txt"));
-       
-// write MFP elements
-        Set set1 = MFPElementSup.entrySet();
-        String group="";
-        Iterator iterator = set1.iterator();
-        while(iterator.hasNext()) {
-             Map.Entry mentry = (Map.Entry)iterator.next();
-             ArrayList<String> tt = new ArrayList<String>();
-             ArrayList<String> elemnts = (ArrayList<String>) mentry.getKey();
-             for (String e:elemnts) {
-            	 group=group+" "+e;
-             }
-             System.out.print("key: "+ mentry.getKey() + " & Value: ");
-             System.out.println(mentry.getValue());
-             writer.write(group+" ("+mentry.getValue()+")");
-          }
-        writer.close();
+		String value = "";
+		ArrayList<String> element = new ArrayList<>();
+		BufferedReader MFPBuff = new BufferedReader(
+				new FileReader(rootPath + set + classname + "/schemas/schema_minsup" + threshold + ".txt"));
+		while ((line = MFPBuff.readLine()) != null) {
+			String l1 = line.substring(0, line.indexOf("("));
+			String[] properties = l1.split(" ");
+			for (int i = 0; i < properties.length; i++) {
+				int x = Integer.parseInt(properties[i]);
+				if (HashmapItem.containsKey(x)) {
+					value = HashmapItem.get(x);
+					value = value.substring(value.lastIndexOf("/") + 1);
+					if (value.contains("#"))
+						value = value.substring(value.indexOf("#") + 1);
+					element.add(value);
+				}
+
+			}
+			String l2 = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
+			MFPElementSup.put(element, l2);
+		}
+		MFPBuff.close();
+		BufferedWriter writer = new BufferedWriter(
+				new FileWriter(rootPath + set + classname + "/schemas/schema_minsupElements" + threshold + ".txt"));
+
+		// write MFP elements
+		Set set1 = MFPElementSup.entrySet();
+		String group = "";
+		Iterator iterator = set1.iterator();
+		while (iterator.hasNext()) {
+			Map.Entry mentry = (Map.Entry) iterator.next();
+			ArrayList<String> tt = new ArrayList<String>();
+			ArrayList<String> elemnts = (ArrayList<String>) mentry.getKey();
+			for (String e : elemnts) {
+				group = group + " " + e;
+			}
+			System.out.print("key: " + mentry.getKey() + " & Value: ");
+			System.out.println(mentry.getValue());
+			writer.write(group + " (" + mentry.getValue() + ")");
+		}
+		writer.close();
 		log.info("end of program.");
 	}
 
@@ -354,36 +355,36 @@ public class Main {
 			log.error("Error during saveModel: ", e);
 		}
 	}
-	
-	
+
 	/**
 	 * Function that read a hashMap file.
 	 * 
 	 * @param path path of hashMap file
-
+	 * 
 	 */
-    public static void readHashmap(String path) { 
-        File file = new File(path);
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(file));
+	public static void readHashmap(String path) {
+		File file = new File(path);
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader(file));
 
-        String line="";
-        int p;
-        String s;
-        while ((line = reader.readLine()) != null) {
-            p = Integer.parseInt(line.substring(0,line.indexOf(" =>")));
-            s = line.substring(line.indexOf("=>")+3);
-            HashmapItem.put(p, s);
-        } } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                reader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-	
+			String line = "";
+			int p;
+			String s;
+			while ((line = reader.readLine()) != null) {
+				p = Integer.parseInt(line.substring(0, line.indexOf(" =>")));
+				s = line.substring(line.indexOf("=>") + 3);
+				HashmapItem.put(p, s);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 }
