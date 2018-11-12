@@ -55,6 +55,7 @@ public class Main {
 
 	public static void main(String[] args) throws IOException, NotFoundException, URISyntaxException {
 
+		// encoding/spmf_library=UTF-8
 		log.info("starting...");
 		checkArguments(args);
 		String dirWhereJarIs = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI())

@@ -11,20 +11,14 @@
 	</properties>
 	<name>LOD-CM</name>
 	<build>
-		<resources>
+		<!-- <resources>
 			<resource>
 				<directory>spmf_library</directory>
-				<!-- <includes>
-					<include>**/*</include>
-				</includes> -->
 			</resource>
 			<resource>
 				<directory>fpm</directory>
-				<!-- <includes>
-					<include>**/*</include>
-				</includes> -->
 			</resource>
-		</resources>
+		</resources> -->
 		<plugins>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
