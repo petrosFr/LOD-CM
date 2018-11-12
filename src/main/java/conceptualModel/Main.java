@@ -139,7 +139,8 @@ public class Main {
 			String propertyType = ds.datasetName.equalsIgnoreCase(wikidataStr) ? "http://www.wikidata.org/prop/P31"
 					: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
 			log.debug("propertyType: " + propertyType);
-			IteratorTripleString it = hdt.search("", propertyType, "");
+			IteratorTripleString it = hdt.search("", propertyType, instanceType);
+			log.debug("query: " + "(? <" + propertyType + "> <" + instanceType + ">)");
 			Set<String> subjectsTmp = new HashSet<>();
 			while (it.hasNext()) {
 				TripleString ts = it.next();
@@ -165,7 +166,7 @@ public class Main {
 				}
 				predicatesBySubject.put(subject, setTmp);
 			});
-			
+
 			log.debug("predicatesBySubject size: " + predicatesBySubject.size());
 			for (Entry<String, Set<String>> entry : predicatesBySubject.entrySet()) {
 				String transaction = "";
@@ -187,7 +188,6 @@ public class Main {
 				numTrans++;
 			}
 
-			
 			log.debug("Writing files...");
 			ItemHashmap = folderPath + "/itemHashmap.txt";
 			Path fileItemHashmap = Paths.get(folderPath + "/itemHashmap.txt");
@@ -200,7 +200,6 @@ public class Main {
 			Path fileTransactionSP = Paths.get(folderPath + "/transactions.txt");
 			Files.write(fileTransactionSP, transactions, Charset.forName("UTF-8"));
 
-			
 			log.debug("FPGrowth starting...");
 			// FPGrowth...
 			// Load a sequence database
@@ -218,7 +217,6 @@ public class Main {
 			TransactionSP = folderPath + "/transactions.txt";
 			conceptualModel conceptual = new conceptualModel(hdt);
 
-			
 			log.debug("Finishing main computation...");
 
 			conceptual.setPathFile(TransactionSP, output, ItemHashmap);
