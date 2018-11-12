@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ca.pfv.spmf.algorithms.frequentpatterns.fpgrowth.AlgoFPGrowth;
+import ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemsets;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.SourceFileReader;
 
@@ -139,7 +140,8 @@ public class Main {
 			String propertyType = ds.datasetName.equalsIgnoreCase(wikidataStr) ? "http://www.wikidata.org/prop/P31"
 					: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
 			log.debug("propertyType: " + propertyType);
-			IteratorTripleString it = hdt.search("", propertyType, "");
+			IteratorTripleString it = hdt.search("", propertyType, instanceType);
+			log.debug("query: " + "(? <" + propertyType + "> <" + instanceType + ">)");
 			Set<String> subjectsTmp = new HashSet<>();
 			while (it.hasNext()) {
 				TripleString ts = it.next();
@@ -165,7 +167,7 @@ public class Main {
 				}
 				predicatesBySubject.put(subject, setTmp);
 			});
-			
+
 			log.debug("predicatesBySubject size: " + predicatesBySubject.size());
 			for (Entry<String, Set<String>> entry : predicatesBySubject.entrySet()) {
 				String transaction = "";
@@ -187,7 +189,6 @@ public class Main {
 				numTrans++;
 			}
 
-			
 			log.debug("Writing files...");
 			ItemHashmap = folderPath + "/itemHashmap.txt";
 			Path fileItemHashmap = Paths.get(folderPath + "/itemHashmap.txt");
@@ -200,7 +201,6 @@ public class Main {
 			Path fileTransactionSP = Paths.get(folderPath + "/transactions.txt");
 			Files.write(fileTransactionSP, transactions, Charset.forName("UTF-8"));
 
-			
 			log.debug("FPGrowth starting...");
 			// FPGrowth...
 			// Load a sequence database
@@ -212,22 +212,33 @@ public class Main {
 
 			// execute the algorithm
 			double ms = Integer.parseInt(threshold) / 100.0;
-			algo.runAlgorithm(input, output, ms);
+			log.info("minsup: " + ms);
+			// log.debug("input: " + input);
+			Itemsets itemsets = null;
+			try {		
+				log.debug("input exist ? " + conceptualModel.isFileExists(input));		
+				itemsets = algo.runAlgorithm(input, output, ms);
+				log.debug("output exist ? " + conceptualModel.isFileExists(output));	
+			} catch (Exception e) {
+				log.error("Error in AlgoFPGrowth runAlgorithm", e);
+			}
+			log.debug("itemsets count: " + (itemsets != null ? itemsets.getItemsetsCount() : 0));
 
 			ItemHashmap = folderPath + "/itemHashmap.txt";
 			TransactionSP = folderPath + "/transactions.txt";
 			conceptualModel conceptual = new conceptualModel(hdt);
 
-			
 			log.debug("Finishing main computation...");
 
 			conceptual.setPathFile(TransactionSP, output, ItemHashmap);
 			conceptual.CreateTxtFile(classname, threshold, numTrans);
 
 			File source = new File(
-					"/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt");
+					"/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt");			
+			log.debug("source exist? " + conceptualModel.isFileExists("/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt"));
 			SourceFileReader readeruml = new SourceFileReader(source);
 			List<GeneratedImage> list = readeruml.getGeneratedImages();
+			log.debug("# of generated images: " + list.size());
 		} catch (Exception e) {
 			log.error("error during main computation: ", e);
 		}
@@ -269,7 +280,6 @@ public class Main {
 	 * @param file   The full path of the file
 	 * @param format The format of the serialization
 	 */
-	@Deprecated
 	public static void saveModel(Model model, String file, RDFFormat format) {
 		log.debug("enterring saveModel");
 		try (OutputStream out = new FileOutputStream(file)) {

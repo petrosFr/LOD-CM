@@ -40,19 +40,35 @@ import org.rdfhdt.hdt.exceptions.NotFoundException;
 import org.rdfhdt.hdt.hdt.HDT;
 import org.rdfhdt.hdt.triples.IteratorTripleString;
 import org.rdfhdt.hdt.triples.TripleString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class conceptualModel {
+	private static final Logger log = LoggerFactory.getLogger(Main.class);
 
 	public static String myNS = "http://subhi.com#";
-	public static String dbpOntPath = "/srv/www/htdocs/demo_conception/dbpedia_2016-10.nt";
+	public static String dbpOntPath = isFileExists("/srv/www/htdocs/demo_conception/dbpedia_2016-10.nt") ? 
+		"/srv/www/htdocs/demo_conception/dbpedia_2016-10.nt" :
+		"dbpedia_2016-10.nt";
 	public static Property sub = ResourceFactory.createProperty(myNS, "subclass");
 	static Model dbpOnt = RDFDataMgr.loadModel(dbpOntPath);// <- charge dbo
 	private String mfpPathFile;
 	private String itemHashmap;
 	private HDT hdt;
 
-	public conceptualModel(HDT hdt) {
+	public conceptualModel(HDT hdt) {		
+		log.debug("conceptualModel constructor");
 		this.hdt = hdt;
+	}
+
+	/**
+	 * Helper to check if a string correspond to an existing file.
+	 * @param filePathString
+	 * @return
+	 */
+	public static boolean isFileExists(String filePathString) {
+		File f = new File(filePathString);
+		return f.exists() && !f.isDirectory();
 	}
 
 	public conceptualModel(String transPathFile, String mfpPathFile, String itemHashmap) {
@@ -61,6 +77,10 @@ public class conceptualModel {
 	}
 
 	public void setPathFile(String transPathFile, String mfpPathFile, String itemHashmap) {
+		log.debug("entering setPathFile...");
+		log.debug("transPathFile (" + isFileExists(transPathFile) + "): " + transPathFile);
+		log.debug("mfpPathFile (" + isFileExists(mfpPathFile) + "): " + mfpPathFile);
+		log.debug("itemHashmap : " + itemHashmap);
 		this.mfpPathFile = mfpPathFile;
 		this.itemHashmap = itemHashmap;
 	}
@@ -278,6 +298,10 @@ public class conceptualModel {
 
 	public void CreateTxtFile(String type, String threshold, int numberofTransactions)
 			throws IOException, NotFoundException {
+		log.debug("entering CreateTxtFile...");
+		log.debug("type: " + type);
+		log.debug("threshold: " + threshold);
+		log.debug("numberofTransactions: " + numberofTransactions);
 		String attributes = "";
 		List<String> CModel = new ArrayList<>();
 		HashSet<String> finalclass = new HashSet<String>();
@@ -444,7 +468,6 @@ public class conceptualModel {
 		Path fileCModel = Paths
 				.get("/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + type + "_" + threshold + ".txt");
 		Files.write(fileCModel, CModel, Charset.forName("UTF-8"));
-		Set<PosixFilePermission> perms = Files.readAttributes(fileCModel, PosixFileAttributes.class).permissions();
 
 		try (FileWriter fileJSON = new FileWriter(
 				"/srv/www/htdocs/demo_conception/pictures_uml/JSONclasses_" + type + "_" + threshold + ".json")) {
@@ -456,20 +479,29 @@ public class conceptualModel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		if (!System.getProperty("os.name").toLowerCase().contains("windows")) {
+			// allow the web interface to handle files
+			Set<PosixFilePermission> perms = Files.readAttributes(fileCModel, PosixFileAttributes.class).permissions();
+			perms.add(PosixFilePermission.OWNER_WRITE);
+			perms.add(PosixFilePermission.OWNER_READ);
+			perms.add(PosixFilePermission.OWNER_EXECUTE);
+			perms.add(PosixFilePermission.GROUP_WRITE);
+			perms.add(PosixFilePermission.GROUP_READ);
+			perms.add(PosixFilePermission.GROUP_EXECUTE);
+			perms.add(PosixFilePermission.OTHERS_WRITE);
+			perms.add(PosixFilePermission.OTHERS_READ);
+			perms.add(PosixFilePermission.OTHERS_EXECUTE);
+			Files.setPosixFilePermissions(fileCModel, perms);
+		}
 
-		perms.add(PosixFilePermission.OWNER_WRITE);
-		perms.add(PosixFilePermission.OWNER_READ);
-		perms.add(PosixFilePermission.OWNER_EXECUTE);
-		perms.add(PosixFilePermission.GROUP_WRITE);
-		perms.add(PosixFilePermission.GROUP_READ);
-		perms.add(PosixFilePermission.GROUP_EXECUTE);
-		perms.add(PosixFilePermission.OTHERS_WRITE);
-		perms.add(PosixFilePermission.OTHERS_READ);
-		perms.add(PosixFilePermission.OTHERS_EXECUTE);
-		Files.setPosixFilePermissions(fileCModel, perms);
 		Main.saveModel(outputModelsupclasses, "/srv/www/htdocs/demo_conception/pictures_uml/subclasses.ttl",
 				RDFFormat.TTL);
 		Main.saveModel(outputModelrelations, "/srv/www/htdocs/demo_conception/pictures_uml/relation.ttl",
 				RDFFormat.TTL);
+		
+		log.debug("outputModelsupclasses exists: " + isFileExists("/srv/www/htdocs/demo_conception/pictures_uml/subclasses.ttl"));
+		log.debug("outputModelrelations exists: " + isFileExists("/srv/www/htdocs/demo_conception/pictures_uml/relation.ttl"));
+		log.debug("leaving CreateTxtFile.");
 	}
 }
