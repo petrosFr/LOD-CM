@@ -236,11 +236,11 @@ public class Main {
 			String[] cmdScript;
 			if (Integer.parseInt(threshold) > 80)
 				cmdScript = new String[] { "/bin/bash",
-						"/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/scriptApriori.sh", classname,
+						"/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub26/scriptApriori.sh", classname,
 						threshold };
 			else
 				cmdScript = new String[] { "/bin/bash",
-						"/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/scriptFPgrowth.sh", classname,
+						"/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub26/scriptFPgrowth.sh", classname,
 						threshold };
 			Process procScript = Runtime.getRuntime().exec(cmdScript);
 		} catch (Exception e) {

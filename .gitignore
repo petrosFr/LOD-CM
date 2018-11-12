@@ -5,3 +5,4 @@ install.sh
 .classpath
 logs
 lod_cm_logs
+hs_err_*
