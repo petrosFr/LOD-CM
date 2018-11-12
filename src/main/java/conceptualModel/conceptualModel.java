@@ -43,7 +43,7 @@ import org.rdfhdt.hdt.triples.TripleString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ConceptualModel {
+public class conceptualModel {
 	private static final Logger log = LoggerFactory.getLogger(Main.class);
 
 	public static String myNS = "http://subhi.com#";
@@ -56,7 +56,7 @@ public class ConceptualModel {
 	private String itemHashmap;
 	private HDT hdt;
 
-	public ConceptualModel(HDT hdt) {		
+	public conceptualModel(HDT hdt) {		
 		log.debug("conceptualModel constructor");
 		this.hdt = hdt;
 	}
@@ -71,7 +71,7 @@ public class ConceptualModel {
 		return f.exists() && !f.isDirectory();
 	}
 
-	public ConceptualModel(String transPathFile, String mfpPathFile, String itemHashmap) {
+	public conceptualModel(String transPathFile, String mfpPathFile, String itemHashmap) {
 		this.mfpPathFile = mfpPathFile;
 		this.itemHashmap = itemHashmap;
 	}
@@ -468,7 +468,6 @@ public class ConceptualModel {
 		Path fileCModel = Paths
 				.get("/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + type + "_" + threshold + ".txt");
 		Files.write(fileCModel, CModel, Charset.forName("UTF-8"));
-		Set<PosixFilePermission> perms = Files.readAttributes(fileCModel, PosixFileAttributes.class).permissions();
 
 		try (FileWriter fileJSON = new FileWriter(
 				"/srv/www/htdocs/demo_conception/pictures_uml/JSONclasses_" + type + "_" + threshold + ".json")) {
@@ -480,17 +479,22 @@ public class ConceptualModel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		if (!System.getProperty("os.name").toLowerCase().contains("windows")) {
+			// allow the web interface to handle files
+			Set<PosixFilePermission> perms = Files.readAttributes(fileCModel, PosixFileAttributes.class).permissions();
+			perms.add(PosixFilePermission.OWNER_WRITE);
+			perms.add(PosixFilePermission.OWNER_READ);
+			perms.add(PosixFilePermission.OWNER_EXECUTE);
+			perms.add(PosixFilePermission.GROUP_WRITE);
+			perms.add(PosixFilePermission.GROUP_READ);
+			perms.add(PosixFilePermission.GROUP_EXECUTE);
+			perms.add(PosixFilePermission.OTHERS_WRITE);
+			perms.add(PosixFilePermission.OTHERS_READ);
+			perms.add(PosixFilePermission.OTHERS_EXECUTE);
+			Files.setPosixFilePermissions(fileCModel, perms);
+		}
 
-		perms.add(PosixFilePermission.OWNER_WRITE);
-		perms.add(PosixFilePermission.OWNER_READ);
-		perms.add(PosixFilePermission.OWNER_EXECUTE);
-		perms.add(PosixFilePermission.GROUP_WRITE);
-		perms.add(PosixFilePermission.GROUP_READ);
-		perms.add(PosixFilePermission.GROUP_EXECUTE);
-		perms.add(PosixFilePermission.OTHERS_WRITE);
-		perms.add(PosixFilePermission.OTHERS_READ);
-		perms.add(PosixFilePermission.OTHERS_EXECUTE);
-		Files.setPosixFilePermissions(fileCModel, perms);
 		Main.saveModel(outputModelsupclasses, "/srv/www/htdocs/demo_conception/pictures_uml/subclasses.ttl",
 				RDFFormat.TTL);
 		Main.saveModel(outputModelrelations, "/srv/www/htdocs/demo_conception/pictures_uml/relation.ttl",

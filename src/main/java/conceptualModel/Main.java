@@ -216,9 +216,9 @@ public class Main {
 			// log.debug("input: " + input);
 			Itemsets itemsets = null;
 			try {		
-				log.debug("input exist ? " + ConceptualModel.isFileExists(input));		
+				log.debug("input exist ? " + conceptualModel.isFileExists(input));		
 				itemsets = algo.runAlgorithm(input, output, ms);
-				log.debug("output exist ? " + ConceptualModel.isFileExists(output));	
+				log.debug("output exist ? " + conceptualModel.isFileExists(output));	
 			} catch (Exception e) {
 				log.error("Error in AlgoFPGrowth runAlgorithm", e);
 			}
@@ -226,7 +226,7 @@ public class Main {
 
 			ItemHashmap = folderPath + "/itemHashmap.txt";
 			TransactionSP = folderPath + "/transactions.txt";
-			ConceptualModel conceptual = new ConceptualModel(hdt);
+			conceptualModel conceptual = new conceptualModel(hdt);
 
 			log.debug("Finishing main computation...");
 
