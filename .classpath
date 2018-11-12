@@ -29,41 +29,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<!-- <classpathentry kind="lib" path="C:/google_drive/dev/java/lib/spmf.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/collection-0.7.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/commons-cli-1.4.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/commons-codec-1.11.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/commons-compress-1.16.1.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/commons-csv-1.5.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/commons-io-2.6.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/commons-lang3-3.4.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/commons-math3-3.5.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/hdt-api-2.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/hdt-java-cli-2.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/hdt-java-core-2.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/hdt-jena-2.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/httpclient-4.5.3.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/httpclient-cache-4.5.3.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/httpcore-4.4.6.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/jackson-annotations-2.9.0.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/jackson-core-2.9.0.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/jackson-databind-2.9.0.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/jcl-over-slf4j-1.7.25.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/jcommander-1.72.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/jena-arq-3.7.0.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/jena-base-3.7.0.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/jena-core-3.7.0.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/jena-iri-3.7.0.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/jena-shaded-guava-3.7.0.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/JLargeArrays-1.6.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/jsonld-java-0.11.1.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/libthrift-0.10.0.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/objenesis-2.6.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/slf4j-api-1.7.25.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/xercesImpl-2.11.0.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/xml-apis-1.4.01.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/xz-1.6.jar"/>
-	<classpathentry kind="lib" path="C:/google_drive/dev/java/lib/java-json.jar"/> -->
 	<classpathentry kind="src" path="target/generated-sources/annotations">
 		<attributes>
 			<attribute name="optional" value="true"/>
@@ -78,6 +43,17 @@
 			<attribute name="maven.pomderived" value="true"/>
 			<attribute name="ignore_optional_problems" value="true"/>
 			<attribute name="m2e-apt" value="true"/>
+			<attribute name="test" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="target\generated-sources\annotations">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="target\generated-test-sources\test-annotations">
+		<attributes>
+			<attribute name="optional" value="true"/>
 			<attribute name="test" value="true"/>
 		</attributes>
 	</classpathentry>

@@ -47,7 +47,7 @@ public class Main {
 
 	/// link
 	public static void main(String[] args) throws IOException, NotFoundException, URISyntaxException {
-
+		// test
 		log.info("starting...");
 		checkArguments(args);
 		String dirWhereJarIs = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI())
