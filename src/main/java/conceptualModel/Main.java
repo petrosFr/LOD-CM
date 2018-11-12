@@ -213,10 +213,10 @@ public class Main {
 			// execute the algorithm
 			double ms = Integer.parseInt(threshold) / 100.0;
 			log.info("minsup: " + ms);
-			log.debug("input exist ? " + conceptualModel.isFileExists(input));
 			// log.debug("input: " + input);
 			Itemsets itemsets = null;
-			try {				
+			try {		
+				log.debug("input exist ? " + conceptualModel.isFileExists(input));		
 				itemsets = algo.runAlgorithm(input, output, ms);
 			} catch (Exception e) {
 				log.error("Error in AlgoFPGrowth runAlgorithm", e);
