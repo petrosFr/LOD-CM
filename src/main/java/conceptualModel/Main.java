@@ -218,6 +218,7 @@ public class Main {
 			try {		
 				log.debug("input exist ? " + ConceptualModel.isFileExists(input));		
 				itemsets = algo.runAlgorithm(input, output, ms);
+				log.debug("output exist ? " + ConceptualModel.isFileExists(output));	
 			} catch (Exception e) {
 				log.error("Error in AlgoFPGrowth runAlgorithm", e);
 			}
