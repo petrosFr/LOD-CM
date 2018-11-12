@@ -235,9 +235,10 @@ public class Main {
 
 			File source = new File(
 					"/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt");			
-			// log.debug("itemsets count: " + itemsets.getItemsetsCount());
+			log.debug("source exist? " + conceptualModel.isFileExists("/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt"));
 			SourceFileReader readeruml = new SourceFileReader(source);
 			List<GeneratedImage> list = readeruml.getGeneratedImages();
+			log.debug("# of generated images: " + list.size());
 		} catch (Exception e) {
 			log.error("error during main computation: ", e);
 		}
@@ -279,7 +280,6 @@ public class Main {
 	 * @param file   The full path of the file
 	 * @param format The format of the serialization
 	 */
-	@Deprecated
 	public static void saveModel(Model model, String file, RDFFormat format) {
 		log.debug("enterring saveModel");
 		try (OutputStream out = new FileOutputStream(file)) {
