@@ -1,7 +1,7 @@
 target
 log_information.txt
 *.hdt
-install.sh
+# install.sh
 .classpath
 logs
 lod_cm_logs
