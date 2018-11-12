@@ -115,7 +115,7 @@ public class Main {
 
 		log.info("main computation...");
 		try (HDT hdt = HDTManager.loadHDT(hdtPath, null)) {
-
+			log.debug("HDT file loaded");
 			String ItemHashmap = "";
 			String TransactionSP = "";
 			int numTrans = 0;
