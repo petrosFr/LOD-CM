@@ -19,7 +19,7 @@
             "console": "internalConsole",
             "stopOnEntry": false,
             "mainClass": "conceptualModel.Main",
-            "args": "Actor 60 DBpedia",
+            "args": "Actor 60 Wikidata",
             "projectName": "linked_itemset_4"
         },
         {

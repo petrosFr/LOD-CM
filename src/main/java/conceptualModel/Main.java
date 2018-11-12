@@ -98,20 +98,33 @@ public class Main {
 			log.debug("using wikidata... getting corresponding class of: " + classname);
 			// We have to search for Wikidata equivalent class since
 			// the interface present only DBpedia classes.
-			// TODO: we can make it quicker by creatling a file
-			// containing all pair of classes such as each line is:
-			// DBpedia_Class Wikiadata_Equivalent_Class
-			Dataset dbpedia = conf.datasets.stream().filter(x -> x.datasetName.equalsIgnoreCase(dbpediaStr)).findFirst()
-					.get();
-			try (HDT hdt = HDTManager.loadHDT(dbpedia.hdtFilePath, null)) {
-				IteratorTripleString it = hdt.search(instanceType, "http://www.w3.org/2002/07/owl#equivalentClass", "");
-				while (it.hasNext()) {
-					TripleString ts = it.next();
-					String wikidataInstanceType = ts.getObject().toString();
-					instanceType = wikidataInstanceType;
-					log.info("new instance type name: " + instanceType);
-				}
+			log.debug("equivalent_classes exists ? " + conceptualModel.isFileExists("./equivalent_classes"));
+			List<String> lines = Files.readAllLines(Paths.get("./", "equivalent_classes"));
+			log.debug("# of equivalent classes: " + lines.size());
+			final String tmpString = instanceType;
+			Optional<String> newInstanceType = lines.stream().filter(x -> x.startsWith(tmpString + "\t"))
+				.findFirst();
+			if (!newInstanceType.isPresent()) {
+				log.error("no wikidata equivelent class to " + instanceType + " has been found!");
+				System.exit(0);
 			}
+			instanceType = newInstanceType.get();
+			log.info("new instance type name: " + instanceType);
+			// // TODO: we can make it quicker by creatling a file
+			// // containing all pair of classes such as each line is:
+			// // DBpedia_Class Wikiadata_Equivalent_Class
+			// Dataset dbpedia = conf.datasets.stream().filter(x -> x.datasetName.equalsIgnoreCase(dbpediaStr)).findFirst()
+			// 		.get();			
+			// log.debug("dbpedia found ? " + dbpedia);
+			// try (HDT hdt = HDTManager.loadHDT(dbpedia.hdtFilePath, null)) {
+			// 	IteratorTripleString it = hdt.search(instanceType, "http://www.w3.org/2002/07/owl#equivalentClass", "");
+			// 	while (it.hasNext()) {
+			// 		TripleString ts = it.next();
+			// 		String wikidataInstanceType = ts.getObject().toString();
+			// 		instanceType = wikidataInstanceType;
+			// 		log.info("new instance type name: " + instanceType);
+			// 	}
+			// }
 		}
 
 		log.info("main computation...");
