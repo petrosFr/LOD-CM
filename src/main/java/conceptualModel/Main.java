@@ -267,8 +267,8 @@ public class Main {
 	 */
 	static void checkArguments(String[] args) {
 		// TODO: provide a man page if arguments are not correct.
-		if (args.length < 2) {
-			log.error("There must be at least two arguments.");
+		if (args.length < 3) {
+			log.error("There must be three arguments: class name, then threshold, then dataset name.");
 			System.exit(0);
 		}
 	}
