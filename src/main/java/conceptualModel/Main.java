@@ -282,6 +282,7 @@ public class Main {
 			log.error("error during final step: ", e);
 		}
 
+		// write labels of MFP file
 		String line = "";
 		readHashmap(folderPath + "/itemHashmap.txt");
 		String value = "";
@@ -309,7 +310,7 @@ public class Main {
 		BufferedWriter writer = new BufferedWriter(
 				new FileWriter(rootPath + set + classname + "/schemas/schema_minsupElements" + threshold + ".txt"));
 
-		// write MFP elements
+		// write MFP elements (labels)
 		Set set1 = MFPElementSup.entrySet();
 		String group = "";
 		Iterator iterator = set1.iterator();
@@ -320,8 +321,6 @@ public class Main {
 			for (String e : elemnts) {
 				group = group + " " + e;
 			}
-			System.out.print("key: " + mentry.getKey() + " & Value: ");
-			System.out.println(mentry.getValue());
 			writer.write(group + " (" + mentry.getValue() + ")");
 		}
 		writer.close();
