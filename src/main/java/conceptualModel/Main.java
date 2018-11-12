@@ -213,8 +213,10 @@ public class Main {
 			// execute the algorithm
 			double ms = Integer.parseInt(threshold) / 100.0;
 			log.info("minsup: " + ms);
+			log.debug("input exist ? " + conceptualModel.isFileExists(input));
+			log.debug("input: " + input);
 			Itemsets itemsets = algo.runAlgorithm(input, output, ms);
-			log.debug("itemsets count: " + itemsets.getItemsetsCount());
+			log.debug("itemsets count: " + (itemsets != null ? itemsets.getItemsetsCount() : 0));
 
 			ItemHashmap = folderPath + "/itemHashmap.txt";
 			TransactionSP = folderPath + "/transactions.txt";
