@@ -1,7 +1,11 @@
 package conceptualModel;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
@@ -14,6 +18,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -45,9 +50,12 @@ public class Main {
 
 	static HashMap<String, Double> propertyMinsup = new HashMap<String, Double>();
 
-	/// link
+	public static HashMap<Integer,String> HashmapItem = new HashMap<Integer,String>();
+	public static HashMap<List<String>,String> MFPElementSup = new HashMap<List<String>,String>();
+	
+	
 	public static void main(String[] args) throws IOException, NotFoundException, URISyntaxException {
-		// test
+		
 		log.info("starting...");
 		checkArguments(args);
 		String dirWhereJarIs = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI())
@@ -61,9 +69,12 @@ public class Main {
 		String classname = args[0];
 		String threshold = args[1];
 		String datasetName = args.length > 2 ? args[2] : "dbpedia";
-
+		
 		String rootPath = conf.rootPath; // FIXME: document this in Configuration class
 		String set = conf.set; // FIXME: document this in Configuration class
+		String folderPath = rootPath + set + classname;
+
+		
 		log.debug("classname: " + classname);
 		log.debug("threshold: " + threshold);
 		log.debug("datasetName: " + datasetName);
@@ -141,7 +152,7 @@ public class Main {
 			int item = 0;
 
 			// String instanceType = classname;
-			String folderPath = rootPath + set + classname;
+
 
 			File tmpFolder = new File(folderPath);
 
@@ -265,11 +276,53 @@ public class Main {
 			else
 				cmdScript = new String[] { "/bin/bash",
 						"/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub26/scriptFPgrowth.sh", classname,
-						threshold };
+						java.util.		threshold };
 			Process procScript = Runtime.getRuntime().exec(cmdScript);
 		} catch (Exception e) {
 			log.error("error during final step: ", e);
 		}
+		
+		String line="";
+		readHashmap(folderPath + "/itemHashmap.txt");
+        String value="";
+        ArrayList<String> element = new ArrayList<>();
+        BufferedReader MFPBuff = new BufferedReader(new FileReader(rootPath+ set + classname + "/schemas/schema_minsup"+threshold+".txt"));
+        while ((line = MFPBuff.readLine()) != null) {
+            String l1 = line.substring(0,line.indexOf("("));
+                String[] properties = l1.split(" ");
+                for (int i=0; i < properties.length; i++) {
+                    int x= Integer.parseInt(properties[i]);
+                    if (HashmapItem.containsKey(x)) {
+                    	value=HashmapItem.get(x);
+                    	value=value.substring(value.lastIndexOf("/")+1);
+                        if (value.contains("#"))
+                        	value=value.substring(value.indexOf("#")+1);
+                        element.add(value);
+                    }
+                       
+                }
+                String l2=line.substring(line.indexOf("(")+1,line.indexOf(")"));
+                MFPElementSup.put(element,l2);
+        }
+        MFPBuff.close();
+        BufferedWriter writer = new BufferedWriter(new FileWriter(rootPath+ set + classname + "/schemas/schema_minsupElements"+threshold+".txt"));
+       
+// write MFP elements
+        Set set1 = MFPElementSup.entrySet();
+        String group="";
+        Iterator iterator = set1.iterator();
+        while(iterator.hasNext()) {
+             Map.Entry mentry = (Map.Entry)iterator.next();
+             ArrayList<String> tt = new ArrayList<String>();
+             ArrayList<String> elemnts = (ArrayList<String>) mentry.getKey();
+             for (String e:elemnts) {
+            	 group=group+" "+e;
+             }
+             System.out.print("key: "+ mentry.getKey() + " & Value: ");
+             System.out.println(mentry.getValue());
+             writer.write(group+" ("+mentry.getValue()+")");
+          }
+        writer.close();
 		log.info("end of program.");
 	}
 
@@ -301,4 +354,36 @@ public class Main {
 			log.error("Error during saveModel: ", e);
 		}
 	}
+	
+	
+	/**
+	 * Function that read a hashMap file.
+	 * 
+	 * @param path path of hashMap file
+
+	 */
+    public static void readHashmap(String path) { 
+        File file = new File(path);
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+
+        String line="";
+        int p;
+        String s;
+        while ((line = reader.readLine()) != null) {
+            p = Integer.parseInt(line.substring(0,line.indexOf(" =>")));
+            s = line.substring(line.indexOf("=>")+3);
+            HashmapItem.put(p, s);
+        } } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+	
 }
