@@ -44,7 +44,9 @@ import org.rdfhdt.hdt.triples.TripleString;
 public class conceptualModel {
 
 	public static String myNS = "http://subhi.com#";
-	public static String dbpOntPath = "/srv/www/htdocs/demo_conception/dbpedia_2016-10.nt";
+	public static String dbpOntPath = isFileExists("/srv/www/htdocs/demo_conception/dbpedia_2016-10.nt") ? 
+		"/srv/www/htdocs/demo_conception/dbpedia_2016-10.nt" :
+		"dbpedia_2016-10.nt";
 	public static Property sub = ResourceFactory.createProperty(myNS, "subclass");
 	static Model dbpOnt = RDFDataMgr.loadModel(dbpOntPath);// <- charge dbo
 	private String mfpPathFile;
@@ -53,6 +55,16 @@ public class conceptualModel {
 
 	public conceptualModel(HDT hdt) {
 		this.hdt = hdt;
+	}
+
+	/**
+	 * Helper to check if a string correspond to an existing file.
+	 * @param filePathString
+	 * @return
+	 */
+	static boolean isFileExists(String filePathString) {
+		File f = new File(filePathString);
+		return f.exists() && !f.isDirectory();
 	}
 
 	public conceptualModel(String transPathFile, String mfpPathFile, String itemHashmap) {
