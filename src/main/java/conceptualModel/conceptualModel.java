@@ -40,8 +40,11 @@ import org.rdfhdt.hdt.exceptions.NotFoundException;
 import org.rdfhdt.hdt.hdt.HDT;
 import org.rdfhdt.hdt.triples.IteratorTripleString;
 import org.rdfhdt.hdt.triples.TripleString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class conceptualModel {
+	private static final Logger log = LoggerFactory.getLogger(Main.class);
 
 	public static String myNS = "http://subhi.com#";
 	public static String dbpOntPath = isFileExists("/srv/www/htdocs/demo_conception/dbpedia_2016-10.nt") ? 
@@ -53,7 +56,8 @@ public class conceptualModel {
 	private String itemHashmap;
 	private HDT hdt;
 
-	public conceptualModel(HDT hdt) {
+	public conceptualModel(HDT hdt) {		
+		log.debug("conceptualModel constructor");
 		this.hdt = hdt;
 	}
 
@@ -62,7 +66,7 @@ public class conceptualModel {
 	 * @param filePathString
 	 * @return
 	 */
-	static boolean isFileExists(String filePathString) {
+	public static boolean isFileExists(String filePathString) {
 		File f = new File(filePathString);
 		return f.exists() && !f.isDirectory();
 	}
@@ -73,6 +77,10 @@ public class conceptualModel {
 	}
 
 	public void setPathFile(String transPathFile, String mfpPathFile, String itemHashmap) {
+		log.debug("entering setPathFile...");
+		log.debug("transPathFile (" + isFileExists(transPathFile) + "): " + transPathFile);
+		log.debug("mfpPathFile (" + isFileExists(mfpPathFile) + "): " + mfpPathFile);
+		log.debug("itemHashmap : " + itemHashmap);
 		this.mfpPathFile = mfpPathFile;
 		this.itemHashmap = itemHashmap;
 	}
@@ -290,6 +298,10 @@ public class conceptualModel {
 
 	public void CreateTxtFile(String type, String threshold, int numberofTransactions)
 			throws IOException, NotFoundException {
+		log.debug("entering CreateTxtFile...");
+		log.debug("type: " + type);
+		log.debug("threshold: " + threshold);
+		log.debug("numberofTransactions: " + numberofTransactions);
 		String attributes = "";
 		List<String> CModel = new ArrayList<>();
 		HashSet<String> finalclass = new HashSet<String>();
@@ -483,5 +495,9 @@ public class conceptualModel {
 				RDFFormat.TTL);
 		Main.saveModel(outputModelrelations, "/srv/www/htdocs/demo_conception/pictures_uml/relation.ttl",
 				RDFFormat.TTL);
+		
+		log.debug("outputModelsupclasses exists: " + isFileExists("/srv/www/htdocs/demo_conception/pictures_uml/subclasses.ttl"));
+		log.debug("outputModelrelations exists: " + isFileExists("/srv/www/htdocs/demo_conception/pictures_uml/relation.ttl"));
+		log.debug("leaving CreateTxtFile.");
 	}
 }

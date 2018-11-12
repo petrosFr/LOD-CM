@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ca.pfv.spmf.algorithms.frequentpatterns.fpgrowth.AlgoFPGrowth;
+import ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemsets;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.SourceFileReader;
 
@@ -211,7 +212,9 @@ public class Main {
 
 			// execute the algorithm
 			double ms = Integer.parseInt(threshold) / 100.0;
-			algo.runAlgorithm(input, output, ms);
+			log.info("minsup: " + ms);
+			Itemsets itemsets = algo.runAlgorithm(input, output, ms);
+			log.debug("itemsets count: " + itemsets.getItemsetsCount());
 
 			ItemHashmap = folderPath + "/itemHashmap.txt";
 			TransactionSP = folderPath + "/transactions.txt";
@@ -223,7 +226,8 @@ public class Main {
 			conceptual.CreateTxtFile(classname, threshold, numTrans);
 
 			File source = new File(
-					"/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt");
+					"/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt");			
+			// log.debug("itemsets count: " + itemsets.getItemsetsCount());
 			SourceFileReader readeruml = new SourceFileReader(source);
 			List<GeneratedImage> list = readeruml.getGeneratedImages();
 		} catch (Exception e) {
