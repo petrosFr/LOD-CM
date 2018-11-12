@@ -4,8 +4,8 @@
     "datasets": [
         {
            "datasetName": "DBpedia",
-            "hdtFilePath_debug": "dataset.hdt",
-            "hdtFilePath": "/srv/www/htdocs/demo_conception/dataset.hdt",
+            "hdtFilePath": "dataset.hdt",
+            "hdtFilePath_debug": "/srv/www/htdocs/demo_conception/dataset.hdt",
             "classNamespace": "http://dbpedia.org/ontology/"
         },        
         {

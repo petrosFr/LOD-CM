@@ -43,7 +43,7 @@ import org.rdfhdt.hdt.triples.TripleString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class conceptualModel {
+public class ConceptualModel {
 	private static final Logger log = LoggerFactory.getLogger(Main.class);
 
 	public static String myNS = "http://subhi.com#";
@@ -56,7 +56,7 @@ public class conceptualModel {
 	private String itemHashmap;
 	private HDT hdt;
 
-	public conceptualModel(HDT hdt) {		
+	public ConceptualModel(HDT hdt) {		
 		log.debug("conceptualModel constructor");
 		this.hdt = hdt;
 	}
@@ -71,7 +71,7 @@ public class conceptualModel {
 		return f.exists() && !f.isDirectory();
 	}
 
-	public conceptualModel(String transPathFile, String mfpPathFile, String itemHashmap) {
+	public ConceptualModel(String transPathFile, String mfpPathFile, String itemHashmap) {
 		this.mfpPathFile = mfpPathFile;
 		this.itemHashmap = itemHashmap;
 	}
