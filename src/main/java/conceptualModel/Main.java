@@ -45,7 +45,7 @@ public class Main {
 	static HashMap<String, Double> propertyMinsup = new HashMap<String, Double>();
 
 	/// link
-	public static void main(Streing[] args) throws IOException, NotFoundException, URISyntaxException {
+	public static void main(String[] args) throws IOException, NotFoundException, URISyntaxException {
 
 		log.info("starting...");
 		checkArguments(args);

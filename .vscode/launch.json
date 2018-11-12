@@ -19,7 +19,7 @@
             "console": "internalConsole",
             "stopOnEntry": false,
             "mainClass": "conceptualModel.Main",
-            "args": "",
+            "args": "Actor 60 DBpedia",
             "projectName": "LOD-CM"
         }
     ]
