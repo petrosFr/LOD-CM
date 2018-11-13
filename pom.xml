@@ -11,8 +11,16 @@
 	</properties>
 	<name>LOD-CM</name>
 	<build>
+		<!-- <resources>
+			<resource>
+				<directory>spmf_library</directory>
+			</resource>
+			<resource>
+				<directory>fpm</directory>
+			</resource>
+		</resources> -->
 		<plugins>
-			<plugin>
+			<!-- <plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<version>1.8</version>
 				<executions>
@@ -29,7 +37,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>

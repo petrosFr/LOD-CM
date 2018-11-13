@@ -1,7 +1,11 @@
 package conceptualModel;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
@@ -14,6 +18,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -45,9 +50,12 @@ public class Main {
 
 	static HashMap<String, Double> propertyMinsup = new HashMap<String, Double>();
 
-	/// link
+	public static HashMap<Integer, String> HashmapItem = new HashMap<Integer, String>();
+	public static HashMap<List<String>, String> MFPElementSup = new HashMap<List<String>, String>();
+
 	public static void main(String[] args) throws IOException, NotFoundException, URISyntaxException {
 
+		// encoding/spmf_library=UTF-8
 		log.info("starting...");
 		checkArguments(args);
 		String dirWhereJarIs = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI())
@@ -64,6 +72,8 @@ public class Main {
 
 		String rootPath = conf.rootPath; // FIXME: document this in Configuration class
 		String set = conf.set; // FIXME: document this in Configuration class
+		String folderPath = rootPath + set + classname;
+
 		log.debug("classname: " + classname);
 		log.debug("threshold: " + threshold);
 		log.debug("datasetName: " + datasetName);
@@ -98,20 +108,34 @@ public class Main {
 			log.debug("using wikidata... getting corresponding class of: " + classname);
 			// We have to search for Wikidata equivalent class since
 			// the interface present only DBpedia classes.
-			// TODO: we can make it quicker by creatling a file
-			// containing all pair of classes such as each line is:
-			// DBpedia_Class Wikiadata_Equivalent_Class
-			Dataset dbpedia = conf.datasets.stream().filter(x -> x.datasetName.equalsIgnoreCase(dbpediaStr)).findFirst()
-					.get();
-			try (HDT hdt = HDTManager.loadHDT(dbpedia.hdtFilePath, null)) {
-				IteratorTripleString it = hdt.search(instanceType, "http://www.w3.org/2002/07/owl#equivalentClass", "");
-				while (it.hasNext()) {
-					TripleString ts = it.next();
-					String wikidataInstanceType = ts.getObject().toString();
-					instanceType = wikidataInstanceType;
-					log.info("new instance type name: " + instanceType);
-				}
+			log.debug("equivalent_classes exists ? " + Helpers.isFileExists("./equivalent_classes"));
+			List<String> lines = Files.readAllLines(Paths.get("./", "equivalent_classes"));
+			log.debug("# of equivalent classes: " + lines.size());
+			final String tmpString = instanceType;
+			Optional<String> newInstanceType = lines.stream().filter(x -> x.startsWith(tmpString + "\t")).findFirst();
+			if (!newInstanceType.isPresent()) {
+				log.error("no wikidata equivelent class to " + instanceType + " has been found!");
+				System.exit(0);
 			}
+			instanceType = newInstanceType.get();
+			log.info("new instance type name: " + instanceType);
+			// // TODO: we can make it quicker by creatling a file
+			// // containing all pair of classes such as each line is:
+			// // DBpedia_Class Wikiadata_Equivalent_Class
+			// Dataset dbpedia = conf.datasets.stream().filter(x ->
+			// x.datasetName.equalsIgnoreCase(dbpediaStr)).findFirst()
+			// .get();
+			// log.debug("dbpedia found ? " + dbpedia);
+			// try (HDT hdt = HDTManager.loadHDT(dbpedia.hdtFilePath, null)) {
+			// IteratorTripleString it = hdt.search(instanceType,
+			// "http://www.w3.org/2002/07/owl#equivalentClass", "");
+			// while (it.hasNext()) {
+			// TripleString ts = it.next();
+			// String wikidataInstanceType = ts.getObject().toString();
+			// instanceType = wikidataInstanceType;
+			// log.info("new instance type name: " + instanceType);
+			// }
+			// }
 		}
 
 		log.info("main computation...");
@@ -128,7 +152,6 @@ public class Main {
 			int item = 0;
 
 			// String instanceType = classname;
-			String folderPath = rootPath + set + classname;
 
 			File tmpFolder = new File(folderPath);
 
@@ -257,6 +280,49 @@ public class Main {
 		} catch (Exception e) {
 			log.error("error during final step: ", e);
 		}
+
+		// write labels of MFP file
+		String line = "";
+		readHashmap(folderPath + "/itemHashmap.txt");
+		String value = "";
+		ArrayList<String> element = new ArrayList<>();
+		BufferedReader MFPBuff = new BufferedReader(
+				new FileReader(rootPath + set + classname + "/schemas/schema_minsup" + threshold + ".txt"));
+		while ((line = MFPBuff.readLine()) != null) {
+			String l1 = line.substring(0, line.indexOf("("));
+			String[] properties = l1.split(" ");
+			for (int i = 0; i < properties.length; i++) {
+				int x = Integer.parseInt(properties[i]);
+				if (HashmapItem.containsKey(x)) {
+					value = HashmapItem.get(x);
+					value = value.substring(value.lastIndexOf("/") + 1);
+					if (value.contains("#"))
+						value = value.substring(value.indexOf("#") + 1);
+					element.add(value);
+				}
+
+			}
+			String l2 = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
+			MFPElementSup.put(element, l2);
+		}
+		MFPBuff.close();
+		BufferedWriter writer = new BufferedWriter(
+				new FileWriter(rootPath + set + classname + "/schemas/schema_minsupElements" + threshold + ".txt"));
+
+		// write MFP elements (labels)
+		Set set1 = MFPElementSup.entrySet();
+		String group = "";
+		Iterator iterator = set1.iterator();
+		while (iterator.hasNext()) {
+			Map.Entry mentry = (Map.Entry) iterator.next();
+			ArrayList<String> tt = new ArrayList<String>();
+			ArrayList<String> elemnts = (ArrayList<String>) mentry.getKey();
+			for (String e : elemnts) {
+				group = group + " " + e;
+			}
+			writer.write(group + " (" + mentry.getValue() + ")");
+		}
+		writer.close();
 		log.info("end of program.");
 	}
 
@@ -267,8 +333,8 @@ public class Main {
 	 */
 	static void checkArguments(String[] args) {
 		// TODO: provide a man page if arguments are not correct.
-		if (args.length < 2) {
-			log.error("There must be at least two arguments.");
+		if (args.length < 3) {
+			log.error("There must be three arguments: class name, then threshold, then dataset name.");
 			System.exit(1);
 		}
 	}
@@ -288,4 +354,36 @@ public class Main {
 			log.error("Error during saveModel: ", e);
 		}
 	}
+
+	/**
+	 * Function that read a hashMap file.
+	 * 
+	 * @param path path of hashMap file
+	 * 
+	 */
+	public static void readHashmap(String path) {
+		File file = new File(path);
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader(file));
+
+			String line = "";
+			int p;
+			String s;
+			while ((line = reader.readLine()) != null) {
+				p = Integer.parseInt(line.substring(0, line.indexOf(" =>")));
+				s = line.substring(line.indexOf("=>") + 3);
+				HashmapItem.put(p, s);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 }
