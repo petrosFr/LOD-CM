@@ -2,6 +2,17 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - DatasetInformations",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "conceptualModel.DatasetInformations",
+            "args": "",
+            "projectName": "linked_itemset_4"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - Main",
             "request": "launch",
             "cwd": "${workspaceFolder}",
@@ -31,7 +42,7 @@
             "stopOnEntry": false,
             "mainClass": "conceptualModel.Main",
             "args": "Actor 60 DBpedia",
-            "projectName": "LOD-CM"
+            "projectName": "linked_itemset_4"
         }
     ]
 }

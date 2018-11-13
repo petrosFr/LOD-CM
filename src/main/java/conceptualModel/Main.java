@@ -81,7 +81,7 @@ public class Main {
 				.filter(x -> x.datasetName.equalsIgnoreCase(datasetName)).findFirst();
 		if (!optionalDataset.isPresent()) {
 			log.error("No corresponding dataset found: " + datasetName);
-			System.exit(0);
+			System.exit(1);
 		}
 		Dataset ds = optionalDataset.get();
 
@@ -216,9 +216,9 @@ public class Main {
 			// log.debug("input: " + input);
 			Itemsets itemsets = null;
 			try {		
-				log.debug("input exist ? " + conceptualModel.isFileExists(input));		
+				log.debug("input exist ? " + Helpers.isFileExists(input));		
 				itemsets = algo.runAlgorithm(input, output, ms);
-				log.debug("output exist ? " + conceptualModel.isFileExists(output));	
+				log.debug("output exist ? " + Helpers.isFileExists(output));	
 			} catch (Exception e) {
 				log.error("Error in AlgoFPGrowth runAlgorithm", e);
 			}
@@ -235,7 +235,7 @@ public class Main {
 
 			File source = new File(
 					"/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt");			
-			log.debug("source exist? " + conceptualModel.isFileExists("/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt"));
+			log.debug("source exist? " + Helpers.isFileExists("/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt"));
 			SourceFileReader readeruml = new SourceFileReader(source);
 			List<GeneratedImage> list = readeruml.getGeneratedImages();
 			log.debug("# of generated images: " + list.size());
@@ -269,7 +269,7 @@ public class Main {
 		// TODO: provide a man page if arguments are not correct.
 		if (args.length < 2) {
 			log.error("There must be at least two arguments.");
-			System.exit(0);
+			System.exit(1);
 		}
 	}
 

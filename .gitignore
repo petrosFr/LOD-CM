@@ -6,3 +6,6 @@ log_information.txt
 logs
 lod_cm_logs
 hs_err_*
+transactions*.txt
+dbp_results.txt
+wikidata_results.txt
