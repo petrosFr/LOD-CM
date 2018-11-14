@@ -25,6 +25,7 @@ import org.rdfhdt.hdt.triples.TripleString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ca.pfv.spmf.algorithms.frequentpatterns.apriori.AlgoApriori;
 import ca.pfv.spmf.algorithms.frequentpatterns.fpgrowth.AlgoFPGrowth;
 import ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemset;
 import ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemsets;
@@ -80,9 +81,12 @@ public class DatasetInformations {
 
     public List<List<Itemset>> getItemsetsByLevel(String transactionsFilePath, double threshold)
             throws FileNotFoundException, IOException {
-        log.debug("FPGrowth...");
-        AlgoFPGrowth algo = new AlgoFPGrowth();
-        Itemsets itemsets = algo.runAlgorithm(transactionsFilePath.toString(), null, threshold);
+        // log.debug("FPGrowth...");
+        // AlgoFPGrowth algo = new AlgoFPGrowth();
+        // Itemsets itemsets = algo.runAlgorithm(transactionsFilePath.toString(), null, threshold);
+        log.debug("Apriori...");
+        AlgoApriori algo = new AlgoApriori();
+        Itemsets itemsets = algo.runAlgorithm(threshold, transactionsFilePath.toString(), null);
         log.debug("# of itemsets: " + itemsets.getItemsetsCount());
         return itemsets.getLevels();
     }
