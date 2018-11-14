@@ -135,6 +135,7 @@ public class DatasetInformations {
 
     public static void main(String[] args) throws IOException, NotFoundException {
         log.debug("start!");
+        // java -server -Xmx300g -Xms8g -Dfile.encoding=UTF-8 -cp "/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/lod-cmOK.jar" conceptualModel.DatasetInformations "/srv/www/htdocs/demo_conception/dataset.hdt" "/data2/hamdif/doctorants/ph/linkeddatasets/hdt/wikidata/wikidata-20170313-all-BETA.hdt" 
         // test();
         if (args.length != 2) {
             System.out.println("You must provide the path to dbpedia then to wikidata HDT files.");
@@ -166,11 +167,13 @@ public class DatasetInformations {
         }
 
         String dbpediaPath = args.length > 1 ? args[0] : "dataset.hdt";
+        log.debug("DBpedia path: " + dbpediaPath);
         List<String> dbpediaLatexArray = generateLatexArray(dbpediaClasses, thresholds, dbpediaPath, propertyTypeDBpedia, "DBpedia number of predicates by classes and thresholds", "tab:dbpPredicatesThresholds", columns, tabular);
         Path dbpediaResultPath = Paths.get("dbp_results.txt");
         Files.write(dbpediaResultPath, dbpediaLatexArray, Charset.forName("UTF-8"));
         
         String wikidataPath = args[1];
+        log.debug("Wikidata path: " + wikidataPath);
         List<String> wikidataLatexArray = generateLatexArray(wikidataClasses, thresholds, wikidataPath, propertyTypeWikidata, "Wikidata number of predicates by classes and thresholds", "tab:wikiPredicatesThresholds", columns, tabular);                
         Path wikidataResultPath = Paths.get("wikidata_results.txt");
         Files.write(wikidataResultPath, wikidataLatexArray, Charset.forName("UTF-8"));
@@ -207,7 +210,9 @@ public class DatasetInformations {
         ));
         for (Entry<String, String> classEntry : classes.entrySet()) {
             String line = classEntry.getValue() + " & ";
+            log.debug("class: " + classEntry.getValue());
             for (Double threshold : thresholds) {
+                log.debug("threshold: " + threshold);
                 DatasetInformations di = new DatasetInformations();
                 int numberOfPredicates = di.getNumberOfPropertiesAboveThreshold(hdtPath, classEntry.getKey(), threshold, propertyType, classEntry.getValue());
                 line += numberOfPredicates + " & ";
