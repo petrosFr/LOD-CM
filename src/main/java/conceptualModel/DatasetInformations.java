@@ -106,10 +106,12 @@ public class DatasetInformations {
     public Map<String, Set<String>> getPredicatesBySubject(String hdtPath, String propertyType, String instanceType)
             throws IOException, NotFoundException {
         final Map<String, Set<String>> predicatesBySubject = new ConcurrentHashMap<>();
-        try (HDT hdt = HDTManager.loadHDT(hdtPath, null)) {
+        // try (HDT hdt = HDTManager.loadHDT(hdtPath, null)) {
+        try (HDT hdt = HDTManager.mapIndexedHDT(hdtPath, null)) {
             log.debug("Subjects retrieving...");
             Set<String> subjects = new HashSet<>();
             IteratorTripleString it = hdt.search("", propertyType, instanceType);
+            log.debug("query: " + "(? <" + propertyType + "> <" + instanceType + ">)");
             while (it.hasNext()) {
                 TripleString ts = it.next();
                 String s = ts.getSubject().toString();
@@ -171,17 +173,17 @@ public class DatasetInformations {
         }
 
         try {
-            // String dbpediaPath = args.length > 1 ? args[0] : "dataset.hdt";
-            // log.debug("DBpedia path: " + dbpediaPath);
-            // List<String> dbpediaLatexArray = generateLatexArray(dbpediaClasses, thresholds, dbpediaPath, propertyTypeDBpedia, "DBpedia number of predicates by classes and thresholds", "tab:dbpPredicatesThresholds", columns, tabular);
-            // Path dbpediaResultPath = Paths.get("dbp_results.txt");
-            // Files.write(dbpediaResultPath, dbpediaLatexArray, Charset.forName("UTF-8"));
+            String dbpediaPath = args.length > 1 ? args[0] : "dataset.hdt";
+            log.debug("DBpedia path: " + dbpediaPath);
+            List<String> dbpediaLatexArray = generateLatexArray(dbpediaClasses, thresholds, dbpediaPath, propertyTypeDBpedia, "DBpedia number of predicates by classes and thresholds", "tab:dbpPredicatesThresholds", columns, tabular);
+            Path dbpediaResultPath = Paths.get("dbp_results.txt");
+            Files.write(dbpediaResultPath, dbpediaLatexArray, Charset.forName("UTF-8"));
 
-            String wikidataPath = args[1];
-            log.debug("Wikidata path: " + wikidataPath);
-            List<String> wikidataLatexArray = generateLatexArray(wikidataClasses, thresholds, wikidataPath, propertyTypeWikidata, "Wikidata number of predicates by classes and thresholds", "tab:wikiPredicatesThresholds", columns, tabular);                
-            Path wikidataResultPath = Paths.get("wikidata_results.txt");
-            Files.write(wikidataResultPath, wikidataLatexArray, Charset.forName("UTF-8"));
+            // String wikidataPath = args[1];
+            // log.debug("Wikidata path: " + wikidataPath);
+            // List<String> wikidataLatexArray = generateLatexArray(wikidataClasses, thresholds, wikidataPath, propertyTypeWikidata, "Wikidata number of predicates by classes and thresholds", "tab:wikiPredicatesThresholds", columns, tabular);                
+            // Path wikidataResultPath = Paths.get("wikidata_results.txt");
+            // Files.write(wikidataResultPath, wikidataLatexArray, Charset.forName("UTF-8"));
         } catch (Exception e) {
             log.error("Error in main: ", e);
         }
