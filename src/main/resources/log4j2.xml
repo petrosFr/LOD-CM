@@ -4,8 +4,10 @@
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
     </Console>
-    <RollingFile name="RollingFile" fileName="/srv/www/htdocs/demo_conception/pictures_uml/lod_cm_logs/app.log" immediateFlush="false"
-                 filePattern="/srv/www/htdocs/demo_conception/pictures_uml/lod_cm_logs/archives/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+   <!--  <RollingFile name="RollingFile" fileName="/srv/www/htdocs/demo_conception/pictures_uml/lod_cm_logs/app.log" immediateFlush="false"
+                 filePattern="/srv/www/htdocs/demo_conception/pictures_uml/lod_cm_logs/archives/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz"> -->
+    <RollingFile name="RollingFile" fileName="lod_cm_logs/app.log" immediateFlush="false"
+                 filePattern="lod_cm_logs/archives/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
         <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         <Policies>
             <OnStartupTriggeringPolicy />

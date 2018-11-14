@@ -63,7 +63,7 @@ public class Main {
 		// FIXME: automatize recuperation of jar name, do not hard code it in following
 		// string.
 		String fullConfFileName = Paths.get(dirWhereJarIs, "conf.json").toString().replace("target\\classes\\", "")
-				.replace("target/classes/", "").replace("lod-cmOK.jar/", "").replace("lod-cmOK.jar\\", "");
+				.replace("target/classes/", "").replace("lod-cmOK1.jar/", "").replace("lod-cmOK1.jar\\", "");
 		log.info("loading configuration file: " + fullConfFileName);
 		Configuration conf = Configuration.fromJson(fullConfFileName);
 		String classname = args[0];
