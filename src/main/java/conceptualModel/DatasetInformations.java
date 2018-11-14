@@ -179,11 +179,11 @@ public class DatasetInformations {
             Path dbpediaResultPath = Paths.get("dbp_results.txt");
             Files.write(dbpediaResultPath, dbpediaLatexArray, Charset.forName("UTF-8"));
 
-            // String wikidataPath = args[1];
-            // log.debug("Wikidata path: " + wikidataPath);
-            // List<String> wikidataLatexArray = generateLatexArray(wikidataClasses, thresholds, wikidataPath, propertyTypeWikidata, "Wikidata number of predicates by classes and thresholds", "tab:wikiPredicatesThresholds", columns, tabular);                
-            // Path wikidataResultPath = Paths.get("wikidata_results.txt");
-            // Files.write(wikidataResultPath, wikidataLatexArray, Charset.forName("UTF-8"));
+            String wikidataPath = args[1];
+            log.debug("Wikidata path: " + wikidataPath);
+            List<String> wikidataLatexArray = generateLatexArray(wikidataClasses, thresholds, wikidataPath, propertyTypeWikidata, "Wikidata number of predicates by classes and thresholds", "tab:wikiPredicatesThresholds", columns, tabular);                
+            Path wikidataResultPath = Paths.get("wikidata_results.txt");
+            Files.write(wikidataResultPath, wikidataLatexArray, Charset.forName("UTF-8"));
         } catch (Exception e) {
             log.error("Error in main: ", e);
         }
