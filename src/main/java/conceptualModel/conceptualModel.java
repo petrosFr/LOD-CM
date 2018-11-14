@@ -47,7 +47,7 @@ public class conceptualModel {
 	private static final Logger log = LoggerFactory.getLogger(Main.class);
 
 	public static String myNS = "http://subhi.com#";
-	public static String dbpOntPath = isFileExists("/srv/www/htdocs/demo_conception/dbpedia_2016-10.nt") ? 
+	public static String dbpOntPath = Helpers.isFileExists("/srv/www/htdocs/demo_conception/dbpedia_2016-10.nt") ? 
 		"/srv/www/htdocs/demo_conception/dbpedia_2016-10.nt" :
 		"dbpedia_2016-10.nt";
 	public static Property sub = ResourceFactory.createProperty(myNS, "subclass");
@@ -61,15 +61,6 @@ public class conceptualModel {
 		this.hdt = hdt;
 	}
 
-	/**
-	 * Helper to check if a string correspond to an existing file.
-	 * @param filePathString
-	 * @return
-	 */
-	public static boolean isFileExists(String filePathString) {
-		File f = new File(filePathString);
-		return f.exists() && !f.isDirectory();
-	}
 
 	public conceptualModel(String transPathFile, String mfpPathFile, String itemHashmap) {
 		this.mfpPathFile = mfpPathFile;
@@ -78,8 +69,8 @@ public class conceptualModel {
 
 	public void setPathFile(String transPathFile, String mfpPathFile, String itemHashmap) {
 		log.debug("entering setPathFile...");
-		log.debug("transPathFile (" + isFileExists(transPathFile) + "): " + transPathFile);
-		log.debug("mfpPathFile (" + isFileExists(mfpPathFile) + "): " + mfpPathFile);
+		log.debug("transPathFile (" + Helpers.isFileExists(transPathFile) + "): " + transPathFile);
+		log.debug("mfpPathFile (" + Helpers.isFileExists(mfpPathFile) + "): " + mfpPathFile);
 		log.debug("itemHashmap : " + itemHashmap);
 		this.mfpPathFile = mfpPathFile;
 		this.itemHashmap = itemHashmap;
@@ -500,8 +491,8 @@ public class conceptualModel {
 		Main.saveModel(outputModelrelations, "/srv/www/htdocs/demo_conception/pictures_uml/relation.ttl",
 				RDFFormat.TTL);
 		
-		log.debug("outputModelsupclasses exists: " + isFileExists("/srv/www/htdocs/demo_conception/pictures_uml/subclasses.ttl"));
-		log.debug("outputModelrelations exists: " + isFileExists("/srv/www/htdocs/demo_conception/pictures_uml/relation.ttl"));
+		log.debug("outputModelsupclasses exists: " + Helpers.isFileExists("/srv/www/htdocs/demo_conception/pictures_uml/subclasses.ttl"));
+		log.debug("outputModelrelations exists: " + Helpers.isFileExists("/srv/www/htdocs/demo_conception/pictures_uml/relation.ttl"));
 		log.debug("leaving CreateTxtFile.");
 	}
 }

@@ -91,7 +91,7 @@ public class Main {
 				.filter(x -> x.datasetName.equalsIgnoreCase(datasetName)).findFirst();
 		if (!optionalDataset.isPresent()) {
 			log.error("No corresponding dataset found: " + datasetName);
-			System.exit(0);
+			System.exit(1);
 		}
 		Dataset ds = optionalDataset.get();
 
@@ -108,7 +108,7 @@ public class Main {
 			log.debug("using wikidata... getting corresponding class of: " + classname);
 			// We have to search for Wikidata equivalent class since
 			// the interface present only DBpedia classes.
-			log.debug("equivalent_classes exists ? " + conceptualModel.isFileExists("./equivalent_classes"));
+			log.debug("equivalent_classes exists ? " + Helpers.isFileExists("./equivalent_classes"));
 			List<String> lines = Files.readAllLines(Paths.get("./", "equivalent_classes"));
 			log.debug("# of equivalent classes: " + lines.size());
 			final String tmpString = instanceType;
@@ -238,10 +238,10 @@ public class Main {
 			log.info("minsup: " + ms);
 			// log.debug("input: " + input);
 			Itemsets itemsets = null;
-			try {
-				log.debug("input exist ? " + conceptualModel.isFileExists(input));
+			try {		
+				log.debug("input exist ? " + Helpers.isFileExists(input));		
 				itemsets = algo.runAlgorithm(input, output, ms);
-				log.debug("output exist ? " + conceptualModel.isFileExists(output));
+				log.debug("output exist ? " + Helpers.isFileExists(output));	
 			} catch (Exception e) {
 				log.error("Error in AlgoFPGrowth runAlgorithm", e);
 			}
@@ -257,9 +257,8 @@ public class Main {
 			conceptual.CreateTxtFile(classname, threshold, numTrans);
 
 			File source = new File(
-					"/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt");
-			log.debug("source exist? " + conceptualModel.isFileExists(
-					"/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt"));
+					"/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt");			
+			log.debug("source exist? " + Helpers.isFileExists("/srv/www/htdocs/demo_conception/pictures_uml/CModel_" + classname + "_" + threshold + ".txt"));
 			SourceFileReader readeruml = new SourceFileReader(source);
 			List<GeneratedImage> list = readeruml.getGeneratedImages();
 			log.debug("# of generated images: " + list.size());
@@ -336,7 +335,7 @@ public class Main {
 		// TODO: provide a man page if arguments are not correct.
 		if (args.length < 3) {
 			log.error("There must be three arguments: class name, then threshold, then dataset name.");
-			System.exit(0);
+			System.exit(1);
 		}
 	}
 
