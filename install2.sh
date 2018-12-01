@@ -23,9 +23,9 @@ echo 'end building'
 echo 'sending to remote server...'
 cp target/lod-cm-0.0.1-SNAPSHOT-jar-with-dependencies.jar target/lod-cmOK.jar
 scp target/lod-cmOK.jar pari_p1@vlad.cnam.fr:~/
-ssh pari_p1@vlad.cnam.fr
+# ssh pari_p1@vlad.cnam.fr
 # jar is on vlad, let's copy it on IE5
-scp lod-cmOK.jar pari_p1@ie5.cnam.fr:/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/
+ssh pari_p1@vlad.cnam.fr scp /etudiants/deptinfo/p/pari_p1/lod-cmOK.jar pari_p1@ie5.cnam.fr:/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/
 echo 'end copying'
 exit
 # cd /etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub26

@@ -162,7 +162,7 @@ public class DatasetInformations {
                 Map.entry("http://www.wikidata.org/entity/Q486972", "human settlement"),
                 Map.entry("http://www.wikidata.org/entity/Q43229", "organization")
             );
-        String propertyTypeWikidata = "http://www.wikidata.org/prop/P31";
+        String propertyTypeWikidata = "http://www.wikidata.org/prop/direct/P31";
         String propertyTypeDBpedia = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
         
         String columns = "Class & " + String.join(" & ", thresholds.stream().map(x -> x.toString())

@@ -160,7 +160,7 @@ public class Main {
 				boolean creationResult = tmpFolder.mkdirs();
 				log.info("folder created: " + creationResult);
 			}
-			String propertyType = ds.datasetName.equalsIgnoreCase(wikidataStr) ? "http://www.wikidata.org/prop/P31"
+			String propertyType = ds.datasetName.equalsIgnoreCase(wikidataStr) ? "http://www.wikidata.org/prop/direct/P31"
 					: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
 			log.debug("propertyType: " + propertyType);
 			IteratorTripleString it = hdt.search("", propertyType, instanceType);
