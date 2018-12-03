@@ -106,8 +106,10 @@ public class DatasetInformations {
     public Map<String, Set<String>> getPredicatesBySubject(String hdtPath, String propertyType, String instanceType)
             throws IOException, NotFoundException {
         final Map<String, Set<String>> predicatesBySubject = new ConcurrentHashMap<>();
-        // try (HDT hdt = HDTManager.loadHDT(hdtPath, null)) {
-        try (HDT hdt = HDTManager.mapIndexedHDT(hdtPath, null)) {
+        log.debug("HDT file loading...");
+        try (HDT hdt = HDTManager.loadHDT(hdtPath, null)) {
+            log.debug("HDT file loaded");
+        // try (HDT hdt = HDTManager.mapIndexedHDT(hdtPath, null)) {
             log.debug("Subjects retrieving...");
             Set<String> subjects = new HashSet<>();
             IteratorTripleString it = hdt.search("", propertyType, instanceType);
@@ -142,19 +144,20 @@ public class DatasetInformations {
     public static void main(String[] args) throws IOException, NotFoundException {
         log.debug("start!");
         // java -server -Xmx300g -Xms8g -Dfile.encoding=UTF-8 -cp "/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/lod-cmOK.jar" conceptualModel.DatasetInformations "/srv/www/htdocs/demo_conception/dataset.hdt" "/data2/hamdif/doctorants/ph/linkeddatasets/hdt/wikidata/wikidata-20170313-all-BETA.hdt" 
+        // java -server -Xmx300g -Xms8g -Dfile.encoding=UTF-8 -cp "/data2/hamdif/doctorants/ph/lod_cm/*" conceptualModel.DatasetInformations "/srv/www/htdocs/demo_conception/dataset.hdt" "/data2/hamdif/doctorants/ph/linkeddatasets/hdt/wikidata/wikidata-20170313-all-BETA.hdt"
         // test();
         if (args.length != 2) {
             System.out.println("You must provide the path to dbpedia then to wikidata HDT files.");
             log.info("You must provide the path to dbpedia then to wikidata HDT files.");
         }
         List<Double> thresholds = Arrays.asList(0.1d, 0.3d, 0.5d, 0.7d, 0.9d);
-        Map<String, String> dbpediaClasses = 
-            Map.ofEntries(
-                Map.entry("http://dbpedia.org/ontology/Scientist", "Scientist"),
-                Map.entry("http://dbpedia.org/ontology/Film", "Film"),
-                Map.entry("http://dbpedia.org/ontology/Settlement", "Settlement"),
-                Map.entry("http://dbpedia.org/ontology/Organisation", "Organisation")
-            );
+        // Map<String, String> dbpediaClasses = 
+        //     Map.ofEntries(
+        //         Map.entry("http://dbpedia.org/ontology/Scientist", "Scientist"),
+        //         Map.entry("http://dbpedia.org/ontology/Film", "Film"),
+        //         Map.entry("http://dbpedia.org/ontology/Settlement", "Settlement"),
+        //         Map.entry("http://dbpedia.org/ontology/Organisation", "Organisation")
+        //     );
         Map<String, String> wikidataClasses = 
             Map.ofEntries(
                 Map.entry("http://www.wikidata.org/entity/Q901", "scientist"),
@@ -163,7 +166,7 @@ public class DatasetInformations {
                 Map.entry("http://www.wikidata.org/entity/Q43229", "organization")
             );
         String propertyTypeWikidata = "http://www.wikidata.org/prop/direct/P31";
-        String propertyTypeDBpedia = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+        // String propertyTypeDBpedia = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
         
         String columns = "Class & " + String.join(" & ", thresholds.stream().map(x -> x.toString())
             .collect(Collectors.toList())).trim();
@@ -173,11 +176,11 @@ public class DatasetInformations {
         }
 
         try {
-            String dbpediaPath = args.length > 1 ? args[0] : "dataset.hdt";
-            log.debug("DBpedia path: " + dbpediaPath);
-            List<String> dbpediaLatexArray = generateLatexArray(dbpediaClasses, thresholds, dbpediaPath, propertyTypeDBpedia, "DBpedia number of predicates by classes and thresholds", "tab:dbpPredicatesThresholds", columns, tabular);
-            Path dbpediaResultPath = Paths.get("dbp_results.txt");
-            Files.write(dbpediaResultPath, dbpediaLatexArray, Charset.forName("UTF-8"));
+            // String dbpediaPath = args.length > 1 ? args[0] : "dataset.hdt";
+            // log.debug("DBpedia path: " + dbpediaPath);
+            // List<String> dbpediaLatexArray = generateLatexArray(dbpediaClasses, thresholds, dbpediaPath, propertyTypeDBpedia, "DBpedia number of predicates by classes and thresholds", "tab:dbpPredicatesThresholds", columns, tabular);
+            // Path dbpediaResultPath = Paths.get("dbp_results.txt");
+            // Files.write(dbpediaResultPath, dbpediaLatexArray, Charset.forName("UTF-8"));
 
             String wikidataPath = args[1];
             log.debug("Wikidata path: " + wikidataPath);
@@ -220,7 +223,7 @@ public class DatasetInformations {
         ));
         for (Entry<String, String> classEntry : classes.entrySet()) {
             String line = classEntry.getValue() + " & ";
-            log.debug("class: " + classEntry.getValue());
+            log.debug("class: " + classEntry.getValue() + " // " + classEntry.getKey());
             for (Double threshold : thresholds) {
                 log.debug("threshold: " + threshold);
                 DatasetInformations di = new DatasetInformations();

@@ -56,6 +56,7 @@ public class Main {
 	public static void main(String[] args) throws IOException, NotFoundException, URISyntaxException {
 
 		// encoding/spmf_library=UTF-8
+		// java -server -Xmx300g -Xms8g -Dfile.encoding=UTF-8 -Dlog4j.configurationFile=/data2/hamdif/doctorants/ph/wardrobe_java/log4j2.xml -cp "/data2/hamdif/doctorants/ph/lod_cm/*" conceptualModel.Main Actor 80 Wikidata
 		log.info("starting...");
 		checkArguments(args);
 		String dirWhereJarIs = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI())
