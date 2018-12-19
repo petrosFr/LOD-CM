@@ -1,12 +1,12 @@
 {
     "rootPath": "/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/itemsets/",
     "set": "dbpedia/2016-10/",
-    "fpsDirectory": "/etudiants/deptinfo/p/pari_p1/dev/java/LOD-CM/GeneratedFiles/<DATASET>/<CLASSNAME>/FP/",
+    "fpsDirectory": "D:/xp/GeneratedFiles/<DATASET>/<CLASSNAME>/FP/",
     "datasets": [
         {
            "datasetName": "DBpedia",
             "hdtFilePath_debug": "dataset.hdt",
-            "hdtFilePath": "/srv/www/htdocs/demo_conception/dataset.hdt",
+            "hdtFilePath": "D:/hdt/dbpedia/custom/dataset.hdt",
             "classNamespace": "http://dbpedia.org/ontology/",
             "propertyType": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
         },        

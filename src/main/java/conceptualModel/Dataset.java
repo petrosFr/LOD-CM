@@ -6,5 +6,6 @@ public class Dataset {
     public String datasetName;
     public String hdtFilePath;
     public String classNamespace;
+    public String propertyType;
     
 }

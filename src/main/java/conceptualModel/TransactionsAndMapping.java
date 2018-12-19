@@ -47,7 +47,7 @@ public class TransactionsAndMapping {
     }
 
     /**
-     * Reach line is a transaction composed by item separated by a space.
+     * Each line is a transaction composed by item separated by a space.
      * @return
      */
     public List<String> getTransactionsToStringList() {

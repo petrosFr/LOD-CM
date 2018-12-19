@@ -18,6 +18,7 @@ public class Configuration {
      * List of available datasets.
      */
     public List<Dataset> datasets;
+    public String fpsDirectory;
 
     /**
      * Fill the configuration class with values from specified json file.

@@ -32,8 +32,16 @@ import ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemsets;
 
 public class DatasetInformations {
     private static final Logger log = LoggerFactory.getLogger(DatasetInformations.class);
+    private Dataset ds;
+    public DatasetInformations(Dataset ds) {
+		this.ds = ds;
+	}
 
-    /**
+	public DatasetInformations() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
      * Compute the number of properties above the given threshold for the given
      * class.
      * 
@@ -270,4 +278,12 @@ public class DatasetInformations {
             log.error("error: ", e);
         }
     }
+
+	public List<InstanceType> getAllClasses() {
+		throw new UnsupportedOperationException();
+	}
+
+	public Map<String, Set<String>> getPredicatesBySubject(String instanceType) throws IOException, NotFoundException {
+		return getPredicatesBySubject(ds.hdtFilePath, ds.propertyType, instanceType);
+	}
 }
