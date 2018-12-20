@@ -50,9 +50,9 @@ public class FP {
 		double ms = threshold / 100.0;
 		log.info("minsup: " + ms);
 		// log.debug("input: " + input);
-		String folderPath = null;
+		String folderPath = "D:/xp";
 		String input = folderPath + "/transactions.txt";
-		Path inputPath = Paths.get(folderPath, folderPath);
+		Path inputPath = Paths.get(input);
 		if (!Files.exists(inputPath)) {
 			Files.write(inputPath, tam.getTransactionsToStringList(), Charset.forName("UTF-8"));
 		}

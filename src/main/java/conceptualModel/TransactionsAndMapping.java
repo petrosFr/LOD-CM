@@ -1,5 +1,9 @@
 package conceptualModel;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,14 +24,20 @@ public class TransactionsAndMapping {
     private List<List<Integer>> transactions;
     private Map<String, Set<String>> predicatesBySubject;
 
+	public String transactionsFilePath;
+
     /**
      * Each key is a subject and each corresponding set is its predicates
      * @param predicatesBySubject
      */
-    public TransactionsAndMapping(Map<String, Set<String>> predicatesBySubject) {
+    public TransactionsAndMapping(Map<String, Set<String>> predicatesBySubject, Configuration conf, Dataset ds, InstanceType instanceType) {
         this.predicatesBySubject = predicatesBySubject;
         this.mappingPredicateToInt = new HashMap<>();
         this.transactions = new ArrayList<>();
+        this.transactionsFilePath = conf.transactionsFilePath.replace("<DATASETNAME>", ds.datasetName).replace("<CLASSLABEL>", instanceType.label);// initiliser ici !!!! utiliser conf, ds et className
+        if (OSValidator.isWindows()) {
+        	this.transactionsFilePath = this.transactionsFilePath.replace("/mnt/d", "D:");
+        }
     }
 
     /**
@@ -64,8 +74,9 @@ public class TransactionsAndMapping {
 
     /**
      * Compute all transactions from predicatesBySubject.
+     * @throws IOException 
      */
-    public void computeTransactions() {
+    public void computeTransactions(boolean saveTofile) throws IOException {
         log.debug("Computing transactions...");
         int predicateCount = 1;
         for (Entry<String, Set<String>> predicateBySubject : predicatesBySubject.entrySet()) {
@@ -81,6 +92,10 @@ public class TransactionsAndMapping {
                 }
             }
             transactions.add(transaction);
+        }
+        if (saveTofile) {
+        	//enregistrer ici les transations dans transactionsFilePath
+        	Files.write(Paths.get(transactionsFilePath), getTransactionsToStringList(),  Charset.forName("UTF-8"));
         }
         log.debug("# of transactions: " + transactions.size());
     }

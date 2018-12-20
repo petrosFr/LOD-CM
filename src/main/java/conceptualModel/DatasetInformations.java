@@ -33,8 +33,10 @@ import ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemsets;
 public class DatasetInformations {
     private static final Logger log = LoggerFactory.getLogger(DatasetInformations.class);
     private Dataset ds;
-    public DatasetInformations(Dataset ds) {
+    Configuration conf;
+    public DatasetInformations(Dataset ds, Configuration conf) {
 		this.ds = ds;
+		this.conf = conf;
 	}
 
 	public DatasetInformations() {
@@ -55,7 +57,7 @@ public class DatasetInformations {
      * @throws IOException
      * @throws NotFoundException
      */
-    public int getNumberOfPropertiesAboveThreshold(String hdtPath, String instanceType, double threshold, String propertyType, String instanceTypeFragment)
+    public int getNumberOfPropertiesAboveThreshold(String hdtPath, InstanceType instanceType, double threshold, String propertyType, String instanceTypeFragment)
             throws IOException, NotFoundException {
         if (threshold > 1d) {
             log.error("Threshold must be between 0 and 1! You provided: " + threshold);
@@ -68,9 +70,9 @@ public class DatasetInformations {
         
         Path transactionsFilePath = Paths.get("transactions_" + instanceTypeFragment + ".txt");
         if (!Helpers.isFileExists("transactions_" + instanceTypeFragment + ".txt")) {
-            Map<String, Set<String>> predicatesBySubject = getPredicatesBySubject(hdtPath, propertyType, instanceType);
-            TransactionsAndMapping tam = new TransactionsAndMapping(predicatesBySubject);
-            tam.computeTransactions();           
+            Map<String, Set<String>> predicatesBySubject = getPredicatesBySubject(hdtPath, propertyType, instanceType.Uri);
+            TransactionsAndMapping tam = new TransactionsAndMapping(predicatesBySubject, conf, ds, instanceType);
+            tam.computeTransactions(true);           
             log.debug("Saving transactions in " + transactionsFilePath.toString() + "...");
             Files.write(transactionsFilePath, tam.getTransactionsToStringList(), Charset.forName("UTF-8"));
         }
@@ -235,7 +237,7 @@ public class DatasetInformations {
             for (Double threshold : thresholds) {
                 log.debug("threshold: " + threshold);
                 DatasetInformations di = new DatasetInformations();
-                int numberOfPredicates = di.getNumberOfPropertiesAboveThreshold(hdtPath, classEntry.getKey(), threshold, propertyType, classEntry.getValue());
+                int numberOfPredicates = di.getNumberOfPropertiesAboveThreshold(hdtPath, new InstanceType(classEntry.getKey()), threshold, propertyType, classEntry.getValue());
                 line += numberOfPredicates + " & ";
             }
             line = line.trim();

@@ -16,5 +16,8 @@
              "classNamespace": "http://www.wikidata.org/entity/",
              "propertyType": "http://www.wikidata.org/prop/direct/P31"
          }
-    ]
+    ],
+    "outputMFPDirectoryPath": "/etudiants/deptinfo/p/pari_p1/dev/java/LOD-CM/xp",
+    "scriptDirectory": "/etudiants/deptinfo/p/pari_p1/workspace/linked_itemset_sub16/fpm/",
+    "transactionsFilePath": "/etudiants/deptinfo/p/pari_p1/dev/java/LOD-CM/xp/<DATASETNAME>/<CLASSLABEL>/transactions.txt"
 }

@@ -19,6 +19,9 @@ public class Configuration {
      */
     public List<Dataset> datasets;
     public String fpsDirectory;
+	public String outputMFPDirectoryPath;
+	public String scriptDirectory;
+	public String transactionsFilePath;
 
     /**
      * Fill the configuration class with values from specified json file.

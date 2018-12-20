@@ -16,5 +16,8 @@
              "classNamespace": "http://www.wikidata.org/entity/",
              "propertyType": "http://www.wikidata.org/prop/direct/P31"
          }
-    ]
+    ],
+    "outputMFPDirectoryPath": "/mnt/d/xp",
+    "scriptDirectory": "/mnt/c/Users/ISSA/git/LOD-CM/fpm",
+    "transactionsFilePath": "/mnt/d/xp/<DATASETNAME>/<CLASSLABEL>/transactions.txt"
 }
